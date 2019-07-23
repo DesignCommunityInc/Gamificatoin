@@ -1,0 +1,14 @@
+$mobileWidth: 320px;
+$tabletWidth: 768px;
+$lowscreenWidth: 1920px;
+
+@mixin mobile {
+  @media  only screen and (max-width: #{$tabletWidth + 1px}) {
+    @content;
+  }
+}
+@mixin lowscreen {
+  @media  only screen and (min-width: #{$tabletWidth + 1px}) and (max-width: #{$lowscreenWidth - 1px}) {
+    @content;
+  }
+}

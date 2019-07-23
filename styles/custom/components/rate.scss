@@ -1,0 +1,82 @@
+.Rate {
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+
+  @include mobile {
+    display: block;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  &__container {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0 10px;
+
+      
+      &__tags {
+        &__wrapper {
+          display: inline-block;
+          position: relative;
+          max-width: 100%;
+          
+          .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            padding-left: 0;
+            margin-right: 5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: $grey;
+            cursor: pointer;
+
+            &:hover {
+              color: $dark;
+              transition: $fast;
+            }
+          }
+        }
+      }
+      
+        
+      &__current {
+        width: 100%;
+        position: relative;
+        margin-top: 30px;
+        
+        &__position {
+          font-size: 20pt;
+          vertical-align: middle;
+          font-weight: 900;
+          padding-right: 20px;
+        }
+        &__image {
+          display: inline-block;
+          position: relative;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          vertical-align: middle;
+          background: $light;
+          background-repeat: no-repeat;
+          background-size: cover;
+        }
+        &__info {
+          display: inline-block;
+          position: relative;
+          padding-left: 20px;
+          vertical-align: top;
+          
+          h2 {
+            font-weight: 500;
+          }
+          h4 {
+            font-weight: 400;
+            color: $grey;
+          }
+        }
+      }
+    }
+  }

@@ -1,0 +1,111 @@
+
+.Header { 
+    position: relative;
+    padding: $container-padding;
+    width: 100%;
+    white-space: nowrap;
+    transition: $average;
+    z-index: z("main-layer");
+    @include mobile {
+        padding: $container-padding-mobile;
+    }
+    .tile {
+
+      &__container {
+        display: inline-block;
+        position: relative;
+        width: 75%;
+        vertical-align: middle;
+        padding: 10px;
+        overflow: hidden;
+
+        &__image {
+          display: inline-block;
+          position: relative;
+          width: 75px;
+          height: 75px;
+          border-radius: 50%;
+          background: $light;
+          vertical-align: middle;
+          background-repeat: no-repeat;
+          background-size: cover;
+
+          &-loading {
+            background: $light-violet;
+          }
+        }
+        &__info {
+          display: inline-block;
+          position: relative;
+          padding-left: 20px;
+          vertical-align: top;
+
+          span {
+            display: inline-block;
+            padding: 3px 10px;
+            margin: {
+                right: 5px;
+                top: 2px;
+            }
+            border-radius: 2px;
+            background: $light-violet;
+            color: $violet;
+            font-size: 12pt;
+
+              &::before {
+                content: 'ico';
+                font-weight: 700;
+                margin-right: 5px;
+              }
+          }
+          h2 {
+            font-weight: 500;
+          }
+          h4 {
+            font-weight: 400;
+            color: $grey;
+          }
+          &-loading {
+            span {
+              display: block;
+              padding: 0;
+              width: 50px;
+              &::before {
+                content: '';
+              }
+            }
+            h2 {
+              background: $light-violet;
+              padding: 10px 40px;
+              margin: 5px 0;
+              border-radius: $border-radius-small;
+            }
+            h4 {
+              display: inline-block;
+              background: $light-violet;
+              padding: 5px 10px;
+              margin: 5px 0;
+              border-radius: $border-radius-small;
+            }
+          }
+        }
+      }
+    }
+  .settings-container {
+    display: inline-block;
+    position: relative;
+    width: 25%;
+    padding: 10px;
+    vertical-align: middle;
+    overflow: hidden;
+    
+    .button {
+      display: block;
+      margin: {
+        left: auto; 
+        right: 0;
+        bottom: 1px;
+      }
+    }
+  }
+}

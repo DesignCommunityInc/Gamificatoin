@@ -1,0 +1,45 @@
+$fontFamily: "Gilroy";
+
+$dark: #323232;
+$dark-40: rgba(50, 50, 50, .4);
+$grey: #929292;
+$red: #F56A6A;
+$red-40: rgba(345, 106, 106, .4);
+$light: #E3E3E3;
+$light-violet: #DEDAF1;
+$violet: #7C6ACE;
+$green: #84FE85;
+$green-40: rgba(132, 254, 133, .4);
+$purple: #9E63BF;
+$light-purple: rgb(235, 210, 250);
+$yellow: #F7C339;
+$yellow-40: rgba(247, 195, 59, .4);
+$linear-gradient: linear-gradient(to left, $violet, $purple);
+
+$border-radius-small: 2px;
+$border-radius-average: 3px;
+$border-radius-large: 5px;
+
+$container-height: 300px;
+$container-padding: 15px 50px;
+$container-padding-mobile: 20px 10px;
+
+$fast: ease-in-out .1s;
+$average: ease-in-out .2s;
+$slow: ease-in-out .3s;
+
+@function z($name) {
+    @if index($z-indexes, $name) {
+        @return (length($z-indexes) - index($z-indexes, $name)) + 1;
+    } @else {
+        @warn 'There is no item "#{$name}" in this list; choose one of: #{$z-indexes}';
+        @return null;
+    }
+}
+$z-indexes: (
+    "supertop-layer",
+    "top-layer",
+    "main-layer",
+    "sub-layer",
+    "background-layer",
+);

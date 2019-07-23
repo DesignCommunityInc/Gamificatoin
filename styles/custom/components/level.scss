@@ -1,0 +1,138 @@
+
+.Level { 
+  position: relative;
+  padding: $container-padding;
+  background: $linear-gradient;
+  margin-bottom: 80px;
+  transition: $slow;
+  z-index: z("main-layer");
+
+  &__container {
+    display: block;
+    max-width: 400px;
+    padding: 10px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  &__title {
+    display: block;
+    font-size: 18pt;
+    text-align: center;
+    padding: 6px;
+    color: white;
+    font-weight: 700;
+    &-loading {
+      margin: 10px auto;
+      width: 60px;
+      height: 30px;
+      background-color: $light-purple;
+      border-radius: $border-radius-small;
+    }
+    &-small {
+      font-size: 10pt;
+      &-loading {
+        border-radius: $border-radius-small;
+        margin: 10px auto;
+        width: 60px;
+        height: 20px;
+        background-color: $light-purple;
+      }
+    }
+  }
+  &__rate {
+    display: inline-block;
+    position: relative;
+    padding: 5px;
+    margin: 0 auto;
+    color: white;
+    font-size: 28pt;
+    font-weight: 700;
+    &-loading {
+      display: block;
+      border-radius: $border-radius-small;
+      width: 80px;
+      height: 35px;
+      margin-top: 10px;
+      padding: 0;
+      background-color: $light-purple;
+      &::before {
+        content: none!important;
+      }
+    }
+    &::before {
+      content: '❮';
+      display: inline-block;
+      position: relative;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      vertical-align: middle;
+      font-size: 10pt;
+      font-weight: 500;
+      text-align: center;
+      background: white;
+      color: $purple;
+      border-radius: 50%;
+      transform: rotate(90deg);
+    }
+  }
+  &__progress {
+    display: block;
+    position: relative;
+    height: 40px;
+    margin-bottom: 20px;  
+    box-shadow: 0 5px 30px -16px $dark;
+    background: $light-violet;
+    border-radius: 3px;
+    &-loading {
+      background-color: $light-purple;
+      box-shadow: unset;
+    }
+    &::after,
+    &::before {
+      display: block;
+      position: absolute;
+      font-size: 18pt;
+      color: white;
+      top: 0;
+      line-height: 40px;
+      font-weight: 700;
+      z-index: z("sub-layer");
+    }
+    &::after {
+        content: attr(next-level);
+        right: 20px;
+    }
+    &::before {
+        content: attr(current-level);
+        left: 20px;
+    }
+    &-bar {
+      display: block;
+      position: relative;
+      height: 100%;
+      width: 0;
+      background: $linear-gradient;
+      transition: 1s ease-in-out;
+      z-index: z("background-layer");
+      &-loading {
+        transition: none!important;
+      }
+    }
+  }
+  &__subtitle {
+    color: $light;
+    font-size: 10pt; 
+    b {
+        color: white;
+    }
+    &-loading {
+      display: block;
+      margin: 0 auto;
+      max-width: 200px;
+      height: 20px;
+      background-color: $light-purple;
+      border-radius: $border-radius-small;
+    }
+  }
+}

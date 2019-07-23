@@ -1,0 +1,61 @@
+.Classmates {
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+  @include mobile {
+    display: block;
+    width: 100%;
+  }
+
+  &__container {
+    width: 100%;
+    padding: 0 10px;
+    overflow: hidden;
+    white-space: nowrap;
+      
+    .tag-list {
+
+      &__item {
+        display: inline-block;
+        padding: 3px 10px;
+        margin-right: 5px;
+        border-radius: 2px;
+        background: #DEDAF1;
+        color: #7C6ACE;
+        font-size: 12pt;
+      }
+    }
+    .mates {
+      margin-top: 30px;
+      
+      &__image {
+        display: inline-block;
+        position: relative;
+        width: 53px;
+        height: 53px;
+        border: 3px solid white;
+        border-radius: 50%;
+        vertical-align: middle;
+        background: linear-gradient(to right, #7B74C2, #9E63BF);
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        &:nth-child(2) {
+          z-index: -1;
+        }
+        &:nth-child(3) {
+          z-index: -2;
+        }
+        &:nth-child(2),
+        &:nth-child(3) {
+          width: 43px;
+          height: 43px;
+          margin-left: -20px;
+        }
+      }
+      &__count {
+        padding-left: 10px;
+      }
+    }
+  }
+}

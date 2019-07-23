@@ -1,0 +1,66 @@
+.check {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  text-align: right;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+  input {
+    display: none;
+  }
+}
+.check svg {
+  position: relative;
+  z-index: 1;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: $light-violet;
+  stroke-width: 1.5;
+  transform: translate3d(0, 0, 0);
+  transition: all 0.2s ease;
+}
+.check svg path {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+}
+.check svg polyline {
+  stroke-dasharray: 22;
+  stroke-dashoffset: 66;
+}
+.check:hover:before {
+  opacity: 1;
+}
+.check:hover svg {
+  stroke: $violet;
+}
+.check input:checked + svg {
+  stroke: $violet;
+}
+.check input:checked + svg path {
+  stroke-dashoffset: 60;
+  transition: all 0.3s linear;
+}
+.check input:checked + svg polyline {
+  stroke-dashoffset: 42;
+  transition: all 0.2s linear;
+  transition-delay: 0.15s;
+}
+// Radio
+.radio {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  text-align: right;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+  input {
+    display: none;
+  }
+}

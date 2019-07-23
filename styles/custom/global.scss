@@ -1,0 +1,309 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Gilroy";
+    color: #323232;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    // filter: saturate(1.02);
+}
+.hidden { display: none!important; }
+.unvisible { 
+  visibility: hidden;
+  opacity: 0;
+  transition: $average;
+}
+
+.page {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  &:nth-child(2) {
+    position: fixed;
+    top: 100vh;
+    transition: 500ms ease-in-out;
+  }
+
+  @include mobile {
+    &:nth-child(n) {
+      top: 0;
+      transition: $fast;
+    }
+  }
+}
+/* simple - enter transition 300ms, exit 150ms */
+.fade {
+  &-appear,
+  &-enter {
+    opacity: 0;
+    z-index: 1;
+    &-active {
+      opacity: 1;
+      transition: opacity 300ms linear 150ms;
+    }
+  }
+  &-exit {
+    opacity: 1;
+    &-active {
+      opacity: 0;  
+      transition: opacity 150ms linear;
+    }
+  }
+}
+::-webkit-scrollbar {
+  height: 0;
+  width: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: $light; 
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $grey;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $violet; 
+}
+::selection {
+  background-color: $violet;
+  color: white;
+}
+.Container {
+  display: block;
+  position: relative;
+  padding: $container-padding;
+  margin: 0 auto;
+  max-width: 1920px;
+  // overflow: hidden;
+  transition: $average;
+  z-index: z("main-layer");
+  @include mobile {
+      padding: $container-padding-mobile;
+  }
+  &:last-child {
+    margin-bottom: 50px;
+  }
+  &__title {
+      display: inline-block;
+      padding: 10px;
+      font-size: 24pt;
+      font-weight: 700;
+      transition: $fast, background-color none;
+      cursor: pointer;        
+      @include mobile {
+          display: block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+      }
+      &-loading {
+        &::after,
+        &::before {
+          content: none!important;
+        }
+        width: 300px;
+        background: $light;
+        margin: 0 10px;
+        padding: 28px 0;
+        border-radius: $border-radius-small;
+      }
+      &::after,
+      &::before {
+        display: inline-block;
+        position: relative;
+        vertical-align: middle;
+        text-align: center;
+        border-radius: 3px;
+        transition: $fast;
+        font-size: 12pt;
+        background: $light;
+      }
+      &-forward {
+        @include mobile {
+          margin-right: 20px;
+        }
+        &::after {
+          content: '❱';
+          width: 30px;
+          height: 30px;
+          line-height: 32px;
+          margin-left: 50px;
+          @include mobile {
+            margin-top: 5px;
+            position: absolute;
+            right: 20px;
+          }
+        }
+      }
+      &-backward {
+        display: block;
+        &::before {
+          content: '❰';
+          width: 35px;
+          height: 35px;
+          line-height: 38px;
+          margin: {
+            top: -5px;
+            right: 50px;
+          } 
+        }
+      }
+      &:hover {
+        &::after {
+          text-indent: 10px;
+          transition: $fast;
+        }
+        &::before {
+          text-indent: -10px;
+          transition: $fast;
+        }
+      }
+  }
+}
+.sort-desc {
+  transform: rotateX(180deg);
+  filter: grayscale(10) contrast(6);
+}
+.button {
+  position: relative;
+  border-radius: 2px;
+  user-select: none;
+  overflow: hidden;
+  transition: $fast;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  // button-icon
+  &-icon {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+    &-sort {
+      display: inline-block;
+      vertical-align: middle;
+      width: 20px;
+      height: 20px;
+      background-size: contain;
+      background-image: url("data:image/svg+xml, #{$sort}");
+      &:hover {
+        filter: unset;
+      }
+    }
+  }
+  // button-iconless
+  &-iconless {
+    &::before {
+      content: none!important;
+    }
+    &::after {
+      content: none!important;
+    }
+  }
+  &-main {
+    max-width: 200px;
+    padding: 7px 10px;
+    font-size: 12pt;
+    font-weight: 700;
+
+    &::before {
+      content: 'ico';
+      font-weight: 700;
+      margin-right: 10px;
+    }
+    // main-light
+    &-light {
+      color: $dark;
+      &:hover {
+          transition: $fast;
+          background: $light;
+      }
+      &-colorful {
+        background: $light;
+      }
+    }
+    // main-violet
+    &-violet { 
+      color: $violet;
+      &:hover {
+        transition: $fast;
+        background: $light-violet;
+      }
+      &-colorful {
+        background: $light-violet;
+      }
+    }
+    &-red {
+      display: block;
+      color: $red;
+      &:hover {
+        transition: $fast;
+        background: $red-40;
+      }
+      &-colorful {
+        background: $red-40;
+      }
+    }
+    &:active {
+      transform: scale(.95);
+      backface-visibility: hidden;
+      will-change: transform;
+      transition: $fast;
+    }
+  }
+  &-action {
+    max-width: 250px;
+    padding: 15px 100px;
+    font-size: 12pt;
+    font-weight: 700;
+    background: $linear-gradient;
+    border-radius: $border-radius-small;
+    color: white;
+  }
+  
+  &-info {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 12pt;
+    font-weight: 500;
+    color: $violet;
+    background: $light-violet;
+    @include mobile {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-right: 50px;
+    }
+  }
+  &-forward {
+    &::after {
+      content: '❱';
+      display: inline-block;
+      text-align: center;
+      margin-left: 50px;
+      line-height: 22.5px;
+      font-size: 12pt;
+      font-weight: 700;
+      transition: $fast;
+      @include mobile {
+        position: absolute;
+        right: 20px;
+      }
+    }
+    &:hover {     
+      &::after {
+          text-indent: 10px;
+          transition: $fast;
+      }
+    }
+  }
+}

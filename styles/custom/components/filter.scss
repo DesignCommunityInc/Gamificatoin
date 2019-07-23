@@ -1,0 +1,97 @@
+.Sort {
+  z-index: z("background-layer")!important;
+}
+.Filter {
+  position: relative;
+  padding: 10px 5px 20px;
+  overflow: visible;
+  z-index: z("top-layer");
+
+  &__container {
+    display: inline-block;
+    position: relative;
+    z-index: z("sub-layer");
+
+    .button {
+      &:hover + .Filter__body {
+        visibility: visible;
+        opacity: 1;
+        transition: $average;
+      }
+    }
+  }
+  &__header {
+    padding: 0 5px;
+    .button {
+      display: block;
+      max-width: unset;
+      text-align: center;
+    }
+  }
+  &__body {
+    display: block;
+    position: absolute;
+    max-width: 250px;
+    min-width: 150px;
+    top: -10px;
+    left: -5px;
+    opacity: 0;
+    visibility: hidden;
+    transition: $average;
+    background: white;
+    border-radius: $border-radius-average;
+    box-shadow: 0 0 6px -3px $dark;
+    &:hover {
+      visibility: visible;
+      opacity: 1;
+      transition: $average;
+    }
+    &::before {
+      content: '';
+      display: block;
+      position: relative;
+      height: 5px;
+      width: 100%;
+    }
+  }
+  &__field {
+    cursor: pointer;
+    display: block;
+    position: relative;
+    padding: 5px 0;
+    margin: 5px 0;
+    white-space: nowrap;
+    transition: $fast;
+    &:hover {
+      background: $light-violet;
+      transition: $fast;
+      & > * {
+        color: $violet;
+        transition: $fast;
+      }
+      .check svg {
+        stroke: $violet;
+      }
+    }
+    & > * {
+      user-select: none;
+      vertical-align: middle;
+      display: inline-block;
+      font-weight: 700;
+      transition: $fast;
+    }
+    &-name {
+      width: 70%;
+      font-size: 10pt;
+      padding: 0 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: $violet;
+    }
+    &-value {
+      padding: 0 10px;
+      min-width: 30%;
+      text-align: right;
+    }
+  }
+}

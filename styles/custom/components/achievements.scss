@@ -1,0 +1,302 @@
+.for-title {
+  padding-bottom: 0;
+}
+.Achievements {
+  position: relative;
+  .button-info {
+    margin-top: 20px;
+  }
+  &__container {
+    display: block;
+    position: relative;
+    padding: 20px 10px;
+
+    &-scroller {
+      max-height: 410px;
+      // box-shadow: inset 0px -200px 69px -185px rgba(204,204,204,1);
+      border: 3px solid $light;
+      border-right: 0;
+      border-radius: $border-radius-average;
+      overflow-y: scroll;
+      /* width */
+    }
+    &-last {
+      @include lowscreen {
+        width: 50%;
+      }
+      width: 500px;
+    }
+    &-progress {
+      width: 1000px;
+      @include lowscreen {
+        width: 50%;
+        & > :nth-last-child(1) {
+          display: none!important;
+        }
+      }
+    }
+    &-last,
+    &-progress {
+      display: inline-block;
+      vertical-align: top;
+      &::before {
+        content: attr(data-attr);
+        display: block;
+        position: relative;
+        font-size: 16pt;
+        font-weight: 700;
+        display: block;
+        @include mobile {
+          padding: 20px 10px 0;
+        }
+        @include lowscreen {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          margin-right: 40px;
+        }
+      }
+      @include mobile {
+        width: 100%;
+        padding: 0;
+        max-width: unset;
+        min-width: unset;
+      }
+    }
+    .achievement {
+      display: inline-table;
+      position: relative;
+      width: 25%;
+      height: 60px;
+      vertical-align: top;
+      padding: 10px 0px;
+      padding-right: 100px;
+      @include lowscreen {
+        width: 33.3%;
+        padding-right: 20px;
+      }
+      @include mobile {
+          width: 50%;
+          padding: 10px;
+      }
+      &__icon {
+        display: inline-block;
+        position: relative;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: $light;
+        background-repeat: no-repeat;
+        background-size: cover;
+        @include mobile {
+          display: block;
+          margin: 0 auto;
+        }
+        &__container {
+          display: table-cell;
+          position: relative;
+          width: 1%;
+          @include mobile {
+            display: block;
+            margin: 0 auto;
+            width: unset;
+          }
+        }
+      }
+      &__progress {
+        display: block;
+        position: relative;
+        margin: 5px;
+        height: 3px;
+        background: $light-violet;
+        overflow: hidden;
+        border-radius: $border-radius-small;
+        @include mobile {
+          max-width: 100px;
+          margin: 5px auto;
+        }
+        &-done {
+          display: block;
+          background: $violet;
+          height: 100%;
+        }
+      }
+      &__info {
+        display: table-cell;
+        position: relative;
+        padding-left: 20px;
+        padding-top: 5px;
+        vertical-align: top;
+        @include mobile {
+            display: block;
+            padding: 10px;
+            text-align: center;
+            max-width: 100%;
+        }
+        &-loading {
+          & > * {
+            background: $light;
+            padding: 10px 40px;
+          }
+          h5 {
+            max-width: 80%;
+            @include mobile {
+              max-width: 100%;
+            }
+          }
+        }
+        h4 {
+          display: inline-block;
+          max-width: 55%;
+          font-weight: 700;
+          @include mobile {
+            margin: unset;
+            white-space: unset;
+            overflow: unset;
+          }
+        }
+        h5 {
+          display: block;
+          padding: 5px 0;
+          font-weight: 500;
+          color: $grey;
+        }
+      }
+      &__reward {
+        position: absolute;
+        right: 0;
+        padding: 5px 10px;
+        vertical-align: top;
+        font-size: 10pt;
+        background: $light-violet;
+        color: $violet;
+        border-radius: $border-radius-small;
+        @include mobile {
+          display: block;
+          position: relative;
+          max-width: 100px;
+          margin: 5px auto;
+        }
+      }
+
+      // Big achievements --- 
+      &-big {
+        display: inline-table;
+        position: relative;
+        width: 100%;
+        max-width: 450px;
+        border-spacing: 0 10px;
+        padding: 10px 0px;
+        padding-right: 40px;
+        @include lowscreen {
+          max-width: unset;
+        }
+        @include mobile {
+          width: 50%;
+          padding: 10px;
+          &:only-child {
+            width: 100%;
+            max-width: unset;
+          }
+        }
+        &__container {
+          cursor: pointer;
+          display: table-cell;
+          height: 100%;
+          background: $linear-gradient;
+          border-radius: $border-radius-large;
+        }
+        &__icon {
+          display: inline-block;
+          position: relative;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          border: 3px solid white;
+          background: $linear-gradient;
+          background-repeat: no-repeat;
+          background-size: cover;
+          @include mobile {
+            display: block;
+            margin: 0 auto;
+          }
+          &__container {
+            display: table-cell;
+            position: relative;
+            width: 1%;
+            padding: 50px 30px;
+            @include mobile {
+              display: block;
+              margin: 0 auto;
+              width: unset;
+            }
+          }
+        }
+        &__progress {
+          display: table-row;
+          position: relative;
+          background: $light-violet;
+          overflow: hidden;
+          border-radius: $border-radius-small;
+          @include mobile {
+            max-width: 100px;
+            margin: 5px auto;
+          }
+          &-done {
+            display: block;
+            background: $violet;
+            height: 3px;
+          }
+        }
+        &__info {
+          display: table-cell;
+          position: relative;
+          padding-left: 20px;
+          vertical-align: middle;
+          @include mobile {
+              display: block;
+              padding: 10px;
+              text-align: center;
+              max-width: 100%;
+          }
+          h2 {
+            display: inline-block;
+            font-weight: 700;
+            color: white;
+            @include mobile {
+              margin: unset;
+              white-space: unset;
+              overflow: unset;
+            }
+          }
+          h3 {
+            display: block;
+            position: relative;
+            font-weight: 500;
+            color: white;
+          }
+        }
+        &__reward {
+          display: block;
+          position: absolute;
+          top: 0;
+          right: 10px;
+          padding: 5px 20px;
+          font-size: 12pt;
+          font-weight: 500;
+          background: $dark-40;
+          color: white;
+          border-radius: $border-radius-average;
+          @include mobile {
+            display: block;
+            position: relative;
+            max-width: 100px;
+            margin: 20px auto;
+            top: unset;
+            right: unset;
+          }
+        }
+      }
+    }
+  }
+}
