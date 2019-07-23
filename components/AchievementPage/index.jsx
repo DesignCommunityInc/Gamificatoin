@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from "../../containers/HeaderContainer";
 import SpecialAchievements from "./SpecialAchievements";
-import Settings from '../../containers/SettingsContainer';
+import Settings from '../Settings';
 import Achievements from "./Achievements";
 import Utils from "../../utils/Utils";
 

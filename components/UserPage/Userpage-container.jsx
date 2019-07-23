@@ -5,7 +5,7 @@ import Gamelist from "../Gamelist";
 import Classmates from "../../containers/ClassmatesContainer";
 import Rate from "../../containers/RateContainer";
 import Header from '../../containers/HeaderContainer';
-import Settings from '../../containers/SettingsContainer';
+import Settings from '../Settings';
 import Utils from "../../utils/Utils";
 import PropTypes from "prop-types";
 

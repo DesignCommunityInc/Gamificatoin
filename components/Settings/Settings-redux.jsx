@@ -1,13 +1,13 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Settings from "../components/Settings";
+import Settings from "./Settings-container";
 import { 
   toggleSettingsScreen, 
   toggleLockSettings, 
   toggleHelpersSettings,
   setNickNameLength,
- } from "../actions/Settings";
+ } from "../../actions/Settings";
 
 const settingsContainer = props => <Settings {...props} />;
 

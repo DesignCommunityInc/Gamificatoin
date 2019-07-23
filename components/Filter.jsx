@@ -41,6 +41,7 @@ class Filter extends React.Component {
       filterList.push(filter);
     else
       filterList.splice(filterList.indexOf(filter), 1);
+
   }
   render() {
     return (

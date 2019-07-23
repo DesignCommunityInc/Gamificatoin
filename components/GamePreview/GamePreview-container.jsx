@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../../containers/HeaderContainer';
-import Settings from '../../containers/SettingsContainer';
+import Settings from '../Settings';
 import Info from './Info';
 import Classmates from '../Classmates';
 import Rules from './Rules';
