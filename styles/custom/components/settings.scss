@@ -30,6 +30,74 @@
       transition: all $slow, padding $fast;
     }
   }
+
+  &__user-inf{
+    background: $linear-gradient;
+    height: 200px;
+
+    .tile {
+
+      &__container {
+        display: inline-block;
+        position: relative;
+        width: 75%;
+        vertical-align: middle;
+        padding: 10px;
+        overflow: hidden;
+        padding: 65px 0px 0px 45px;
+
+        &__image {
+          display: inline-block;
+          position: relative;
+          width: 85px;
+          height: 85px;
+          border-radius: 50%;
+          background: $light;
+          vertical-align: middle;
+          background-repeat: no-repeat;
+          background-size: cover;
+
+          &-loading {
+            background: $light-violet;
+          }
+        }
+        &__info {
+          display: inline-block;
+          position: relative;
+          padding-left: 20px;
+          vertical-align: top;
+
+          span {
+            display: inline-block;
+            padding: 5px 15px;
+            margin: {
+                right: 5px;
+                top: 2px;
+            }
+            border-radius: 2px;
+            background: #A388D1; // add to variables
+            color: white;
+            font-size: 12pt;
+
+              &::before {
+                content: 'ico';
+                font-weight: 700;
+                margin-right: 5px;
+              }
+          }
+          h2 {
+            font-weight: 400;
+            color: white;
+          }
+          h4 {
+            font-weight: 400;
+            color: $light;
+            margin: -2px 0px 7px;
+          }
+        }
+      }
+    }
+  }
   
   &__container {
     display: block;
@@ -64,19 +132,19 @@
   &__title {
     display: block;
     position: relative;
-    padding: 30px;
-    font-size: 18pt;
+    padding: 30px 30px 10px 30px;
+    font-size: 16pt;
     font-weight: 700;
     margin-right: 40px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    &::before {
-        content: 'ico';
-        font-weight: 700;
-        margin-right: 10px;
-    }
+    // &::before {
+    //     content: 'ico';
+    //     font-weight: 700;
+    //     margin-right: 10px;
+    // }
   }
   &__cross {
     display: inline-block;

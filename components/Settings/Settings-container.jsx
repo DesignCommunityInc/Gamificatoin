@@ -1,6 +1,7 @@
 import React from 'react'
 import { PropTypes } from "prop-types";
 import Toggle from "../Toggle";
+import { Link } from "react-router-dom";
 
 const propTypes = {
 };
@@ -47,6 +48,10 @@ class Settings extends React.Component {
       toggleHelpersSettings, 
       toggleLockSettings,
       counter,
+      style,
+      last_name = 'Константинов',
+      second_name = 'Константинович',
+      name = 'Константин'
     } = this.props;
 
     const className = `Settings ${ visible ? `Settings-shown` : `` }`;
@@ -57,13 +62,29 @@ class Settings extends React.Component {
           className="Settings__background" 
           onClick={() => toggleSettingsScreen()} 
         />
+
         <div className="Settings__container">
+          <div className="Settings__user-inf">
+            <div className="tile__container">
+              <div className="tile__container__image" style={style}/>
+              <div className="tile__container__info">
+                <h2>{last_name}</h2>
+                <h4>{name} {second_name}</h4>
+                
+                <Link to="/my/class/">
+                  <span>4Б класс</span>
+                </Link>
+                <Link to="my/rate/">
+                  <span>ТОП 16</span>
+                </Link>
+              </div>
+            </div>
+          </div>
           <div className="Settings__title">Настройки</div>
           <span 
             className="Settings__cross" 
             onClick={() => toggleSettingsScreen()} 
           />
-          <hr/>
           <div className="Settings__field">
             <input 
               type="text" 
