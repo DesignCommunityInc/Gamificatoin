@@ -64,8 +64,8 @@ class Question extends React.Component {
       target.style.top = `${e.touches[0].clientY - target.offsetHeight * 0.5 - offsetY}px`;
       return;
     }
-    target.style.left = `${e.pageX - boundings.x - offsetX}px`;
-    target.style.top = `${e.pageY - boundings.y - offsetY}px`;
+    target.style.left = `${e.pageX - target.offsetWidth * 0.5 - offsetX}px`;
+    target.style.top = `${e.pageY - target.offsetHeight * 0.5 - offsetY}px`;
   }
   getBoundingClientXY(e) {
     let rect = e.currentTarget.getBoundingClientRect();
