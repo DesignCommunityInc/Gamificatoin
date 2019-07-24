@@ -1,7 +1,7 @@
 import React from 'react'
 // import { PropTypes } from "prop-types";
 import { Link } from 'react-router-dom';
-import { MAIN_PAGE } from '../../../constants/Routes'
+import { ROOT } from '../../../constants/Routes'
 
 class Info extends React.Component {
   constructor() {
@@ -37,7 +37,7 @@ class Info extends React.Component {
     );
     return(
       <section className="Games Container Games-Preview">
-      <Link to={MAIN_PAGE} className="Container__title Container__title-backward">Мои достижения</Link> 
+      <Link to={ROOT} className="Container__title Container__title-backward">Мои достижения</Link> 
       <div className="Games__container">
         <div className="Games__container__wrapper">
           <div className="game">

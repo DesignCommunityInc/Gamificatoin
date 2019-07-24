@@ -24,7 +24,7 @@ const Root = () => (
       classNames="fade"
     >
       <Switch location={location}>
-        <Route exact path={routes.MAIN_PAGE} component={UserPage} />
+        <Route exact path={routes.ROOT} component={UserPage} />
         <Route exact path={routes.ACHIEVEMENT_PAGE} component={AchievementsPage} />
         <Route exact path={routes.GAME_PREVIEW_PAGE} component={GamePreview} />
         <Route exact path={routes.GAME_PLAYING_PAGE} component={GameInside} />

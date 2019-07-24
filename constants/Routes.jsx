@@ -1,4 +1,4 @@
-export const MAIN_PAGE = "/";
+export const ROOT = "/";
 export const ACHIEVEMENT_PAGE = "/achievements";
 export const GAME_LIST_PAGE = "/games";
 export const GAME_PREVIEW_PAGE = "/games/:id";

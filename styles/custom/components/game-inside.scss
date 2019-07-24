@@ -170,6 +170,7 @@
       position: relative;
       width: 50%;
       height: 100%;
+      transition: $slow;
       background: $purple;
     }
   }
@@ -178,8 +179,13 @@
     display: block;
     position: relative;
     width: 100%;
-    border-bottom: 2px solid $light-purple;
-    border-radius: $border-radius-large;
+    transition: $fast;
+    -webkit-animation-name: zoomInDown;
+    animation-name: zoomInDown;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
     @include mobile {
       height: auto;
       width: 100%;
@@ -188,8 +194,21 @@
       display: inline-block;
       position: relative;
       max-height: 200px;
+      border-radius: $border-radius-large;
       overflow: hidden;
     }
+    @keyframes zoomInDown {
+      0% {
+        opacity: 0;
+        transform: scale3d(2, 2, 2);
+        animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+      }
+      60% {
+        opacity: 1;
+        transform: scale3d(1.475, 1.475, 1.475);
+        animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+      }
+    } 
   }
   // Question__container > .Question__title
   &__title {
@@ -199,7 +218,7 @@
     color: white;
     text-align: center;
     font-size: 24pt;
-    font-weight: 900;
+    font-weight: 700;
   }
   // .Question__list
   &__list {
@@ -210,23 +229,49 @@
     text-align: center;
     padding: 10px 50px;
     @include mobile {
-      
+      width: 100%;
     }
   }
   // .list > .Question__answer
   &__answer {
     display: inline-block;
-    padding: 5%;
+    padding: 3% 5%;
     margin: 1%;
     background: white;
     opacity: .8;
+    user-select: none;
     text-align: left;
-    max-width: 80%;
+    font-weight: 700;
+    color: $dark;
     border-radius: $border-radius-average;
-    transition: $fast;
-    cursor: pointer;
+    transition: all 0s, margin $slow, opacity $average, color $average;
+    touch-action: none;
+    cursor: grab;
+    @include mobile {
+      padding: 5% 10%;
+      margin: 3%;
+    }
+    &::after {
+      content: attr(data-attr);
+      display: block;
+      position: relative;
+      top: 0;
+      left: 0;
+    }
+    &-hidden {
+      opacity: 0!important;
+    }
+    &-grabbing {
+      position: absolute;
+      margin: 0;
+      opacity: 1!important;
+      transition: all 0s, margin $average;
+      z-index: z("supertop-layer");
+      cursor: grabbing!important;
+    }
     &:hover {
       opacity: 1;
+      color: $violet;
     }
     p {
       display: inline-block;
