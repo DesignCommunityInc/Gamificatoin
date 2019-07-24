@@ -7,10 +7,9 @@ class Mode extends React.Component {
     const { title, link } = this.props;
     return (   
       <Link to={`games/create/${link}`} className="Games__mode">
-        <div>
-          <p>Режим</p>
+        {/* <div> */}
           <p>{title}</p>
-        </div>
+        {/* </div> */}
       </Link>
     )
   }

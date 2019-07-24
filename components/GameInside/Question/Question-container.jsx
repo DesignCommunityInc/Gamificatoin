@@ -12,30 +12,32 @@ const defaultTypes = {
 class Question extends React.Component {
   render() {
     const { data, isLoading } = this.props;
-    const title = "Lorem ipsum dolor sit amet consectetur adipisicing elit.";
+    const title = "Что было первым?";
     const questions = [
-      "one", 'two', 'three', 'four',
+      "ложка", 'курица', 'яйцо', 'собака' ,
     ];
     const count = 15;
     const total = 30;
     const progress = count / total * 100;
     return (
       <section className="Question">
-        <div className="Question__header">
+        <div className="Question__container">
           <div className="Question__count">
-            {`Вопрос ${count} из ${total}`}
+            <b>{`Вопрос № ${count}`}</b>{` из ${total}`}
           </div>
           <div className="Question__progress">
             <div className="Question__progress__bar" style={{ width: `${progress}%`}}/>
           </div>
-        </div>
-        <div className="Question__container">
+          <div className="Question__image__container">
+            <img src="https://foodallergycanada.ca/wp-content/uploads/egg-2.jpg" alt="mountains" className="Question__image" />
+          </div>
           <div className="Question__title">{title}</div>
-          <img src="https://i.ytimg.com/vi/OIlbiU5NKM4/maxresdefault.jpg" alt="mountains" className="Question__image"/>
         </div>
         <div className="Question__list">
           {questions.map((question, idx) => 
-            <div className="Question__item" key={idx}>{question}</div>
+            <div className="Question__answer" key={idx}>
+              <p>{question}</p>
+            </div>
           )}
         </div>
         <div className="Question__drag" />

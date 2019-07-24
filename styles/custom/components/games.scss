@@ -428,20 +428,30 @@
     &:last-child{
       margin-right: 0;
     }
-
-    & > div{
-      position: relative;
+    p {
       display: inline-block;
-      font-size: 14pt;
-      // width: 100%;
-      & > :nth-child(1){
-        font-size: 12pt!important;
-        text-align: left;
-        font-weight: 300;
+      &::before {
+        content: 'Режим';
+        display: block;
         position: relative;
-        font-size: 13pt;
+        font-size: 12pt;
+        font-weight: 300;
+        text-align: left;
       }
     }
+    // & > div{
+    //   position: relative;
+    //   display: inline-block;
+    //   font-size: 14pt;
+    //   // width: 100%;
+    //   & > :nth-child(1){
+    //     font-size: 12pt!important;
+    //     text-align: left;
+    //     font-weight: 300;
+    //     position: relative;
+    //     font-size: 13pt;
+    //   }
+    // }
 
  } 
  

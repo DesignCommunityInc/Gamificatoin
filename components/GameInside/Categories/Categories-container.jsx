@@ -29,8 +29,8 @@ class Category extends React.Component {
     );
     return(
       <section className={isCategoryChosen 
-        ? "Games Container Games-fullscreen unvisible" 
-        : "Games Games-fullscreen Container"}
+        ? "Game Container Game-fullscreen unvisible" 
+        : "Game Game-fullscreen Container"}
       >
         <div className="background" />
         <div 
