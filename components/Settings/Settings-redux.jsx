@@ -6,7 +6,6 @@ import {
   toggleSettingsScreen, 
   toggleLockSettings, 
   toggleHelpersSettings,
-  setNickNameLength,
  } from "../../actions/Settings";
 
 const settingsContainer = props => <Settings {...props} />;
@@ -23,7 +22,6 @@ const mapStateToProps = ({ session, settings }) => ({
     toggleSettingsScreen,
     toggleLockSettings,
     toggleHelpersSettings,
-    setNickNameLength,
   }, dispatch)
   
 export default connect(

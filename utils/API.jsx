@@ -5,7 +5,7 @@ export default axios.create({
     responseType: 'json',
     headers: {
       // 'X-Auth-Token': localStorage.getItem('X-Auth-Token'),
-      'X-Auth-Token': "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBwLnV1ZC5zY2hvb2xcLyIsImlhdCI6MTU2MzkzNDM5NSwibmJmIjoxNTYzOTQxNTk1fQ.XKHkjjkWGFQgJg-sI3XzbDZp8YJeblgr2A08SAeeeZo",
+      'X-Auth-Token': "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBwLnV1ZC5zY2hvb2xcLyIsImlhdCI6MTU2Mzk2NDI5OCwibmJmIjoxNTYzOTcxNDk4fQ.KhpNDm2Cub0u5Cyxjy_f-t4Lk0jMDSgeOXBEMPzbZyg",
     },
 });
 
@@ -16,7 +16,7 @@ export function handleErrors(error) {
   }
   console.log(`😱 Axios request failed: ${error}`);
   console.log(error.response);
-  switch(error.response.code) {
+  switch(error.response.status) {
     case 401: 
     logout();
     break;
@@ -24,11 +24,11 @@ export function handleErrors(error) {
   }
 }
 
-function logout() {
+export function logout() {
   const eraseCookie = (name) => {
     document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
   localStorage.clear();
   eraseCookie('X-Auth-Token');
-  window.location.replace('http://10.0.4.129/');
+  window.location.replace('http://10.0.4.129/auth');
 }

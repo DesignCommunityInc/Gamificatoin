@@ -4,7 +4,6 @@ const initialState = {
   visible: false,
   isHelpersEnabled: true,
   isLocked: false,
-  counter: 0,
 }
 
 export default (state = initialState, action) => {
@@ -27,7 +26,6 @@ export default (state = initialState, action) => {
     case types.SETTINGS_NICKNAME_LENGTH_SET:
       return {
         ...state,
-        counter: action.length,
       }
     default:
       return state

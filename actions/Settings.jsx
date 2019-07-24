@@ -21,11 +21,3 @@ export const toggleHelpersSettings = () => {
         })
     }
 }
-export const setNickNameLength = ({ length }) => {
-    return dispatch => {
-        dispatch({
-            type: types.SETTINGS_NICKNAME_LENGTH_SET,
-            length,
-        })
-    }
-}

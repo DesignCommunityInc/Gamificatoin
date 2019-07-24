@@ -83,7 +83,10 @@ class Header extends React.Component {
           <span 
             role="button" 
             className="button button-main button-main-red"
-            onClick={() => buttonPressedSound()}>
+            onClick={() => {
+              buttonPressedSound();
+              this.props.logout();
+            }}>
             Выход
           </span>
         </div>

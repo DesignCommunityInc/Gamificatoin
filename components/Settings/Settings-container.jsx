@@ -11,10 +11,12 @@ const defaultTypes = {
 class Settings extends React.Component {
   constructor(){
     super();
-
+    this.state = {
+      allowedLength: 25,
+      counter: 0,
+    }
     this.handleSettingsToggleKeyPress = this.handleSettingsToggleKeyPress.bind(this);
     this.onInput = this.onInput.bind(this);
-    this.allowedLength = 25;
   }
   componentDidMount() {
     document.addEventListener("keydown", this.handleSettingsToggleKeyPress, false);
@@ -33,10 +35,10 @@ class Settings extends React.Component {
   }
   onInput(event) {
     const length = event.target.value.length;
-    if(length <= this.allowedLength)
-      this.props.setNickNameLength({ length });
+    if(length <= this.state.allowedLength)
+      this.setState({ counter: length });
     else 
-      event.target.value = event.target.value.substring(0, this.allowedLength);
+      event.target.value = event.target.value.substring(0, this.state.allowedLength);
   }
   render() {
     const { 
@@ -53,7 +55,7 @@ class Settings extends React.Component {
       toggleSettingsScreen, 
       toggleHelpersSettings, 
       toggleLockSettings,
-      counter,
+      // counter,
     } = this.props;
 
     const className = `Settings ${ visible ? `Settings-shown` : `` }`;
@@ -94,7 +96,7 @@ class Settings extends React.Component {
               value={nickname}
               onInput={this.onInput} 
             />
-            <p>{`${counter}/${this.allowedLength}`}</p>
+            <p>{`${this.state.counter}/${this.state.allowedLength}`}</p>
           </div>
           <div className="Settings__field">
             <span className="Settings__field-name">Любимый предмет</span>

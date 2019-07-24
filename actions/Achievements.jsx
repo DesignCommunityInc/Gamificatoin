@@ -25,7 +25,7 @@ export function fetchAchievementsShort() {
         })
       }
       catch (e) {
-        handleErrors.handleErrors(e)
+        handleErrors(e)
       };
   };
 }
