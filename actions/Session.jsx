@@ -19,7 +19,9 @@ export function fetchUserProfile() {
     dispatch(start());
     try {
       await API.get('/user')
-      .then(response => dispatch(success(response.data)));
+      .then(response => 
+        dispatch(success(response.data))
+      )
     }
     catch (e) {
       handleErrors(e);

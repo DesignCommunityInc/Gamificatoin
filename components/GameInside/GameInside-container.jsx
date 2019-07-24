@@ -18,7 +18,6 @@ class GameInside extends React.Component {
   }
   render() {
     const { data, isDataLoading, categories, isCategoriesLoading, choosenCategory } = this.props;
-    console.log(this.props);
     return (
       <main className="page">
         {/* <Categories 

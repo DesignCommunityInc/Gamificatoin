@@ -2,7 +2,6 @@ import React from 'react';
 // import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Classmates from "../components/Classmates";
-// import { fetchUserProfile } from '../actions/userProfile';
 
 const gamesContainer = props => <Classmates {...props} />;
 

@@ -34,17 +34,19 @@
   &__user-inf{
     background: $linear-gradient;
     height: 200px;
-
     .tile {
-
       &__container {
-        display: inline-block;
+        display: block;
         position: relative;
-        width: 75%;
-        vertical-align: middle;
-        padding: 10px;
+        width: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 10px 50px;
         overflow: hidden;
-        padding: 65px 0px 0px 45px;
+        white-space: nowrap;
+        @include mobile {
+          padding: 10px 20px;
+        }
 
         &__image {
           display: inline-block;
@@ -52,14 +54,11 @@
           width: 85px;
           height: 85px;
           border-radius: 50%;
+          border: 3px solid white;
           background: $light;
           vertical-align: middle;
           background-repeat: no-repeat;
           background-size: cover;
-
-          &-loading {
-            background: $light-violet;
-          }
         }
         &__info {
           display: inline-block;

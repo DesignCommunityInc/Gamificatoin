@@ -5,24 +5,25 @@ export default axios.create({
     responseType: 'json',
     headers: {
       // 'X-Auth-Token': localStorage.getItem('X-Auth-Token'),
-      'X-Auth-Token': "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBwLnV1ZC5zY2hvb2xcLyIsImlhdCI6MTU2MzkyMDUxMCwibmJmIjoxNTYzOTI3NzEwfQ.hcSvUc5xHZ76d_1c7KYbXFRcQcVZCqIBgnwkG1LiG8I",
+      'X-Auth-Token': "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBwLnV1ZC5zY2hvb2xcLyIsImlhdCI6MTU2MzkzNDM5NSwibmJmIjoxNTYzOTQxNTk1fQ.XKHkjjkWGFQgJg-sI3XzbDZp8YJeblgr2A08SAeeeZo",
     },
 });
 
-export function handleErrors(e) {
-  let code = null;
-  if(e.response) {
-    code = e.response.code;
-    console.log(`😱 Axios request failed: ${e}`);
-    console.log(e.response);
+export function handleErrors(error) {
+  if(!error.response) {
+    console.log(error); 
+    return false;
   }
-  switch(code) {
+  console.log(`😱 Axios request failed: ${error}`);
+  console.log(error.response);
+  switch(error.response.code) {
     case 401: 
-      logout();
-      break;
+    logout();
+    break;
     default: break;
   }
 }
+
 function logout() {
   const eraseCookie = (name) => {
     document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';

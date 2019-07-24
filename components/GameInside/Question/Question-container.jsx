@@ -19,7 +19,6 @@ class Question extends React.Component {
     const count = 15;
     const total = 30;
     const progress = count / total * 100;
-    console.log(this.props);
     return (
       <section className="Question">
         <div className="Question__header">
@@ -36,7 +35,7 @@ class Question extends React.Component {
         </div>
         <div className="Question__list">
           {questions.map((question, idx) => 
-            <div className="Question__item">{question}</div>
+            <div className="Question__item" key={idx}>{question}</div>
           )}
         </div>
         <div className="Question__drag" />

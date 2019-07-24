@@ -9,7 +9,8 @@ class AchievementContainer extends React.Component {
     this.props.fetchAchievementsShort();
   }
   render() {
-    const { achievements, count, isLoading } = this.props;
+    const { achievements, isLoading } = this.props;
+    const { data, count } = achievements;
     if(isLoading) return (
       <section className="Achievements Container">
         <Link to="/achievements" className="Container__title Container__title-forward Container__title-loading"></Link>
@@ -30,7 +31,7 @@ class AchievementContainer extends React.Component {
       <section className="Achievements Container">
       <Link to="/achievements" className="Container__title Container__title-forward">Мои достижения</Link>
         <div className="Achievements__container">
-          {achievements.map((achievement, idx) =>
+          {data.map((achievement, idx) =>
             <Achievement
               key={idx} 
               title={achievement.name}

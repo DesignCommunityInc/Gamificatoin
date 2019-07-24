@@ -18,9 +18,6 @@ const propTypes = {
 };
 
 class Header extends React.Component {
-  componentDidMount() {
-    this.props.fetchUserProfile();
-  }
   render() {
     const { isLoading, data, toggleSettingsScreen } = this.props;
     const { name, last_name, second_name, photo } = data;
@@ -98,18 +95,3 @@ class Header extends React.Component {
 Header.propTypes = propTypes;
 
 export default Header;
-
-// const UserImage = styled.div`
-//   display: inline-block;
-//   position: relative;
-//   width: 75px;
-//   height: 75px;
-//   border-radius: 50%;
-//   vertical-align: middle;
-//   background: linear-gradient(to right, #7B74C2, #9E63BF);
-//   background-image: ${props => `url('${props.src}')`};
-//   background-repeat: no-repeat;
-//   background-size: cover;
-// `;
-
-// background: URL ... `${props => props.src || something}`;

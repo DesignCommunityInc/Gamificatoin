@@ -16,6 +16,7 @@ const mapStateToProps = ({ session, settings }) => ({
     isLocked: settings.isLocked,
     isHelpersEnabled: settings.isHelpersEnabled,
     counter: settings.counter,
+    userData: session.data,
 })
   
   const mapDispatchToProps = dispatch => bindActionCreators({

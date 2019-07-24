@@ -2,7 +2,6 @@ import React from 'react';
 // import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Rate from "../components/Rate";
-// import { fetchUserProfile } from '../actions/userProfile';
 
 const rateContainer = props => <Rate {...props} />;
 

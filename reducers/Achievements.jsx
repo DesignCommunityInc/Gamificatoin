@@ -2,18 +2,19 @@ import * as types from "../constants/ActionTypes";
 
 const initialState = {
   data: [],
+  isLoading: true,
   shortData: {
     data: [],
+    isLoading: true,
   },
-  isLoading: false,
 }
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.FETCH_ACHIEVEMENTS_START:
       return {
         ...state,
-        data: [],
-        isLoading: true,
+        // data: [],
+        // isLoading: true,
       }
     case types.FETCH_ACHIEVEMENTS_SUCCESS:
       return {
@@ -24,16 +25,14 @@ export default (state = initialState, action) => {
     case types.FETCH_ACHIEVEMENTS_SHORT_START:
       return {
         ...state,
-        shortData: {
-          data: []
-        },
-        isLoading: true,
       }
     case types.FETCH_ACHIEVEMENTS_SHORT_SUCCESS:
       return {
         ...state,
-        shortData: action.payload.data,
-        isLoading: false,
+        shortData: { 
+          data: action.payload.data, 
+          isLoading: false,
+        },
       }
     default:
       return state
@@ -45,18 +44,13 @@ const specialInitialState = {
     last: {},
     progress: [],
   },
-  isLoading: false,
+  isLoading: true,
 }
 export function specialAchievements(state = specialInitialState, action) {
   switch(action.type) {
     case types.FETCH_SPECIAL_ACHIEVEMENTS_START:
       return {
         ...state,
-          data: {
-            last: {},
-            progress: [],
-          },
-          isLoading: true,
       }
     case types.FETCH_SPECIAL_ACHIEVEMENTS_SUCCESS:
       return {

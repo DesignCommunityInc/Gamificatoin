@@ -7,10 +7,9 @@ import AchievementContainer from "./Achievement-container";
 const achievementsContainer = props => <AchievementContainer {...props} />;
 
 const mapStateToProps = ({ achievements }) => ({
-    achievements: achievements.shortData.data,
-    count: achievements.shortData.count,
-    isLoading: achievements.isLoading,
-    error: achievements.error,
+  achievements: achievements.shortData.data,
+  isLoading: achievements.shortData.isLoading,
+  count: achievements.shortData.count,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

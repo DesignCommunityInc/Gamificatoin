@@ -40,7 +40,13 @@ class Settings extends React.Component {
   }
   render() {
     const { 
-      userData: { nickname } = {},
+      userData: { 
+        nickname,
+        name,
+        last_name, 
+        second_name,
+        photo,
+      } = {},
       visible, 
       isLocked, 
       isHelpersEnabled, 
@@ -48,10 +54,6 @@ class Settings extends React.Component {
       toggleHelpersSettings, 
       toggleLockSettings,
       counter,
-      style,
-      last_name = 'Константинов',
-      second_name = 'Константинович',
-      name = 'Константин'
     } = this.props;
 
     const className = `Settings ${ visible ? `Settings-shown` : `` }`;
@@ -66,7 +68,7 @@ class Settings extends React.Component {
         <div className="Settings__container">
           <div className="Settings__user-inf">
             <div className="tile__container">
-              <div className="tile__container__image" style={style}/>
+              <div className="tile__container__image" style={{ backgroundImage: `url('${photo}')` }}/>
               <div className="tile__container__info">
                 <h2>{last_name}</h2>
                 <h4>{name} {second_name}</h4>
@@ -89,6 +91,7 @@ class Settings extends React.Component {
             <input 
               type="text" 
               placeholder="никнейм" 
+              value={nickname}
               onInput={this.onInput} 
             />
             <p>{`${counter}/${this.allowedLength}`}</p>
