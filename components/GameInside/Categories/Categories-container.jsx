@@ -29,10 +29,10 @@ class Category extends React.Component {
     );
     return(
       <section className={isCategoryChosen 
-        ? "Game Container Game-fullscreen unvisible" 
-        : "Game Game-fullscreen Container"}
+        ? "Game Game-fullscreen unvisible" 
+        : "Game Game-fullscreen"}
       >
-        <div className="background" />
+        {/* <div className="background" /> */}
         <div 
           className="choosing__category"
           ref={(container) => {

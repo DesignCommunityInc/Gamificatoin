@@ -18,11 +18,20 @@ class Question extends React.Component {
     this.handleEnd = this.handleEnd.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleMove = this.handleMove.bind(this);
-    this.movingTimer = null;
-    this.currentTarget = null;
-    this.cloneTarget = null;
-    this.boundingXY = null;
+    this.answerMouseEnter = this.answerMouseEnter.bind(this);
+    this.answerMouseEnter = this.answerMouseEnter.bind(this);
+    this.answered = false;
+    this.defaultState = {
+      answer: 'Pass answer here',
+      answered: false,
+      canAnswer: false,
+    };
+    this.state = this.defaultState;
   }
+  // movingTimer = null;
+  // currentTarget = null;
+  // cloneTarget = null;
+  // boundingXY = null;
   componentDidMount() {
     this.imageMoving();
     document.addEventListener('mousemove', this.handleMove, false);
@@ -32,47 +41,91 @@ class Question extends React.Component {
     clearInterval(this.movingTimer);
   }
   handleStart(e) {
+    if(this.state.answered) return false;
+    this.clearWindowSelections();
     this.currentTarget = e.currentTarget;
     let target = this.currentTarget;
-    this.boundingXY = this.getBoundingClientXY(e);
+    this.boundingXY = this.getBoundingClientXY(e, e.currentTarget);
     this.cloneTarget = target.cloneNode(true);
-    this.cloneTarget.classList.add('Question__answer-hidden');
-    target.classList.add('Question__answer-grabbing');
+    this.cloneTarget.classList.add('Question__answer--hidden');
+    target.classList.add('Question__answer--grabbing');
     target.parentNode.insertBefore(this.cloneTarget, target.nextSibling);
     this.handleMove(e);
   }
   handleEnd() {
     let target = this.currentTarget;
     if(!target || !this.cloneTarget) return false;
+    if(this.state.canAnswer) {
+      this.answerTheQuestion();
+    }
+    if(this.state.answered) 
+      this.currentTarget.classList.add('Question__answer--hidden');
     this.cloneTarget.parentNode.removeChild(this.cloneTarget);
-    target.classList.remove('Question__answer-grabbing');
+    this.answerContainer.classList.remove('Question__drag--passing-answer');
+    target.classList.remove('Question__answer--grabbing');
     target.style = {};
     this.cloneTarget = null;
-    this.currentTarget = null;
+    if(!this.state.answered)
+      this.currentTarget = null;
   }
   handleCancel() {
-    // console.log(e.target);
+    if(!this.state.answered) return false;
+    this.setState(this.defaultState);
+    this.currentTarget.classList.remove('Question__answer--hidden');
+    this.answerContainer.classList.remove('Question__drag--answered');
   }
   handleMove(e) {
     let target = this.currentTarget;
     let boundings = this.boundingXY;
-    if(!target || !boundings) return false;
-    let offsetX = this.questionContainer.offsetLeft;
-    let offsetY = this.questionContainer.offsetTop;
+    if(!target || !boundings || this.state.answered) return false;
     if(e.touches){
-      target.style.left = `${e.touches[0].clientX - target.offsetWidth * 0.5 - offsetX}px`;
-      target.style.top = `${e.touches[0].clientY - target.offsetHeight * 0.5 - offsetY}px`;
+      let pageXOffset = document.documentElement.scrollLeft;
+      let pageYOffset = document.documentElement.scrollTop;
+      target.style.left = `${e.touches[0].clientX - target.offsetWidth * 0.5 + pageXOffset}px`;
+      target.style.top = `${e.touches[0].clientY - target.offsetHeight * 0.5 + pageYOffset}px`;
+      this.answerMouseEnter();
       return;
     }
-    target.style.left = `${e.pageX - target.offsetWidth * 0.5 - offsetX}px`;
-    target.style.top = `${e.pageY - target.offsetHeight * 0.5 - offsetY}px`;
+    target.style.left = `${e.pageX - boundings.x}px`;
+    target.style.top = `${e.pageY - boundings.y}px`;
+    this.answerMouseEnter()
   }
-  getBoundingClientXY(e) {
-    let rect = e.currentTarget.getBoundingClientRect();
+  answerMouseEnter() {
+    let target = this.currentTarget;
+    let containerBoundaries = this.getBoundingClientXY(target, this.answerContainer);
+    if(containerBoundaries.x + target.offsetWidth * 0.4 > 0 && containerBoundaries.y + target.offsetHeight * 0.4 > 0) {
+      this.answerContainer.classList.add('Question__drag--passing-answer');
+      this.setState({ canAnswer: true });
+      return;
+    }
+    this.answerContainer.classList.remove('Question__drag--passing-answer');
+    this.setState({ canAnswer: false });
+  }
+  answerTheQuestion() {
+    this.setState({ answer: this.cloneTarget.getAttribute('data-attr') });
+    this.answerContainer.classList.add('Question__drag--answered');
+    this.setState({ answered: true });
+  }
+  getBoundingClientXY(e, target) {
+    let { left, top} = target.getBoundingClientRect();
     return e.clientX ? {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    } : {};
+      x: e.clientX - left,
+      y: e.clientY - top,
+    } : {
+      x: e.offsetLeft - left,
+      y: e.offsetTop - top,
+    };
+  }
+  clearWindowSelections() {
+    if (window.getSelection) {
+      if (window.getSelection().empty) {  // Chrome
+        window.getSelection().empty();
+      } else if (window.getSelection().removeAllRanges) {  // Firefox
+        window.getSelection().removeAllRanges();
+      }
+    } else if (document.selection) {  // IE?
+      document.selection.empty();
+    }
   }
   imageMoving() {
     let direction = true;
@@ -95,9 +148,7 @@ class Question extends React.Component {
   render() {
     const { data, isLoading } = this.props;
     const title = "Что было первым?";
-    const questions = [
-      "Ложка", 'Курица', 'Яйцо', 'Собака' ,
-    ];
+    const questions = ["Ложка", 'Курица', 'Яйцо', 'Собака', "Кактус"];
     const count = 15;
     const total = 30;
     const progress = count / total * 100;
@@ -127,12 +178,7 @@ class Question extends React.Component {
           <div className="Question__title">{title}</div>
         </div>
         
-        <div 
-          className="Question__list"
-          ref={(questionContainer) => {
-            this.questionContainer = questionContainer;
-          }}
-        >
+        <div className="Question__list">
           {questions.map((question, idx) => 
             <div 
               className="Question__answer" 
@@ -146,7 +192,14 @@ class Question extends React.Component {
             />
           )}
         </div>
-        <div className="Question__drag" />
+        <div className="Question__drag__container">
+          <div 
+            className="Question__drag"
+            ref={container => this.answerContainer = container}
+            data-attr={this.state.answer}
+            onClick={this.handleCancel}
+          />
+        </div>
       </section>
     );
   }

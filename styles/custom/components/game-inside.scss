@@ -4,7 +4,19 @@
   &-fullscreen {
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
   }
+  // .background {
+  //   display: block;
+  //   position: fixed;
+  //   width: 0;
+  //   height: 0;
+  //   left: 0;
+  //   bottom: 0;
+  //   border-style: solid;
+  //   border-width: 1000px 600px 0 1000px;
+  //   border-color: transparent transparent transparent #9E63BF;
+  // }
   .Categories {
     display: block;
     position: fixed;
@@ -37,17 +49,6 @@
       font-size: 12pt;
       
     }
-    .background {
-      display: block;
-      position: fixed;
-      width: 0;
-      height: 0;
-      right: 0;
-      bottom: 0;
-      border-style: solid;
-      border-width: 0 0 600px 1500px;
-      border-color: transparent transparent #9E63BF transparent;
-    }
     &__unit {
       display: inline-block;
       position: relative;
@@ -56,9 +57,9 @@
       text-align: center;
       margin: 20px;
       min-width: 180px;
-      padding: 8% 3%;
+      padding: 8% 4%;
       color: $grey;
-      font-size: 20pt;
+      font-size: 16pt;
       font-weight: 700;
       transition: transform $average;
       cursor: pointer;
@@ -122,31 +123,30 @@
 }
 
 .Question {
-  display: block;
-  position: relative;
+  display: table;
+  position: fixed;
+  top: 0;
+  table-layout: fixed;
   width: 100vw;
   height: 100vh;
-  // text-align: center;
+  background: $linear-gradient;
   background: url('assets/ss.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  filter: saturate(1.4);
+  overflow: hidden;
+  // filter: saturate(1.1);
   
   // .Question__container
   &__container {
-    display: block;
+    display: table-row;
     position: relative;
-    width: 60%;
-    margin: 0 auto;
-    padding: 10px 50px;
-    @include mobile {
-      width: 100%;
-      padding: 10px;
-    }
+    height: 1px;
   }
   // .Question__container > .Question__count
   &__count {
     display: block;
+    margin: 10px auto;
+    max-width: 60%;
     color: white;
     font-size: 10pt;
     b {
@@ -156,14 +156,18 @@
   }
   // .Question__container > .Question__progress
   &__progress {
-    display: inline-block;
+    display: block;
     position: relative;
-    width: 100%;
+    margin: 10px auto;
+    max-width: 60%;
     height: 4px;
-    background: $light-violet;
+    background: $light;
     border-radius: $border-radius-average;
-    box-shadow: 0 0 10px -1.5px $dark;
     overflow: hidden;
+    @include mobile {
+      margin: 10px;
+      max-width: 100%;
+    }
     // & .Question__progress > .Question__progress__bar
     &__bar {
       display: block;
@@ -186,16 +190,24 @@
     animation-duration: 1s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
-    @include mobile {
-      height: auto;
-      width: 100%;
-    }
+
     &__container {
-      display: inline-block;
+      display: block;
       position: relative;
-      max-height: 200px;
-      border-radius: $border-radius-large;
+      margin: 10px auto;
+      max-width: 60%;
+      max-height: 450px;
+      border-radius: $border-radius-average;
       overflow: hidden;
+      @include lowscreen {
+        max-height: 250px;
+      }
+      @include mobile {
+        margin: 10px;
+        border-radius: $border-radius-small;
+        max-width: 100%;
+        max-height: 150px;
+      }
     }
     @keyframes zoomInDown {
       0% {
@@ -222,12 +234,11 @@
   }
   // .Question__list
   &__list {
-    display: block;
+    display: table-row;
     position: relative;
     width: 80%;
-    margin: 0 auto;
+    height: 1px;
     text-align: center;
-    padding: 10px 50px;
     @include mobile {
       width: 100%;
     }
@@ -236,15 +247,16 @@
   &__answer {
     display: inline-block;
     padding: 3% 5%;
-    margin: 1%;
+    margin: .5%;
     background: white;
     opacity: .8;
     user-select: none;
     text-align: left;
     font-weight: 700;
+    font-size: 14pt;
     color: $dark;
     border-radius: $border-radius-average;
-    transition: all 0s, margin $slow, opacity $average, color $average;
+    transition: all 0s, margin $average, padding $fast, opacity $average, color $average;
     touch-action: none;
     cursor: grab;
     @include mobile {
@@ -258,16 +270,18 @@
       top: 0;
       left: 0;
     }
-    &-hidden {
+    &--hidden {
       opacity: 0!important;
+      transition: all 0s;
     }
-    &-grabbing {
-      position: absolute;
-      margin: 0;
+    &--grabbing {
+      position: fixed;
+      padding: 4% 6%;
+      margin: -1%;
       opacity: 1!important;
-      transition: all 0s, margin $average;
+      transition: all 0s, padding $fast, margin $average;
       z-index: z("supertop-layer");
-      cursor: grabbing!important;
+      cursor: grabbing;
     }
     &:hover {
       opacity: 1;
@@ -279,6 +293,58 @@
   }
   // .Question__drag
   &__drag {
-
+    display: block;
+    position: relative;
+    height: 90%;
+    max-width: 80%;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, .1);
+    border-radius: $border-radius-average;
+    transition: $fast;
+    @include lowscreen {
+      height: 80%;
+    }
+    @include mobile {
+      border-radius: $border-radius-small;
+      max-width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+    &::after {
+      content: attr(data-attr);
+      display: block;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: center;
+      color: white;
+      text-transform: uppercase;
+    }
+    &--passing-answer {
+      background: rgba(255, 255, 255, .2);
+      transition: $average;
+    }
+    &--answered {
+      border: 3px solid $purple;
+      border-radius: $border-radius-large;
+      background: white;
+      cursor: pointer;
+      &::after {
+        color: $purple;
+        font-weight: 900;
+        font-size: 18pt;
+      }
+    }
+    &__container {
+      display: table-row;
+      position: relative;
+      height: 30%;
+      @include lowscreen {
+        height: 30%;
+      }
+      @include mobile {
+        height: 100%;
+      }
+    }
   }
 }

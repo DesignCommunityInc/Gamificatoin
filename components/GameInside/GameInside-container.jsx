@@ -20,14 +20,14 @@ class GameInside extends React.Component {
     const { data, isDataLoading, categories, isCategoriesLoading, choosenCategory } = this.props;
     return (
       <main className="page">
-        {/* <Categories 
+        <Categories 
           isLoading={isCategoriesLoading} 
           categories={categories}
           isCategoryChosen={choosenCategory !== null}
-        /> */}
-        {/* {choosenCategory !== null &&  */}
+        />
+        {choosenCategory !== null && 
           <Question />
-        {/* } */}
+        }
 
       </main>
     );
