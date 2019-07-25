@@ -23,10 +23,10 @@ class Question extends React.Component {
     this.answered = false;
     this.defaultState = {
       answer: 'Pass answer here',
-      answered: false,
-      canAnswer: false,
     };
     this.state = this.defaultState;
+    this.canAnswer = false;
+    this.answered = false;
   }
   // movingTimer = null;
   // currentTarget = null;
@@ -41,7 +41,7 @@ class Question extends React.Component {
     clearInterval(this.movingTimer);
   }
   handleStart(e) {
-    if(this.state.answered) return false;
+    if(this.answered) return false;
     this.clearWindowSelections();
     this.currentTarget = e.currentTarget;
     let target = this.currentTarget;
@@ -55,29 +55,31 @@ class Question extends React.Component {
   handleEnd() {
     let target = this.currentTarget;
     if(!target || !this.cloneTarget) return false;
-    if(this.state.canAnswer) {
+    if(this.canAnswer) {
       this.answerTheQuestion();
     }
-    if(this.state.answered) 
+    if(this.answered) 
       this.currentTarget.classList.add('Question__answer--hidden');
     this.cloneTarget.parentNode.removeChild(this.cloneTarget);
     this.answerContainer.classList.remove('Question__drag--passing-answer');
     target.classList.remove('Question__answer--grabbing');
     target.style = {};
     this.cloneTarget = null;
-    if(!this.state.answered)
+    if(!this.answered)
       this.currentTarget = null;
   }
   handleCancel() {
-    if(!this.state.answered) return false;
-    this.setState(this.defaultState);
+    if(!this.answered) return false;
     this.currentTarget.classList.remove('Question__answer--hidden');
     this.answerContainer.classList.remove('Question__drag--answered');
+    this.setState(this.defaultState);
+    this.answered = false;
+    this.canAnswer = false;
   }
   handleMove(e) {
     let target = this.currentTarget;
     let boundings = this.boundingXY;
-    if(!target || !boundings || this.state.answered) return false;
+    if(!target || !boundings || this.answered) return false;
     if(e.touches){
       let pageXOffset = document.documentElement.scrollLeft;
       let pageYOffset = document.documentElement.scrollTop;
@@ -95,16 +97,18 @@ class Question extends React.Component {
     let containerBoundaries = this.getBoundingClientXY(target, this.answerContainer);
     if(containerBoundaries.x + target.offsetWidth * 0.4 > 0 && containerBoundaries.y + target.offsetHeight * 0.4 > 0) {
       this.answerContainer.classList.add('Question__drag--passing-answer');
-      this.setState({ canAnswer: true });
+      this.canAnswer = true;
       return;
     }
     this.answerContainer.classList.remove('Question__drag--passing-answer');
-    this.setState({ canAnswer: false });
+    this.canAnswer = false;
   }
   answerTheQuestion() {
-    this.setState({ answer: this.cloneTarget.getAttribute('data-attr') });
+    this.setState({ 
+      answer: this.cloneTarget.getAttribute('data-attr'), 
+    });
+    this.answered = true;
     this.answerContainer.classList.add('Question__drag--answered');
-    this.setState({ answered: true });
   }
   getBoundingClientXY(e, target) {
     let { left, top} = target.getBoundingClientRect();
@@ -128,17 +132,18 @@ class Question extends React.Component {
     }
   }
   imageMoving() {
+    if(!this.imageContainer) return;
     let direction = true;
     let translate = 0;
     const moving = () => {
-      let limit = this.container.scrollHeight - this.container.clientHeight;
+      let limit = this.imageContainer.scrollHeight - this.imageContainer.clientHeight;
       if(limit <= 30) return false;
       translate += direction ? 1 : -1;
       if(translate <= 0 || translate >= limit) {
         translate = translate > limit - translate ? limit : 0;
         direction = !direction;
       }
-      this.container.scrollTop = translate;
+      this.imageContainer.scrollTop = translate;
     }
     this.movingTimer = setInterval(
       moving,
@@ -155,16 +160,10 @@ class Question extends React.Component {
     return (
       <section className="Question">
         <div className="Question__container">
-          <div className="Question__count">
-            <b>{`Вопрос № ${count}`}</b>{` из ${total}`}
-          </div>
-          <div className="Question__progress">
-            <div className="Question__progress__bar" style={{ width: `${progress}%`}}/>
-          </div>
           <div 
             className="Question__image__container" 
             ref={(container) => {
-              this.container = container;
+              this.imageContainer = container;
             }}>
             <img 
               src={egg} 
@@ -174,6 +173,12 @@ class Question extends React.Component {
                 this.image = image;
               }}
             />
+          </div>
+          <div className="Question__count">
+            <b>{`Вопрос № ${count}`}</b>{` из ${total}`}
+          </div>
+          <div className="Question__progress">
+            <div className="Question__progress__bar" style={{ width: `${progress}%`}}/>
           </div>
           <div className="Question__title">{title}</div>
         </div>
@@ -185,10 +190,10 @@ class Question extends React.Component {
               key={idx}
               data-attr={question}
               onTouchStart={this.handleStart}
-              onTouchEnd={this.handleEnd}
-              onTouchCancel={this.handleCancel}
-              onTouchMove={this.handleMove}
               onMouseDown={this.handleStart}
+              onTouchEnd={this.handleEnd}
+              // onTouchCancel={this.handleCancel}
+              onTouchMove={this.handleMove}
             />
           )}
         </div>

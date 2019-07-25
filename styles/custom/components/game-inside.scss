@@ -4,6 +4,7 @@
   &-fullscreen {
     width: 100vw;
     height: 100vh;
+    z-index: z("top-layer");
     overflow: hidden;
   }
   // .background {
@@ -129,11 +130,12 @@
   table-layout: fixed;
   width: 100vw;
   height: 100vh;
-  background: $linear-gradient;
-  background: url('assets/ss.jpg');
+  // background: $linear-gradient;
+  // background: url('assets/ss.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
+  z-index: z("main-layer");
   // filter: saturate(1.1);
   
   // .Question__container
@@ -146,12 +148,12 @@
   &__count {
     display: block;
     margin: 10px auto;
-    max-width: 60%;
-    color: white;
+    max-width: 50%;
+    // color: white;
     font-size: 10pt;
     b {
       font-size: 14pt;
-      color: white;
+      color: $violet;
     }
   }
   // .Question__container > .Question__progress
@@ -159,8 +161,8 @@
     display: block;
     position: relative;
     margin: 10px auto;
-    max-width: 60%;
-    height: 4px;
+    max-width: 50%;
+    height: 5px;
     background: $light;
     border-radius: $border-radius-average;
     overflow: hidden;
@@ -175,7 +177,7 @@
       width: 50%;
       height: 100%;
       transition: $slow;
-      background: $purple;
+      background: $linear-gradient;
     }
   }
   // Question__container > .Question__image
@@ -194,10 +196,10 @@
     &__container {
       display: block;
       position: relative;
-      margin: 10px auto;
-      max-width: 60%;
-      max-height: 450px;
-      border-radius: $border-radius-average;
+      margin: 50px auto;
+      max-width: 80%;
+      max-height: 350px;
+      border-radius: $border-radius-overlarge;
       overflow: hidden;
       @include lowscreen {
         max-height: 250px;
@@ -227,10 +229,11 @@
     display: block;
     position: relative;
     padding: 10px 0;
-    color: white;
-    text-align: center;
-    font-size: 24pt;
-    font-weight: 700;
+    max-width: 50%;
+    margin: 0 auto;
+    // text-align: center;
+    font-size: 20pt;
+    font-weight: 500;
   }
   // .Question__list
   &__list {
@@ -246,18 +249,25 @@
   // .list > .Question__answer
   &__answer {
     display: inline-block;
+    max-width: 600px;
     padding: 3% 5%;
     margin: .5%;
-    background: white;
     opacity: .8;
-    user-select: none;
+    vertical-align: middle;
     text-align: left;
     font-weight: 700;
     font-size: 14pt;
     color: $dark;
-    border-radius: $border-radius-average;
-    transition: all 0s, margin $average, padding $fast, opacity $average, color $average;
+    background: $light;
+    border-radius: $border-radius-large;
+    user-select: none;
     touch-action: none;
+    transition: all 0s, 
+                margin $average, 
+                padding $fast, 
+                opacity $average, 
+                color $average, 
+                font-size $fast;
     cursor: grab;
     @include mobile {
       padding: 5% 10%;
@@ -278,14 +288,25 @@
       position: fixed;
       padding: 4% 6%;
       margin: -1%;
+      font-size: 18pt;
       opacity: 1!important;
-      transition: all 0s, padding $fast, margin $average;
+      color: white!important;
+      background: $purple;
+      box-shadow: 0 0 30px -20px $dark;
       z-index: z("supertop-layer");
+      transition: all 0s, 
+                  padding $fast, 
+                  margin $average, 
+                  font-size $fast,
+                  color $average,
+                  background-color $fast,
+                  z-index $average;
       cursor: grabbing;
     }
     &:hover {
       opacity: 1;
       color: $violet;
+      // background: $linear-gradient;
     }
     p {
       display: inline-block;
@@ -298,7 +319,8 @@
     height: 90%;
     max-width: 80%;
     margin: 20px auto;
-    background: rgba(255, 255, 255, .1);
+    background: white;
+    border: 5px solid $light;
     border-radius: $border-radius-average;
     transition: $fast;
     @include lowscreen {
@@ -315,18 +337,17 @@
       display: block;
       position: relative;
       top: 50%;
+      font-weight: 700;
+      color: $grey;
       transform: translateY(-50%);
       text-align: center;
-      color: white;
-      text-transform: uppercase;
     }
     &--passing-answer {
-      background: rgba(255, 255, 255, .2);
+      border-color: $light-purple;
       transition: $average;
     }
     &--answered {
-      border: 3px solid $purple;
-      border-radius: $border-radius-large;
+      border-color: $purple;
       background: white;
       cursor: pointer;
       &::after {
