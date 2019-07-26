@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import store, { history } from './store';
 import Root from './components/Root';
 import { ConnectedRouter } from 'connected-react-router';
+import './utils/Extends';
 import "./styles/main.scss";
 
 const target = document.getElementById('root');

@@ -23,32 +23,34 @@
     position: fixed;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
     width: 100%;
-    transform: translate(-50%, -50%);
+    opacity: 1;
     &::before {
       content: 'Выберите категорию';
       display: block;
       position: relative;
-      font-size: 18pt;
       padding-bottom: 40px;
       color: $grey;
+      font-size: 24pt;
       font-weight: 700;
+      opacity: 0;
+      transition: $fast;
       @include mobile {
         font-size: 16pt;
         padding-bottom: 20px;
       }
       @include lowscreen {
-        font-size: 12pt;
+        font-size: 18pt;
         padding-bottom: 30px;
       }
     }
-    @include mobile {
-      padding: 20px;
-    }
-    @include lowscreen {
-      font-size: 12pt;
-      
+    &--animate {
+      &::before {
+        opacity: 1;
+        animation: zoomInDown 1.5s both;
+      }
     }
     &__unit {
       display: inline-block;
@@ -59,16 +61,17 @@
       margin: 20px;
       min-width: 180px;
       padding: 8% 4%;
+      opacity: 0;
       color: $grey;
       font-size: 16pt;
       font-weight: 700;
-      transition: transform $average;
+      transition: padding $average;
       cursor: pointer;
       @include mobile {
         display: block;
         padding: unset;
-        width: 100%;
-        margin: 10px 0;
+        max-width: 100%;
+        margin: 10px;
         font-size: 16pt;
         @for $i from 1 through 10 {
           &:first-child:nth-last-child(#{$i}),
@@ -77,17 +80,24 @@
             line-height: 75vh / $i;
           }
         }
+        &:hover {
+          padding: inherit!important;
+        }
       }
       @include lowscreen {
         font-size: 12pt;
         margin: 10px;
       }
       &:hover {
-        transform: scale3d(1.05, 1.05, 1.05);
-        transition: transform $average;
+        padding: 9% 5%;
+        transition: padding $average;
         transition-timing-function: cubic-bezier(.31,.95,.46,2);
         will-change: transform;
         backface-visibility: hidden;
+      }
+      &--animate {
+        animation: zoomInDown 1s both;        
+        opacity: 1;
       }
     }
   }
@@ -211,18 +221,6 @@
         max-height: 150px;
       }
     }
-    @keyframes zoomInDown {
-      0% {
-        opacity: 0;
-        transform: scale3d(2, 2, 2);
-        animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
-      }
-      60% {
-        opacity: 1;
-        transform: scale3d(1.475, 1.475, 1.475);
-        animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
-      }
-    } 
   }
   // Question__container > .Question__title
   &__title {

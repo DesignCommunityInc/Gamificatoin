@@ -39,9 +39,11 @@ class Question extends React.Component {
   }
   componentWillUnmount() {
     clearInterval(this.movingTimer);
+    document.removeEventListener("mousemove", this.handleMove);
+    document.removeEventListener("mouseup", this.handleEnd);
   }
   handleStart(e) {
-    if(this.answered) return false;
+    if(this.answered || (e.buttons && e.buttons !== 1)) return false;
     this.clearWindowSelections();
     this.currentTarget = e.currentTarget;
     let target = this.currentTarget;

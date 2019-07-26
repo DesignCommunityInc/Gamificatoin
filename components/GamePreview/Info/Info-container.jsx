@@ -7,13 +7,12 @@ class Info extends React.Component {
   constructor() {
     super();
     this.imageMoving = this.imageMoving.bind(this);
-    this.movingTimer = null;
   }
   componentDidMount() {
     this.imageMoving();
   }
   componentWillUnmount() {
-    clearInterval(this.movingTimer);
+    clearInterval(this.interval);
   }
   imageMoving() {
     let direction = true;
@@ -24,7 +23,7 @@ class Info extends React.Component {
       if(scale <= 1 || scale >= 1.2) direction = !direction;
       this.image.style.transform = `scale(${scale})`;
     }
-    this.movingTimer = setInterval(
+    this.interval = setInterval(
       moving,
       50,
     )

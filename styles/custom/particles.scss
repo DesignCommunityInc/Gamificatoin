@@ -1,0 +1,53 @@
+ /* particles */
+
+$particle-width: 4px;
+.particle-spawner {
+  &--from-page-start {
+    display: block;
+    position: fixed;
+    width: 30px;
+    height: 100vh;
+    left: -30px;
+    top: 0;
+  }
+}
+.mark {
+  display: block;
+  position: fixed;
+  div {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  .cross {
+    span {
+      display: block;
+      position: absolute;
+      border-radius: 50%;
+      height: 100%;
+      width: $particle-width;
+      background: $purple;
+      &:nth-child(1) {
+        transform: rotate(45deg);
+      }
+      &:nth-child(2) {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+  .circle {
+    border: $particle-width solid #9E63BF;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .square {
+    border: $particle-width solid #9E63BF;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .triangle {
+    background: url(assets/triangle.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+}

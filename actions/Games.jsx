@@ -114,10 +114,10 @@ export function fetchCategories(id) {
         fith,
         geo,
         bio,
-        bio,
-        chem,
-      ]
-      dispatch(success(categories));
+      ];
+      setTimeout(() => {
+        dispatch(success(categories));
+      }, 1000);
     }
     catch (e) {
       handleErrors(e);

@@ -21,7 +21,7 @@ Utils.prototype = {
           increment = 20,
           animateScroll = () => {
             currentTime += increment;
-            let val = easeInOutQuad(currentTime, start, change, duration);
+            let val = Math.easeInOutQuad(currentTime, start, change, duration);
             element.scrollTop = val;
             if(currentTime < duration) {
               setTimeout(animateScroll, increment);
@@ -39,35 +39,6 @@ Utils.prototype = {
       if(!processing)
         container.animateScrolling(value);
     },
-};
-Element.prototype.animateScrolling = function(value, duration = 300) { 
-    let start = this.scrollLeft;
-    let to = start - value;
-    let change = to - start;
-    let currentTime = 0;
-    let increment = 20;
-    let foo = () => {
-      this.processing = true;
-      currentTime += increment;
-      let offset = easeInOutQuad(currentTime, start, change, duration);
-      if(currentTime < duration) 
-        setTimeout(foo, increment);
-      else this.processing = false;
-      this.scrollLeft = offset;
-    }
-    foo();
-}
-const easeInOutQuad = (
-  currentTime, 
-  startValue, 
-  changesInValue, 
-  duration
-  ) => {
-    currentTime /= duration / 2;
-    if (currentTime < 1) 
-      return changesInValue / 2 * currentTime * currentTime + startValue;
-    currentTime--;
-    return - changesInValue / 2 * ( currentTime * ( currentTime - 2 ) - 1) + startValue;
 };
 
 export default new Utils();
