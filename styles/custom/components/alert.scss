@@ -1,0 +1,45 @@
+.Alert {
+  display: block;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: z("supertop-layer");
+  text-align: right;
+  background: $dark;
+  transform: translateY(100%);
+  transition: $average;
+
+  &--visible {
+    transform: translateY(0);
+    transition: .3s ease-out;
+  }
+  &__title {
+    display: block;
+    position: relative;
+    padding: 5px 10px;
+    border-radius: $border-radius-small;
+    font-weight: 700;
+    background: $yellow;
+    
+    .submitted & {
+      background: $green;
+      transition: $slow;
+    }
+  }
+  .button {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 10px;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 700;
+    opacity: .8;
+    &:hover {
+      opacity: 1;
+      transition: $fast;
+      transition-timing-function: cubic-bezier(.31,.95,.46,2);
+    }
+  }
+}

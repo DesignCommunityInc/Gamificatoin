@@ -86,6 +86,35 @@ export function fetchGamePreview(id) {
     };
   };
 }
+// GAME
+export function fetchGamePlay(id) {
+  const start = () => {
+    return dispatch => {
+      dispatch({ type: types.FETCH_GAME_PLAY_START })
+    }
+  }
+  const success = data => {
+    return dispatch => {
+      dispatch({
+        type: types.FETCH_GAME_PLAY_SUCCESS,
+        payload: { data },
+      })
+    }
+  }
+  return async dispatch => {
+    dispatch(start());
+    try {
+      await API.get(`/game/${id}/play`)
+      .then(response => {
+        console.log(response.data);
+        dispatch(success(response.data))
+      });
+    }
+    catch (e) {
+      handleErrors(e);
+    };
+  };
+}
 
 export function fetchCategories(id) {
   const start = () => {
@@ -133,7 +162,12 @@ export const chooseCategory = (category) => {
     })
   }
 }
-
+// export const gameUnmount = (category) => {
+//   return dispatch => {
+//     dispatch({ type: types.GAME_UNMOUNT })
+//   }
+// }
+// List of games
 export function fetchGameList() {
   const start = () => {
     return dispatch => {

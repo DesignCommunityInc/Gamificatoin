@@ -1,6 +1,6 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
-import { fetchCategories, chooseCategory } from '../../actions/Games';
+import { fetchGamePlay, chooseCategory } from '../../actions/Games';
 import { connect } from 'react-redux';
 import GameInside from "./GameInside-container";
 
@@ -8,15 +8,14 @@ const insideContainer = props => <GameInside {...props} />;
 
 const mapStateToProps = ({ gameInside }) => ({
     data: gameInside.data,
-    categories: gameInside.categories,
+    isLoading: gameInside.isLoading,
     choosenCategory: gameInside.choosenCategory,
-    isDataLoading: gameInside.isDataLoading,
-    isCategoriesLoading: gameInside.isCategoriesLoading,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  fetchCategories,
+  fetchGamePlay,
   chooseCategory,
+  // gameUnmount,
 }, dispatch);
 
 export default connect(

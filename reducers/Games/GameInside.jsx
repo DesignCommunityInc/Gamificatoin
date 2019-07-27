@@ -1,36 +1,39 @@
 import * as types from "../../constants/ActionTypes";
 
 const initialState = {
-  // game data
-  data: {},
+  data: {
+    subjects: [],
+    questions: [],
+  },
   isDataLoading: true,
-  // categories
-  categories: [],
-  choosenCategory: null,
-  isCategoriesLoading: true,
 }
 export default (state = initialState, action) => {
   switch (action.type) {
-    case types.FETCH_GAME_CATEGORIES_START:
+    // case types.GAME_UNMOUNT:
+    //   return {
+    //     ...state,
+    //     data: {},
+    //     isLoading: true,
+    //   }
+    case types.FETCH_GAME_PLAY_START:
       return {
         ...state,
-        categories: [],
-        isCategoriesLoading: true,
-        choosenCategory: null,
+        data: {},
+        isLoading: true,
       }
-    case types.FETCH_GAME_CATEGORIES_SUCCESS:
+    case types.FETCH_GAME_PLAY_SUCCESS:
       return {
         ...state,
-        categories: action.payload.data,
-        isCategoriesLoading: false,
+        data: action.payload.data,
+        isLoading: false,
       }
-
     case types.CHOOSE_GAME_CATEGORY:
       return {
         ...state,
         choosenCategory: action.payload.category,
       }
-    default:
+    default: {
       return state
+    }
   }
 }
