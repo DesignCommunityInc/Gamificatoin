@@ -11,3 +11,31 @@
     animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
   }
 } 
+
+@keyframes zoomOutDown {
+  0% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+    animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+  }
+  100% {
+    opacity: 0;
+    transform: scale3d(0, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+  }
+} 
+
+@keyframes borderMoving {
+  0% {
+    background-position: 0 0, 0 100%, 0 0, 100% 0;
+    animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+  }
+  50% {
+    background-position: 50% 0, -50% 100%, 0 -100%, 100% 100%;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+  }
+  100% {
+    background-position: 0 0, 0 100%, 0 0, 100% 0;
+    animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+  }
+} 

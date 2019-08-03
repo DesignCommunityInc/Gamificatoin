@@ -6,6 +6,7 @@
     font-family: "Gilroy";
     color: #323232;
     text-decoration: none;
+    outline: none;
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
     // filter: saturate(1.02);
@@ -65,6 +66,7 @@
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
+  border-radius: 10px;
   background: $grey;
 }
 /* Handle on hover */

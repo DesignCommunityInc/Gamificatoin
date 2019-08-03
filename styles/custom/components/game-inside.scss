@@ -1,3 +1,17 @@
+.background {
+  display: block;
+  position: fixed;
+  min-width: 100%; 
+  min-height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: $linear-gradient;
+  @include lowscreen {
+    width: 100%;
+  }
+  z-index: -1;
+}
 .Game {
   display: block;
   position: relative;
@@ -7,17 +21,6 @@
     z-index: z("top-layer");
     overflow: hidden;
   }
-  // .background {
-  //   display: block;
-  //   position: fixed;
-  //   width: 0;
-  //   height: 0;
-  //   left: 0;
-  //   bottom: 0;
-  //   border-style: solid;
-  //   border-width: 1000px 600px 0 1000px;
-  //   border-color: transparent transparent transparent #9E63BF;
-  // }
   .Categories {
     display: block;
     position: fixed;
@@ -32,7 +35,7 @@
       display: block;
       position: relative;
       padding-bottom: 40px;
-      color: $grey;
+      color: white;
       font-size: 24pt;
       font-weight: 700;
       opacity: 0;
@@ -55,21 +58,44 @@
     &__unit {
       display: inline-block;
       position: relative;
-      background: $light;
-      border-radius: $border-radius-average;
-      text-align: center;
       margin: 20px;
-      min-width: 180px;
-      padding: 8% 4%;
+      padding: 8% 0;
+      width: 100%;
+      max-width: 250px;
       opacity: 0;
-      color: $grey;
+      text-align: center;
+      background: white;
+      color: $purple;
       font-size: 16pt;
       font-weight: 700;
-      transition: padding $average;
+      border-radius: $border-radius-average;
+      transition: $average;
       cursor: pointer;
+      &--animate {
+        opacity: 1;
+        animation: zoomInDown 1s both;
+      }
+      &:hover {
+        max-width: 280px;
+        padding: 8.5% 0;
+        transition: $average;
+        transition-timing-function: cubic-bezier(.31, .95, .46, 2);
+      }
+      @include lowscreen {
+        font-size: 12pt;
+        margin: 10px;
+        max-width: 200px;
+        &:hover {
+          max-width: 230px;
+          padding: 8.5% 0;
+          transition: $average;
+          transition-timing-function: cubic-bezier(.31, .95, .46, 2);
+        }
+      }
       @include mobile {
         display: block;
         padding: unset;
+        width: unset;
         max-width: 100%;
         margin: 10px;
         font-size: 16pt;
@@ -81,23 +107,11 @@
           }
         }
         &:hover {
-          padding: inherit!important;
+          max-width: 100%;
+          padding: 0;
+          transition: $average;
+          transition-timing-function: cubic-bezier(.31, .95, .46, 2);
         }
-      }
-      @include lowscreen {
-        font-size: 12pt;
-        margin: 10px;
-      }
-      &:hover {
-        padding: 9% 5%;
-        transition: padding $average;
-        transition-timing-function: cubic-bezier(.31,.95,.46,2);
-        will-change: transform;
-        backface-visibility: hidden;
-      }
-      &--animate {
-        animation: zoomInDown 1s both;        
-        opacity: 1;
       }
     }
   }
@@ -109,14 +123,14 @@
       height: 100vh;
       left: 0;
       top: -100%;
-      background: $purple;
+      background: white;
       text-align: center;
       line-height: 100vh;
-      color: white;
+      color: $purple;
       font-size: 20pt;
       font-weight: 900;
       z-index: z('supertop-layer');
-      &-active {
+      &--active {
         animation: easeInBounce 1s forwards;
       }
       @keyframes easeInBounce {
@@ -140,13 +154,16 @@
   table-layout: fixed;
   width: 100vw;
   height: 100vh;
-  // background: $linear-gradient;
-  // background: url('assets/ss.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
   z-index: z("main-layer");
-  // filter: saturate(1.1);
+  transition: $fast;
+  animation: zoomInDown 1.5s both;
+  &--fadeout {
+    transition: $fast;
+    animation: zoomOutDown .5s both;
+  }
   
   // .Question__container
   &__container {
@@ -159,11 +176,14 @@
     display: block;
     margin: 10px auto;
     max-width: 50%;
-    // color: white;
+    color: $light;
     font-size: 10pt;
     b {
       font-size: 14pt;
-      color: $violet;
+      color: white;
+    }
+    .Question__container--large & {
+      max-width: 80%;
     }
   }
   // .Question__container > .Question__progress
@@ -178,7 +198,10 @@
     overflow: hidden;
     @include mobile {
       margin: 10px;
-      max-width: 100%;
+      max-width: 100%!important;
+    }
+    .Question__container--large & {
+      max-width: 80%;
     }
     // & .Question__progress > .Question__progress__bar
     &__bar {
@@ -187,7 +210,7 @@
       width: 50%;
       height: 100%;
       transition: $slow;
-      background: $linear-gradient;
+      background: $violet;
     }
   }
   // Question__container > .Question__image
@@ -195,13 +218,6 @@
     display: block;
     position: relative;
     width: 100%;
-    transition: $fast;
-    -webkit-animation-name: zoomInDown;
-    animation-name: zoomInDown;
-    -webkit-animation-duration: 1s;
-    animation-duration: 1s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
 
     &__container {
       display: block;
@@ -209,6 +225,7 @@
       margin: 50px auto;
       max-width: 80%;
       max-height: 350px;
+      min-height: 0;
       border-radius: $border-radius-overlarge;
       overflow: hidden;
       @include lowscreen {
@@ -229,9 +246,41 @@
     padding: 10px 0;
     max-width: 50%;
     margin: 0 auto;
-    // text-align: center;
     font-size: 20pt;
     font-weight: 500;
+    @include mobile {
+      margin: 10px;
+      padding: unset;
+      max-width: 100%!important;
+      max-height: 170px;
+      overflow-y: scroll;
+      &::-webkit-scrollbar-track {
+        background: transparent; 
+      }
+    }
+    .Question__container--large & {
+      max-width: 80%;
+      font-size: 14pt;
+    }
+    p {
+      display: inline-block;
+      padding: 0 5px;
+      margin: 3px 5px;
+      background: white;
+      color: $purple;
+      font-weight: 700;
+      border-radius: $border-radius-average;
+      &:first-child {
+        display: block;
+        padding: 0;
+        background: none;
+        color: white;
+        font-weight: 700;
+      }
+      & > * {
+        text-transform: uppercase;
+      }
+    }
   }
   // .Question__list
   &__list {
@@ -250,20 +299,18 @@
     max-width: 600px;
     padding: 3% 5%;
     margin: .5%;
-    opacity: .8;
     vertical-align: middle;
     text-align: left;
     font-weight: 700;
     font-size: 14pt;
     color: $dark;
-    background: $light;
+    background: white;
     border-radius: $border-radius-large;
     user-select: none;
     touch-action: none;
     transition: all 0s, 
                 margin $average, 
-                padding $fast, 
-                opacity $average, 
+                padding $fast,
                 color $average, 
                 font-size $fast;
     cursor: grab;
@@ -279,7 +326,7 @@
       left: 0;
     }
     &--hidden {
-      opacity: 0!important;
+      opacity: 0;
       transition: all 0s;
     }
     &--grabbing {
@@ -287,7 +334,6 @@
       padding: 4% 6%;
       margin: -1%;
       font-size: 18pt;
-      opacity: 1!important;
       color: white!important;
       background: $purple;
       box-shadow: 0 0 30px -20px $dark;
@@ -302,7 +348,6 @@
       cursor: grabbing;
     }
     &:hover {
-      opacity: 1;
       color: $violet;
       // background: $linear-gradient;
     }
@@ -318,9 +363,8 @@
     max-width: 80%;
     margin: 20px auto;
     background: white;
-    border: 5px solid $light;
-    border-radius: $border-radius-average;
-    transition: $fast;
+    border-radius: $border-radius-large;
+    transition: $average;
     @include lowscreen {
       height: 80%;
     }
@@ -338,11 +382,19 @@
       font-weight: 700;
       color: $grey;
       transform: translateY(-50%);
+      transition: $fast;
       text-align: center;
     }
     &--passing-answer {
-      border-color: $light-purple;
-      transition: $average;
+      background: linear-gradient(90deg, white 50%, transparent 50%), linear-gradient(90deg, white 50%, transparent 50%), linear-gradient(0deg, white 50%, transparent 50%), linear-gradient(0deg, white 50%, transparent 50%);
+      background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+      background-size: 16px 2px, 16px 3px, 2px 16px, 3px 16px;
+      background-position: 0 0, 0 100%, 0 0, 100% 0;
+      animation: borderMoving 2s infinite forwards;
+      &::after {
+        transition: $fast;
+        color: white;
+      }
     }
     &--answered {
       border-color: $purple;

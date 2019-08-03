@@ -1,89 +1,67 @@
-import React from 'react'
-import { PropTypes } from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const propTypes = {
-  // request: PropTypes.object.isRequired,
+  questions: PropTypes.objectOf(PropTypes.array).isRequired,
+  subjects: PropTypes.arrayOf(PropTypes.string).isRequired,
+  animatedSubjectsCount: PropTypes.number.isRequired,
+  isAnimated: PropTypes.bool.isRequired,
+  visibility: PropTypes.bool.isRequired,
+  chooseCategoryAsync: PropTypes.func.isRequired,
 };
-const defaultTypes = {
-    // request: {},
-};
-
 
 class Category extends React.Component {
   constructor() {
     super();
-    this.categories = [];
     this.handleClick = this.handleClick.bind(this);
-    this.componentCleanUp = this.componentCleanUp.bind(this);
+    this.state = {
+      activePreScreen: false,
+    };
   }
-  componentDidMount() {
-    this.interval = setInterval(() => {
-      this.categories.shift().classList.add('Categories__unit--animate');
-      if(!this.categories.length) {
-        clearInterval(this.interval)
-        this.categoriesContainer.classList.add('Categories--animate');
-      };
-    }, 300);
-  }
-  // componentDidUpdate() {
-  //   if(this.categories.length === 0 || this.props.isCategoryChosen) return false;
-  //   this.interval = setInterval(() => {
-  //     this.categories.shift().classList.add('Categories__unit--animate');
-  //     if(!this.categories.length) {
-  //       clearInterval(this.interval)
-  //       this.categoriesContainer.classList.add('Categories--animate');
-  //     };
-  //   }, 300);
-  // }
-  componentWillUnmount() {
-    // this.componentCleanUp();
-    clearInterval(this.interval);
-  }
-  // componentCleanUp() {
-  // }
+
   handleClick(e) {
-    const target = e.target;
-    const category = target.getAttribute("id");
-    this.choosingContainer.innerHTML = category;
-    this.choosingContainer.classList.add('choosing__category-active');
-    setTimeout(() => { this.props.chooseCategory({ id: category }) }, 2000);
+    const category = e.target.getAttribute('id');
+    this.setState({ activePreScreen: true });
+    const { chooseCategoryAsync, questions } = this.props;
+    chooseCategoryAsync({ category, questions });
   }
+
   render() {
-    const { categoriesList, isCategoryChosen } = this.props;
+    const {
+      subjects,
+      isAnimated,
+      animatedSubjectsCount,
+      visibility,
+    } = this.props;
+    const { activePreScreen } = this.state;
     return (
-      <section className={isCategoryChosen 
-        ? "Game Game-fullscreen unvisible" 
-        : "Game Game-fullscreen"}>
-        <div 
-          className="choosing__category"
-          ref={(container) => {
-            this.choosingContainer = container;
-          }}
-        />
-        <div className="Categories"
+      <section className={`Game Game-fullscreen ${!visibility && 'unvisible'}`}>
+        <div className={`choosing__category ${activePreScreen && 'choosing__category--active'}`}>Начало игры</div>
+        <div
+          className={!isAnimated ? 'Categories' : 'Categories Categories--animate'}
           ref={(ref) => {
             this.categoriesContainer = ref;
-          }}>
-          {categoriesList.map((category, idx) => 
-            <div 
-              key={idx}
-              id={category}
-              className="Categories__unit"
+          }}
+        >
+          {subjects.map((subject, idx) => (
+            <div
+              key={subject}
+              id={subject}
+              className={animatedSubjectsCount >= idx ? 'Categories__unit Categories__unit--animate' : 'Categories__unit'}
               onClick={this.handleClick}
-              ref={(ref) => {
-                this.categories.push(ref);
-              }}>
-              {category}
+              onKeyDown={this.handleClick}
+              role="button"
+              tabIndex={idx}
+            >
+              {subject}
             </div>
-          )}
+          ))}
         </div>
       </section>
-    )
+    );
   }
 }
 
-
 Category.propTypes = propTypes;
-Category.defaultTypes = defaultTypes;
 
 export default Category;

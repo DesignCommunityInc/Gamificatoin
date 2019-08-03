@@ -1,21 +1,27 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { fetchGamePlay, chooseCategory } from '../../actions/Games';
 import { connect } from 'react-redux';
-import GameInside from "./GameInside-container";
+import { bindActionCreators } from 'redux';
+import { fetchGamePlay, chooseCategory, handleAnswer } from './GameInside-actions';
+import GameInside from './GameInside-container';
 
 const insideContainer = props => <GameInside {...props} />;
 
 const mapStateToProps = ({ gameInside }) => ({
-    data: gameInside.data,
-    isLoading: gameInside.isLoading,
-    choosenCategory: gameInside.choosenCategory,
+  game: gameInside.data,
+  isLoading: gameInside.isLoading,
+  currentCategory: gameInside.currentCategory,
+  currentQuestion: gameInside.currentQuestion,
+  totalQuestions: gameInside.totalQuestions,
+  passList: gameInside.passList,
+  animatedSubjects: gameInside.animatedSubjects,
+  subjectsIsAnimated: gameInside.subjectsIsAnimated,
+  endGame: gameInside.endGame,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchGamePlay,
   chooseCategory,
-  // gameUnmount,
+  handleAnswer,
 }, dispatch);
 
 export default connect(

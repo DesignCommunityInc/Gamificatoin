@@ -1,17 +1,20 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { chooseCategory } from '../../../actions/Games';
 import { connect } from 'react-redux';
-import Categories from "./Categories-container";
+import { bindActionCreators } from 'redux';
+import { chooseCategoryAsync } from '../GameInside-actions';
+import Categories from './Categories-container';
 
 const categoryContainer = props => <Categories {...props} />;
 
+const mapStateToProps = ({ gameInside }) => ({
+  visibility: gameInside.categoriesVisible,
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  chooseCategory,
+  chooseCategoryAsync,
 }, dispatch);
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(categoryContainer);

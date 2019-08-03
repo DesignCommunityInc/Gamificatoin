@@ -1,7 +1,7 @@
 import React from 'react';
-import { 
-  Route, 
-  Switch 
+import {
+  Route,
+  Switch,
 } from 'react-router-dom';
 import {
   CSSTransition,
@@ -16,24 +16,25 @@ import GameInside from './GameInside';
 import CreatingPage from './CreatingPage';
 
 const Root = () => (
-  <Route render={({location}) => (
+  <Route render={({ location }) => (
     <TransitionGroup>
-    <CSSTransition 
-      key={location.key}
-      timeout={450}
-      classNames="fade"
-    >
-      <Switch location={location}>
-        <Route exact path={routes.ROOT} component={UserPage} />
-        <Route exact path={routes.ACHIEVEMENT_PAGE} component={AchievementsPage} />
-        <Route exact path={routes.GAME_PREVIEW_PAGE} component={GamePreview} />
-        <Route exact path={routes.GAME_PLAYING_PAGE} component={GameInside} />
-        <Route exact path={routes.GAME_LIST_PAGE} component={GamePage} />
-        <Route exact path={routes.GAME_CREATING_PAGE} component={CreatingPage} />
-      </Switch>
-    </CSSTransition>
-  </TransitionGroup>
-  )} />
-)
+      <CSSTransition
+        key={location.key}
+        timeout={450}
+        classNames="fade"
+      >
+        <Switch location={location}>
+          <Route exact path={routes.ROOT} component={UserPage} />
+          <Route exact path={routes.ACHIEVEMENT_PAGE} component={AchievementsPage} />
+          <Route exact path={routes.GAME_PREVIEW_PAGE} component={GamePreview} />
+          <Route exact path={routes.GAME_PLAYING_PAGE} component={GameInside} />
+          <Route exact path={routes.GAME_LIST_PAGE} component={GamePage} />
+          <Route exact path={routes.GAME_CREATING_PAGE} component={CreatingPage} />
+        </Switch>
+      </CSSTransition>
+    </TransitionGroup>
+  )}
+  />
+);
 
 export default Root;
