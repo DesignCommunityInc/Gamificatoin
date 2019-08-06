@@ -84,7 +84,7 @@ class Settings extends React.Component {
         <div className="Settings__container">
           <div className="Settings__user-inf">
             <div className="tile__container">
-              <div className="tile__container__image" style={{ backgroundImage: `url('${photo}')` }}/>
+              <div className="tile__container__image" style={{ backgroundImage: `url('${photo}')` }} />
               <div className="tile__container__info">
                 <h2>{lastName}</h2>
                 <h4>{`${name} ${patronymic}`}</h4>
@@ -142,7 +142,7 @@ class Settings extends React.Component {
           </div>
         </div>
       </section>
-    )
+    );
   }
 }
 

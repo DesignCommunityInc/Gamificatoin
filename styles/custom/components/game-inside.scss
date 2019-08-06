@@ -328,6 +328,7 @@
     &--hidden {
       opacity: 0;
       transition: all 0s;
+      cursor: default;
     }
     &--grabbing {
       position: fixed;
@@ -337,7 +338,9 @@
       color: white!important;
       background: $purple;
       box-shadow: 0 0 30px -20px $dark;
+      pointer-events: none;
       z-index: z("supertop-layer");
+      cursor: grabbing!important;
       transition: all 0s, 
                   padding $fast, 
                   margin $average, 
@@ -345,11 +348,20 @@
                   color $average,
                   background-color $fast,
                   z-index $average;
-      cursor: grabbing;
+    }
+    &--on-replace {
+      background: linear-gradient(90deg, white 50%, transparent 50%), linear-gradient(90deg, white 50%, transparent 50%), linear-gradient(0deg, white 50%, transparent 50%), linear-gradient(0deg, white 50%, transparent 50%)!important;
+      background-repeat: repeat-x, repeat-x, repeat-y, repeat-y!important;
+      background-size: 16px 2px, 16px 3px, 2px 16px, 3px 16px!important;
+      background-position: 0 0, 0 100%, 0 0, 100% 0!important;
+      animation: borderMoving 2s infinite forwards;
+      &::after {
+        transition: $fast;
+        color: white!important;
+      }
     }
     &:hover {
       color: $violet;
-      // background: $linear-gradient;
     }
     p {
       display: inline-block;
@@ -385,15 +397,38 @@
       transition: $fast;
       text-align: center;
     }
+    &--inline {
+      display: inline-block;
+      margin: 20px;
+      @for $i from 1 through 10 {
+        &:first-child:nth-last-child(#{$i}),
+        &:first-child:nth-last-child(#{$i}) ~ div {
+          width: 80% / $i;
+        }
+      }
+      &::before {
+        content: attr(data-attr-before);
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px;
+        font-weight: 700;
+        font-size: 16pt;
+        color: $purple;
+        transition: $fast;
+        text-align: center;
+      }
+    }
     &--passing-answer {
-      background: linear-gradient(90deg, white 50%, transparent 50%), linear-gradient(90deg, white 50%, transparent 50%), linear-gradient(0deg, white 50%, transparent 50%), linear-gradient(0deg, white 50%, transparent 50%);
-      background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
-      background-size: 16px 2px, 16px 3px, 2px 16px, 3px 16px;
-      background-position: 0 0, 0 100%, 0 0, 100% 0;
+      background: linear-gradient(90deg, white 50%, transparent 50%), linear-gradient(90deg, white 50%, transparent 50%), linear-gradient(0deg, white 50%, transparent 50%), linear-gradient(0deg, white 50%, transparent 50%)!important;
+      background-repeat: repeat-x, repeat-x, repeat-y, repeat-y!important;
+      background-size: 16px 2px, 16px 3px, 2px 16px, 3px 16px!important;
+      background-position: 0 0, 0 100%, 0 0, 100% 0!important;
       animation: borderMoving 2s infinite forwards;
       &::after {
         transition: $fast;
-        color: white;
+        color: white!important;
       }
     }
     &--answered {
@@ -403,13 +438,14 @@
       &::after {
         color: $purple;
         font-weight: 900;
-        font-size: 18pt;
+        font-size: 20pt;
       }
     }
     &__container {
       display: table-row;
       position: relative;
       height: 30%;
+      text-align: center;
       @include lowscreen {
         height: 30%;
       }

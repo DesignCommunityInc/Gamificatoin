@@ -1,17 +1,19 @@
+/* eslint-disable func-names */
+
 // return this.split(search).join(replace);
 
-Math.easeInOutQuad = (currentTime, startValue, changes, duration) => {
+Math.easeInOutQuad = function (currentTime, startValue, changes, duration) {
   let time = currentTime / duration * 0.5;
   if (time < 1) return changes / 2 * time * time + startValue;
   time += 1;
   return -changes / 2 * (time * (time - 2) - 1) + startValue;
 };
 
-Element.prototype.remove = () => {
+Element.prototype.remove = function () {
   this.parentNode.removeChild(this);
 };
 
-Element.prototype.animateScrolling = (value, duration = 300) => { 
+Element.prototype.animateScrolling = function (value, duration = 300) {
   const { scrollLeft } = this;
   const to = scrollLeft - value;
   const change = to - scrollLeft;
