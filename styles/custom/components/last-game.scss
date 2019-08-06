@@ -1,0 +1,136 @@
+.Games{
+    position: relative;
+    // &__container__wrapper__last{
+    //     width: 50px;
+    // }
+    &__Last{
+        margin: 0 10px 20px;
+        position: relative;
+        display: block;
+        white-space: nowrap;
+        max-width: 1920px;
+        overflow-x: hidden;
+        padding: unset;
+        margin: 15px 60px;
+        @include mobile {
+            display: block;
+            margin: 15px 20px;
+            overflow-x: unset;
+            white-space: unset;
+            // text-align: center;
+        }
+        & > *{
+            white-space: nowrap;
+        }
+        &__container{
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            overflow-x: scroll;
+            width: auto;
+            max-width: 65%;
+            vertical-align: middle;
+            height: 170px;
+            padding: 0;
+            margin-top: 15px;
+            @include mobile {
+                margin-top: 25px;
+                display: block;
+                max-width: 100%;
+                border: none;
+              }
+        }
+        &::before{
+            content: 'Статистика по последней проведенной игре';
+            display: block;
+            position: relative;
+            font-size: 16pt;
+            font-weight: 700;
+            display: block;
+        }
+        .Games__container__wrapper__last{
+            padding-right: 200px;
+            @include mobile {
+                padding: unset;
+            }
+        }
+        .game__last{
+            display: inline-block;
+            position: relative;
+            max-width: 430px;
+            width: 100%;
+            height: 150px;
+            border-radius: $border-radius-large;
+            margin-right: 60px;
+            transition: ease-in-out 0.1s;
+            overflow: hidden;
+            vertical-align: middle;
+            .game__tile{
+                min-height: unset;
+                height: 150px;
+                .game__name{
+                    font-weight: 600;
+                }
+                .game__image{
+                    transform: unset;
+                }
+                & > *{
+                    color: white!important;
+                }
+            }
+            @include mobile {
+                margin: unset;
+                margin: 20px auto 0px;
+            }
+        }
+        .stat__ln{
+            position: relative;
+            height: 80px;
+            display: inline-block;
+            margin-right: 50px;
+            vertical-align: middle;
+            @include mobile {
+                margin-right: 25px;
+            }
+            .stat{
+                height: 80px;
+                margin-bottom: 5px;
+                text-align: left;
+                display: inline-block;
+                // vertical-align: middle; 
+                .stat__title{
+                    margin-bottom: 5px;
+                    color: $dark;
+                    font-size: 14pt;
+                    font-weight: 500;
+                    display: inline-block;
+                    color: $grey;
+                }
+                .stat_info{
+                    border-radius: $border-radius-average;
+                    display: inline-block;
+                    // min-width: 60px;
+                    margin-right: 20px;
+                    width: max-content;
+                    & > p{
+                        color: $dark;
+                        font-size: 24pt;
+                    }
+                }
+            }
+        }
+        
+        .Games__scroller[type='backward']{
+            left: 440px;
+            @include mobile {
+                left: 10px;
+            }
+        }
+        .Games__scroller[type='forward']{
+            right: 5px;
+            @include mobile {
+                left: 10px;
+            }
+        }
+    }
+}

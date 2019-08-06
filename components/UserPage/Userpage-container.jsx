@@ -8,6 +8,7 @@ import Header from '../../containers/HeaderContainer';
 import Settings from '../Settings';
 import Utils from "../../utils/Utils";
 import PropTypes from "prop-types";
+import LastGame from '../LastGame';
 
 const propTypes = {
   shortGames: PropTypes.array.isRequired,
@@ -28,26 +29,38 @@ class UserPage extends React.Component {
     this.props.fetchUserProfile();
   }
   render() {
+    console.log(this.props);
     const { 
       games,
       IsGamesLoading,
       userData,
       isUserLoading,
     } = this.props;
+    const{roles} = userData;
+    let role = null;
+    if(roles)
+    role = parseInt(Object.keys(roles)[0]);
+    console.log(role);
     return (
       <main className="page">
         <Header />
         <Settings />
-        <Level 
-          data={userData}
-          isLoading={isUserLoading}
-        />
+        {role === 5 ? (
+          <Level 
+            data={userData}
+            isLoading={isUserLoading}
+          />
+        ) : (
+          <LastGame />
+        )}
         <Gamelist 
           title="Мои игры"
           list={games}
           isLoading={IsGamesLoading}
         />
-        <Achievements />
+        {role === 5 && (
+          <Achievements />
+        )}
         <section className="Container">
           <Rate 
             isLoading={isUserLoading} 
