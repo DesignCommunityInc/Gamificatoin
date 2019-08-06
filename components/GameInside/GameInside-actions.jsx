@@ -60,7 +60,7 @@ export const chooseCategoryAsync = ({ category, questions }) => async (dispatch)
   }, 2000);
 };
 // ANSWER THE QUESTION
-export function handleAnswer({
+export function sendAnswer({
   questions,
   subjects,
   currentQuestion,
@@ -92,9 +92,9 @@ export function handleAnswer({
     const categories = Object.values(subjects);
     // here it needs to randomize categories
     categories.forEach((category) => {
-      if (passList.indexOf(category) === -1) nextCategory = category;
+      if ((passList.concat(currentCategory)).indexOf(category) === -1) nextCategory = category;
     });
-    if (!nextCategory) {
+    if (nextCategory) {
       dispatch(chooseCategory({ category: nextCategory, questions }));
       return;
     }

@@ -15,7 +15,7 @@ const propTypes = {
   subjectsIsAnimated: PropTypes.bool.isRequired,
   endGame: PropTypes.bool.isRequired,
   fetchGamePlay: PropTypes.func.isRequired,
-  answer: PropTypes.func.isRequired,
+  sendAnswer: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -37,16 +37,17 @@ class GameInside extends React.Component {
 
   handleAnswer() {
     const {
-      answer,
+      sendAnswer,
       game: {
         questions,
         subjects,
+        answer,
       } = {},
       currentQuestion,
       currentCategory,
       passList,
     } = this.props;
-    answer({
+    sendAnswer({
       answer,
       questions,
       subjects,
@@ -69,7 +70,6 @@ class GameInside extends React.Component {
       currentCategory,
       currentQuestion,
     } = this.props;
-    // console.log(this.props);
     return !endGame ? (
       <main className="page">
         <div
@@ -102,6 +102,7 @@ class GameInside extends React.Component {
                   this.question = ref;
                 }}
                 {...currentQuestion}
+                endGame={endGame}
                 handleAnswer={this.handleAnswer}
               />
             )}

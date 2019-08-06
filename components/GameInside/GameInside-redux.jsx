@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchGamePlay, chooseCategory, handleAnswer } from './GameInside-actions';
+import { fetchGamePlay, chooseCategory, sendAnswer } from './GameInside-actions';
 import GameInside from './GameInside-container';
 
 const insideContainer = props => <GameInside {...props} />;
@@ -21,7 +21,7 @@ const mapStateToProps = ({ gameInside }) => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchGamePlay,
   chooseCategory,
-  handleAnswer,
+  sendAnswer,
 }, dispatch);
 
 export default connect(

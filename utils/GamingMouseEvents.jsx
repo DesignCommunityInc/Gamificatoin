@@ -29,8 +29,7 @@ GamingMouseEvents.prototype = {
    * @param {Class} e The class instance with x and y mouse coordinates
    * @param {DOMElement} target The movable element
    */
-  move(e, target) {
-    const boundings = this.getBoundingClientXY(e, target);
+  move(e, target, boundings) {
     const { style } = target;
     if (e.touches) {
       const pageXOffset = document.documentElement.scrollLeft;

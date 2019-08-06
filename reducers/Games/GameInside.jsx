@@ -4,6 +4,7 @@ const initialState = {
   data: {
     questions: [],
     subjects: [],
+    answer: [],
   },
   animatedSubjects: 0,
   subjectsIsAnimated: false,
@@ -16,14 +17,11 @@ const initialState = {
   choosenCategory: null,
   passList: [],
 };
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.FETCH_GAME_PLAY_START:
-      return {
-        ...state,
-        data: {},
-        isLoading: true,
-      };
+      return state;
     case types.FETCH_GAME_PLAY_SUCCESS:
       return {
         ...state,
@@ -54,6 +52,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentQuestion: action.payload.data,
+      };
+    case types.REPLACE_ANSWER_OPTION:
+      return {
+        ...state,
+        data: {
+          questions: state.data.questions,
+          subjects: state.data.subjects,
+          answer: action.payload.data,
+        },
       };
     default: {
       return state;
