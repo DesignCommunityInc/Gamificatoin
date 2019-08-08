@@ -3,6 +3,7 @@ import uid from 'uid';
 import PropTypes from 'prop-types';
 import AnswerTile from './Option';
 import AnswerContainer from './Answer';
+import TextAnswer from './TextAnswer';
 import * as types from '../../../constants/QuestionTypes';
 
 const propTypes = {
@@ -87,7 +88,6 @@ class Question extends React.Component {
       id,
       handleAnswer,
     } = this.props;
-    console.log(type);
     switch (type) {
       case types.SELECT_ONE: case types.SELECT_EACH:
         return (
@@ -120,11 +120,30 @@ class Question extends React.Component {
                 title={awr}
                 id={`${id}-${idx}`}
                 type={type}
-                answers={answer}
+                titleList={answer}
               />
             ))}
           </div>
         );
+      case types.MATCH: {
+        const matches = typeof (answer[0]) === 'object' ? Object.values(answer[0]) : answer[0];
+        const answers = typeof (answer[1]) === 'object' ? Object.values(answer[1]) : answer[1];
+        return (
+          <div className="Question__list Question__list--match">
+            {answers.map((_, idx) => (
+              <AnswerTile
+                key={uid()}
+                title={answers[idx]}
+                subTitle={matches[idx]}
+                id={`${id}-${idx}`}
+                type={type}
+                titleList={answers}
+                answerList={answer}
+              />
+            ))}
+          </div>
+        );
+      }
       default: return <div />;
     }
   }
@@ -135,6 +154,7 @@ class Question extends React.Component {
       question,
       question_image: image,
       endGame,
+      type,
     } = this.props;
     const { showQuestion } = this.state;
     const count = 15;
@@ -172,6 +192,11 @@ class Question extends React.Component {
           />
         </div>
         {answers && this.switchRender()}
+        {!answers && (
+          <TextAnswer
+            type={type}
+          />
+        )}
       </section>
     );
   }

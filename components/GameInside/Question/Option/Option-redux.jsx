@@ -12,7 +12,7 @@ import Option from './Option-container';
 
 const optionContainer = props => <Option {...props} />;
 
-const mapStateToProps = ({ answers }) => ({
+const mapStateToProps = ({ answers, gameInside }) => ({
   passedAnswers: answers.passedAnswers,
   isItPossibleToAnswer: answers.isItPossibleToAnswer,
   isItPossibleToReplace: answers.isItPossibleToReplace,

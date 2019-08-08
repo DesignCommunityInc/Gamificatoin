@@ -1,4 +1,5 @@
 import * as types from '../../constants/ActionTypes';
+import * as questionTypes from '../../constants/QuestionTypes';
 
 const initialState = {
   data: {

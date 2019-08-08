@@ -39,3 +39,14 @@
     animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
   }
 } 
+
+@keyframes jumpScaling {
+  0% {
+    transform: scale(1);
+    animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+  }
+  60% {
+    transform: scale(.9475);
+    animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+  }
+} 

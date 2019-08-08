@@ -7,7 +7,9 @@ const propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  answers: PropTypes.arrayOf(PropTypes.any).isRequired,
+  subTitle: PropTypes.string,
+  titleList: PropTypes.arrayOf(PropTypes.string),
+  answerList: PropTypes.arrayOf(PropTypes.any),
   passedAnswers: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -22,6 +24,11 @@ const propTypes = {
   replaceOption: PropTypes.func.isRequired,
   removeAnswers: PropTypes.func.isRequired,
 };
+const defaultProps = {
+  answerList: [],
+  titleList: [],
+  subTitle: null,
+};
 
 class Option extends React.Component {
   constructor() {
@@ -29,6 +36,7 @@ class Option extends React.Component {
     this.handleStart = this.handleStart.bind(this);
     this.handleEnd = this.handleEnd.bind(this);
     this.handleMove = this.handleMove.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.dropAnswerTile = this.dropAnswerTile.bind(this);
@@ -37,6 +45,7 @@ class Option extends React.Component {
     this.state = {
       draggable: false,
       passed: false,
+      onReplace: false,
     };
   }
 
@@ -79,12 +88,28 @@ class Option extends React.Component {
 
   handleStart(e) {
     if ((e.buttons && e.buttons !== 1) || this.isThrowable()) return;
-    const { setOptionfocused } = this.props;
+    const {
+      setOptionfocused,
+      type,
+      throwAnswer,
+      removeAnswers,
+      title,
+    } = this.props;
     setOptionfocused(true);
     this.setState({ draggable: true });
     GME.clearWindowSelections();
     this.boundings = GME.getBoundingClientXY(e, this.currentTarget);
     GME.move(e, this.currentTarget, this.boundings);
+    switch (type) {
+      case types.SEQUENCE: case types.MATCH:
+        removeAnswers();
+        throwAnswer({
+          id: this.currentTarget.id,
+          title,
+        });
+        break;
+      default: break;
+    }
   }
 
   handleEnd() {
@@ -93,7 +118,7 @@ class Option extends React.Component {
     const {
       setOptionfocused,
       isItPossibleToAnswer,
-      isItPossibleToReplace,
+      removeAnswers,
       type,
     } = this.props;
     switch (type) {
@@ -104,8 +129,8 @@ class Option extends React.Component {
           return;
         }
         break;
-      case types.SEQUENCE:
-        if (isItPossibleToReplace) this.replaceAnswerTile();
+      case types.SEQUENCE: case types.MATCH:
+        removeAnswers();
         break;
       default: break;
     }
@@ -118,29 +143,63 @@ class Option extends React.Component {
     GME.move(e, this.currentTarget, this.boundings);
   }
 
-  handleMouseEnter(e) {
-    const { draggable } = this.state;
-    const { type, setReplacePossibility } = this.props;
-    if (type !== types.SEQUENCE || draggable) return;
-    console.log(e.currentTarget);
-    this.enterOption = e.currentTarget;
+  handleMouseEnter() {
+    const {
+      type,
+      setReplacePossibility,
+      passedAnswers,
+    } = this.props;
+    if (!type.match(new RegExp(`${types.SEQUENCE}|${types.MATCH}`)) || passedAnswers.length === 0) return;
+    this.setState({ onReplace: true });
     setReplacePossibility(true);
   }
 
   handleMouseLeave() {
-    const { draggable } = this.state;
-    const { type, setReplacePossibility } = this.props;
-    if (type !== types.SEQUENCE || draggable) return;
-    this.enterOption = null;
+    const {
+      type,
+      setReplacePossibility,
+      passedAnswers,
+    } = this.props;
+    if (!type.match(new RegExp(`${types.SEQUENCE}|${types.MATCH}`)) || passedAnswers.length === 0) return;
+
+    this.setState({ onReplace: false });
     setReplacePossibility(false);
   }
 
+  handleMouseUp() {
+    const { draggable } = this.state;
+    const {
+      type,
+      setReplacePossibility,
+      removeAnswers,
+      isItPossibleToReplace,
+    } = this.props;
+    if (!type.match(new RegExp(`${types.SEQUENCE}|${types.MATCH}`)) || draggable) return;
+    if (isItPossibleToReplace) {
+      this.replaceAnswerTile();
+    }
+    setReplacePossibility(false);
+    removeAnswers();
+  }
+
   replaceAnswerTile() {
-    const { answers, title, replaceOption } = this.props;
-    const elementIndex = answers.indexOf(title);
-    const footholdIndex = answers.indexOf(this.enterOption.getAttribute('data-attr'));
-    // console.log(this.enterOption);
-    // replaceOption(answers, elementIndex, footholdIndex, true);
+    const {
+      titleList,
+      title,
+      type,
+      replaceOption,
+      removeAnswers,
+      passedAnswers: [
+        mouseOverTarget,
+      ],
+      answerList,
+    } = this.props;
+    const elementIndex = titleList.indexOf(mouseOverTarget.title);
+    const footholdIndex = titleList.indexOf(title);
+    removeAnswers();
+    if (elementIndex === footholdIndex) return;
+    // console.log(answerList, titleList, elementIndex, footholdIndex, type);
+    replaceOption(answerList, titleList, elementIndex, footholdIndex, type);
   }
 
   dropAnswerTile() {
@@ -163,10 +222,26 @@ class Option extends React.Component {
   }
 
   render() {
-    const { title, id } = this.props;
-    const { draggable, passed, onReplace } = this.state;
+    const { title, id, subTitle } = this.props;
+    const {
+      draggable,
+      passed,
+      onReplace,
+    } = this.state;
     return (
       <>
+        <div
+          data-attr={title}
+          data-attr-before={subTitle}
+          className={`Question__answer Question__answer--hidden Question__answer--matches ${draggable ? 'Question__answer--empty-space' : ''} ${onReplace ? 'Question__answer--on-empty-space' : ''}`}
+        />
+        <div
+          ref={(ref) => {
+            this.clone = ref;
+          }}
+          data-attr={title}
+          className={`Question__answer Question__answer--hidden ${!draggable && !passed ? 'hidden' : ''}`}
+        />
         <div
           ref={(ref) => {
             this.currentTarget = ref;
@@ -179,16 +254,10 @@ class Option extends React.Component {
           onMouseDown={this.handleStart}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
+          onMouseUp={this.handleMouseUp}
           onTouchStart={this.handleStart}
           onTouchMove={this.handleMove}
           onTouchEnd={this.handleEnd}
-        />
-        <div
-          ref={(ref) => {
-            this.clone = ref;
-          }}
-          data-attr={title}
-          className={`Question__answer Question__answer--hidden ${!draggable && !passed ? 'hidden' : ''}`}
         />
       </>
     );
@@ -196,5 +265,6 @@ class Option extends React.Component {
 }
 
 Option.propTypes = propTypes;
+Option.defaultProps = defaultProps;
 
 export default Option;

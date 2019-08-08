@@ -164,7 +164,6 @@
     transition: $fast;
     animation: zoomOutDown .5s both;
   }
-  
   // .Question__container
   &__container {
     display: table-row;
@@ -296,6 +295,7 @@
   // .list > .Question__answer
   &__answer {
     display: inline-block;
+    position: relative;
     max-width: 600px;
     padding: 3% 5%;
     margin: .5%;
@@ -308,6 +308,7 @@
     border-radius: $border-radius-large;
     user-select: none;
     touch-action: none;
+    animation: jumpScaling .1s forwards;
     transition: all 0s, 
                 margin $average, 
                 padding $fast,
@@ -325,13 +326,40 @@
       top: 0;
       left: 0;
     }
+    &::before {
+      content: attr(data-attr-before);
+      display: block;
+      position: absolute;
+      padding: 10px;
+      top: 0;
+      left: 0;
+      font-size: 20pt;
+      color: $purple;
+      visibility: visible;
+      z-index: 99;
+      transition: $fast;      
+    }
+    &--empty-space {
+      background: $dark-40;
+      visibility: visible!important;
+      color: white;
+      transition: $fast;
+      &::before {
+        color: white;
+        z-index: z("main-layer");
+      }
+    }
+    &--matches {
+      position: absolute;
+      pointer-events: none;
+    }
     &--hidden {
-      opacity: 0;
+      visibility: hidden;
       transition: all 0s;
       cursor: default;
     }
     &--grabbing {
-      position: fixed;
+      position: fixed!important;
       padding: 4% 6%;
       margin: -1%;
       font-size: 18pt;
@@ -349,12 +377,19 @@
                   background-color $fast,
                   z-index $average;
     }
+    &--on-empty-space {
+      &::before {
+        transition: $fast;
+        color: white!important;
+      }
+    }
     &--on-replace {
       background: linear-gradient(90deg, white 50%, transparent 50%), linear-gradient(90deg, white 50%, transparent 50%), linear-gradient(0deg, white 50%, transparent 50%), linear-gradient(0deg, white 50%, transparent 50%)!important;
       background-repeat: repeat-x, repeat-x, repeat-y, repeat-y!important;
       background-size: 16px 2px, 16px 3px, 2px 16px, 3px 16px!important;
       background-position: 0 0, 0 100%, 0 0, 100% 0!important;
       animation: borderMoving 2s infinite forwards;
+      transition: $fast;
       &::after {
         transition: $fast;
         color: white!important;
@@ -365,6 +400,48 @@
     }
     p {
       display: inline-block;
+    }
+    // TEXT
+    &-text {
+      position: relative;
+      width: 80%;
+      height: 100%;
+      max-height: 150px;
+      padding: 20px;
+      vertical-align: middle;
+      color: $purple;
+      font-size: 14pt;
+      font-weight: 300;
+      border: none;
+      border-radius: $border-radius-average;
+      outline: none;
+      resize: none;
+      transition: $average;
+      @include mobile {
+        width: 100%;
+        padding: 0;
+        max-height: unset;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: $purple;
+      }
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      &:hover {
+        max-height: 170px;
+        transition: $fast;
+      }
+      &:focus {
+        max-height: 300px;
+        transition: $average;
+      }
+      &__container {
+        display: table-row;
+        position: relative;
+        height: 50%;
+        text-align: center;
+      }
     }
   }
   // .Question__drag

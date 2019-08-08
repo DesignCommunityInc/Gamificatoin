@@ -9,7 +9,7 @@ import './utils/Extends';
 import "./styles/main.scss";
 
 const target = document.getElementById('root');
-const role = 6;
+const role = 5;
 
 
 function render(Component) {
@@ -24,6 +24,7 @@ function render(Component) {
 };
 
 // render(Root);
+
 switch(role){
   case 5:
     render(Root);

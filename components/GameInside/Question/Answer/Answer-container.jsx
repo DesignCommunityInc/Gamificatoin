@@ -29,7 +29,6 @@ class Answer extends React.Component {
   handleAnswerClick(e) {
     const { handleAnswer, hideQuestion, passedAnswers } = this.props;
     if (passedAnswers.length === 0) return;
-    e.preventDefault();
     hideQuestion();
     setTimeout(() => {
       handleAnswer();

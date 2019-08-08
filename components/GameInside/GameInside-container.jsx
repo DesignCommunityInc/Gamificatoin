@@ -32,7 +32,7 @@ class GameInside extends React.Component {
   componentDidMount() {
     const { fetchGamePlay } = this.props;
     fetchGamePlay(1);
-    ParticleSpawner(this.spawner, 30, 3, 3);
+    ParticleSpawner(this.spawner, 15, 2, 10);
   }
 
   handleAnswer() {
