@@ -5,7 +5,7 @@ export default axios.create({
   responseType: 'json',
   headers: {
     // 'X-Auth-Token': localStorage.getItem('X-Auth-Token'),
-    'X-Auth-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBwLnV1ZC5zY2hvb2xcLyIsImlhdCI6MTU2NTAxNDEwMywibmJmIjoxNTY1MDIxMzAzfQ.xsDfqaXpuXhboVtW4wlehMZHzel6cJ7JOnxyEzzrmcs',
+    'X-Auth-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBwLnV1ZC5zY2hvb2xcLyIsImlhdCI6MTU2NTE5NDMxNiwibmJmIjoxNTY1MjAxNTE2fQ.Tuqk83Otm-ElzDcnX9juN7akRIz2ff4YZInLnrOmoUw',
   },
 });
 

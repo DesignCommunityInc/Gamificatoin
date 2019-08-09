@@ -24,12 +24,21 @@ const defaultProps = {
 }
 class UserPage extends React.Component {
   componentDidMount() {
+    // const{ userData: {roles} = {}} = this.props;     // <--
+    let roles = 6;                                      //    | НЕ ПОЛУЧАЕТСЯ РОЛЬ
     Utils.scrollTo(document.documentElement, 0, 0);
-    this.props.fetchUserGamesShort();
-    this.props.fetchUserProfile();
+    switch(roles){
+      case 5: 
+        this.props.fetchUserGamesShort();
+        this.props.fetchUserProfile();  
+        break;
+      case 6:
+        this.props.fetchTeacherGamesShort();
+        this.props.fetchUserProfile();  
+        break;
+    }
   }
   render() {
-    console.log(this.props);
     const { 
       games,
       IsGamesLoading,
@@ -40,7 +49,6 @@ class UserPage extends React.Component {
     let role = null;
     if(roles)
     role = parseInt(Object.keys(roles)[0]);
-    console.log(role);
     return (
       <main className="page">
         <Header />

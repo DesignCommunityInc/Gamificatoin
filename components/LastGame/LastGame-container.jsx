@@ -19,6 +19,7 @@ class LastGame extends React.Component {
   }
   componentDidMount() {
     // if(this.backward) this.backward.classList.add('hidden');
+    this.props.fetchLastGame();
     if(this.wrapper) this.wrapper.addEventListener('DOMNodeInserted', this.scrollVisibility);
   }
   scrollVisibility() {
@@ -43,33 +44,34 @@ class LastGame extends React.Component {
     }
   }
   moveForward() {
-    Utils.forward(this.gamesContainer, -365);
+    Utils.forward(this.gamesContainer, -2500);
   }
   moveBack() {
-    Utils.backward(this.gamesContainer, 365);
+    Utils.backward(this.gamesContainer, 2500);
   }
 
   render() {
-    // const Game = ({ gameID = 1, picture = 1, results = 1, name = 1, difficulty = 1, questions = 1, time = 1, experience = 1, creator = 1, isLoading = 1 });
     const {
-      Game: {
-        name = 'Первая игра',
-        gameID = '1',
-        picture = 'https://i.ytimg.com/vi/2uiU9Cx3uDM/maxresdefault.jpg',
-        questions = 20,
-        time = 1,
-        // value = 41,
-      } = {},
+      data: {
+        id,
+        image,
+        name,
+        time,
+        status,
+        start_date,
+        finish_date,
+        statistic = [],
+      } = {}
     } = this.props;
     return (
       <section className="Games Container Games__Last Games__container__wrapper">
         <div className="game game__last">
-          <Link to={`games/${gameID}`} className="game__tile">
-            <img className="game__image" src={picture} alt="geography" />
+          <Link style={{backgroundImage: "url(" + image + ")"}} to={`games/${id}`} className="game__tile">
+            {/* <img className="game__image" src={`${image}`} alt="geography" /> */}
             <div className="game__name">{name}</div>
-            <div className="game__questions">{questions} вопрос( a / ов )</div>
-            <div className="game__time">{time} минут</div>
-          </Link>
+            <div className="game__questions">{time} минут</div>
+            {/* <div className="game__time">{time} минут</div> */}
+          </Link> 
         </div>
         <span
           className="Games__scroller" type="backward"
@@ -99,23 +101,35 @@ class LastGame extends React.Component {
             }}
           >
             <div className="stat__ln">
-              <Stat
-                title = "Заявлено участников"
-                value = '42'
-              />
+              <div className="stat stat__main">
+                <span className="stat__title">
+                  <p>Статус</p>
+                </span>
+                <div className="stat__status">
+                  <span className="stat__status__pointer"></span>
+                  <p className="stat__status__name">{status}</p>
+                </div>
+                <div className="stat__date">
+                  <p className="stat__date__start">{start_date}</p>
+                  <span></span>
+                  <p className="stat__date__finish">{finish_date}</p>
+                </div>
+              </div>
             </div>
-            <div className="stat__ln">
-              <Stat
-                title = "Закончили игру"
-                value = '24'
-              />
-            </div>
-            <div className="stat__ln">
-              <Stat
-                title = "Не преступали"
-                value = '18'
-              />
-            </div>
+            
+            {statistic.map((statist, i) => {                    
+              return (
+                <div className="stat__ln">
+                <Stat
+                  title = {statist.title}
+                  value = {statist.count}
+                  info = {statist.stat}
+                />
+                </div>
+              ) 
+            })}
+              
+            {/* </div> */}
           </div>
         </div>
       </section>

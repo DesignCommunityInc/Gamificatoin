@@ -1,19 +1,23 @@
 import * as types from '../../constants/ActionTypes';
 import API, { handleErrors } from '../../utils/API';
 
-export const toggleLockSettings = () => dispatch => dispatch({
-  type: types.SETTINGS_LOCK_TOGGLE,
-});
-
-export const toggleHelpersSettings = hintsEnabled => async (dispatch) => {
-  try {
-    await API.put('/user/settings', {
-      S_hints: !hintsEnabled,
-    }).then((response) => {
-      console.log(response);
-      dispatch({ type: types.SETTINGS_HELPERS_TOGGLE });
-    });
-  } catch (e) {
-    handleErrors(e);
-  }
+export const fetchLastGame = () =>{
+  const start = () => dispatch => dispatch({
+    type: types.FETCH_LAST_TEACHER_GAME_START,
+  });
+  const success = data => dispatch => dispatch({
+    type: types.FETCH_LAST_TEACHER_GAME_SUCCESS,
+    payload: { data },
+  });
+  return async (dispatch) => {
+    try {
+      dispatch(start());
+      await API.get('/games/teacher?info=last'
+      ).then((response) => {
+        dispatch(success(response.data));
+      });
+    } catch (e) {
+      handleErrors(e);
+    }
+  } 
 };

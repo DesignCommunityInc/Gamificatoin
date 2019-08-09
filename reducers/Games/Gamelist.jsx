@@ -43,6 +43,18 @@ export default (state = initialState, action) => {
         shortData: action.payload.data,
         isShortDataLoading: false,
       }
+    case types.FETCH_TEACHER_GAMES_SHORT_START:
+        return {
+          ...state,
+          shortData: [],
+          isShortDataLoading: true,
+        }
+    case types.FETCH_TEACHER_GAMES_SHORT_SUCCESS:
+      return {
+        ...state,
+        shortData: action.payload.data,
+        isShortDataLoading: false,
+      }
     default:
       return state
   }
