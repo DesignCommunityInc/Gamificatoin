@@ -3,6 +3,9 @@ import uid from 'uid';
 import PropTypes from 'prop-types';
 import AnswerTile from './Option';
 import AnswerContainer from './Answer';
+import TextAnswer from './TextAnswer';
+import GME from '../../../utils/GamingMouseEvents';
+import Utils from '../../../utils/Utils';
 import * as types from '../../../constants/QuestionTypes';
 
 const propTypes = {
@@ -30,10 +33,14 @@ class Question extends React.Component {
   constructor() {
     super();
     this.imageMoving = this.imageMoving.bind(this);
+    this.imageMouseMove = this.imageMouseMove.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.showQuestion = this.showQuestion.bind(this);
     this.hideQuestion = this.hideQuestion.bind(this);
     this.state = {
       showQuestion: true,
+      showImage: false,
     };
   }
 
@@ -53,12 +60,13 @@ class Question extends React.Component {
   }
 
   imageMoving() {
-    if (!this.imageContainer) return;
+    const { showImage } = this.state;
+    if (!this.imageContainer || !showImage) return;
     let direction = true;
-    let translate = 0;
+    let translate = this.imageContainer.scrollTop;
     const moving = () => {
       const limit = this.imageContainer.scrollHeight - this.imageContainer.clientHeight;
-      if (limit <= 30) return;
+      if (limit <= 50 || !showImage) return;
       translate += direction ? 1 : -1;
       if (translate <= 0 || translate >= limit) {
         translate = translate > limit - translate ? limit : 0;
@@ -70,6 +78,26 @@ class Question extends React.Component {
       moving,
       10,
     );
+  }
+
+  imageMouseMove(e) {
+    if (!this.imageContainer) return;
+    const boundings = GME.getBoundingClientXY(e, this.imageContainer);
+    const eps = 50;
+    const scroll = Utils.mapRange(
+      boundings.y,
+      eps, this.imageContainer.clientHeight,
+      0, this.imageContainer.scrollHeight - this.imageContainer.clientHeight + eps,
+    );
+    this.imageContainer.scrollTop = scroll;
+  }
+
+  handleMouseEnter() {
+    clearInterval(this.movingTimer);
+  }
+
+  handleMouseLeave() {
+    this.imageMoving();
   }
 
   showQuestion() {
@@ -87,7 +115,6 @@ class Question extends React.Component {
       id,
       handleAnswer,
     } = this.props;
-    console.log(type);
     switch (type) {
       case types.SELECT_ONE: case types.SELECT_EACH:
         return (
@@ -120,11 +147,49 @@ class Question extends React.Component {
                 title={awr}
                 id={`${id}-${idx}`}
                 type={type}
-                answers={answer}
+                titleList={answer}
+                subTitle={idx + 1}
               />
             ))}
+            <span
+              onClick={() => handleAnswer(answer)}
+              role="button"
+              onKeyDown={() => {}}
+              tabIndex="0"
+              className="button button-action"
+            >
+              Играть
+            </span>
           </div>
         );
+      case types.MATCH: {
+        const matches = typeof (answer[0]) === 'object' ? Object.values(answer[0]) : answer[0];
+        const answers = typeof (answer[1]) === 'object' ? Object.values(answer[1]) : answer[1];
+        return (
+          <div className="Question__list Question__list--match">
+            {answers.map((_, idx) => (
+              <AnswerTile
+                key={uid()}
+                title={answers[idx]}
+                subTitle={matches[idx]}
+                id={`${id}-${idx}`}
+                type={type}
+                titleList={answers}
+                answerList={answer}
+              />
+            ))}
+            <span
+              onClick={() => handleAnswer(answers)}
+              role="button"
+              onKeyDown={() => {}}
+              tabIndex="0"
+              className="button button-action"
+            >
+              Играть
+            </span>
+          </div>
+        );
+      }
       default: return <div />;
     }
   }
@@ -135,29 +200,16 @@ class Question extends React.Component {
       question,
       question_image: image,
       endGame,
+      type,
+      handleAnswer,
     } = this.props;
-    const { showQuestion } = this.state;
+    const { showQuestion, showImage } = this.state;
     const count = 15;
     const total = 30;
     const progress = count / total * 100;
     return (
       <section className={endGame || !showQuestion ? 'Question Question--fadeout' : 'Question'}>
         <div className={question.length > 100 ? 'Question__container Question__container--large' : 'Question__container'}>
-          <div
-            className="Question__image__container"
-            ref={(container) => {
-              this.imageContainer = container;
-            }}
-          >
-            <img
-              src={image}
-              alt=""
-              className="Question__image"
-              ref={(img) => {
-                this.image = img;
-              }}
-            />
-          </div>
           <div className="Question__count">
             <b>{`Вопрос № ${count} `}</b>
             {`из ${total}`}
@@ -165,6 +217,33 @@ class Question extends React.Component {
           <div className="Question__progress">
             <div className="Question__progress__bar" style={{ width: `${progress}%` }} />
           </div>
+          {image && (
+            <div
+              className={`Question__image__container ${showImage ? 'Question__image__container--fullscreen' : ''}`}
+              ref={(container) => {
+                this.imageContainer = container;
+              }}
+              tabIndex="-1"
+              role="button"
+              onKeyDown={this.handleKeyDown}
+              onClick={() => {
+                if (showImage) this.setState({ showImage: false });
+                else this.setState({ showImage: true });
+              }}
+              onMouseMove={this.imageMouseMove}
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseLeave}
+            >
+              <img
+                src={image}
+                alt=""
+                className="Question__image"
+                ref={(img) => {
+                  this.image = img;
+                }}
+              />
+            </div>
+          )}
           <div
             className="Question__title"
             // eslint-disable-next-line react/no-danger
@@ -172,6 +251,12 @@ class Question extends React.Component {
           />
         </div>
         {answers && this.switchRender()}
+        {!answers && (
+          <TextAnswer
+            handleAnswer={handleAnswer}
+            type={type}
+          />
+        )}
       </section>
     );
   }

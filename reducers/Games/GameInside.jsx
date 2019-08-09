@@ -16,6 +16,7 @@ const initialState = {
   endGame: false,
   choosenCategory: null,
   passList: [],
+  globalAnswerList: [],
 };
 
 export default (state = initialState, action) => {
@@ -43,6 +44,11 @@ export default (state = initialState, action) => {
         ...state,
         currentCategory: action.payload.category,
       };
+    case types.PASS_CATEGORY:
+      return {
+        ...state,
+        passList: [...state.passList, action.payload.data],
+      };
     case types.TOGGLE_CATEGORIES_VISIBILITY:
       return {
         ...state,
@@ -61,6 +67,16 @@ export default (state = initialState, action) => {
           subjects: state.data.subjects,
           answer: action.payload.data,
         },
+      };
+    case types.PASS_ANSWER_FOR_THE_QUESTION:
+      return {
+        ...state,
+        globalAnswerList: [...state.globalAnswerList, action.payload.data],
+      };
+    case types.END_THE_GAME:
+      return {
+        ...state,
+        endGame: true,
       };
     default: {
       return state;
