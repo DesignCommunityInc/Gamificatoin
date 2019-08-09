@@ -3,19 +3,23 @@ import PropTypes from 'prop-types';
 import Categories from './Categories';
 import Question from './Question';
 import ParticleSpawner from '../../utils/Particles';
-import background from '../../styles/assets/bg_video.mp4';
 
 const propTypes = {
   game: PropTypes.shape({}).isRequired,
   animatedSubjects: PropTypes.number.isRequired,
   passList: PropTypes.arrayOf(PropTypes.string).isRequired,
-  currentQuestion: PropTypes.shape({}),
+  globalAnswerList: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  currentQuestion: PropTypes.shape({
+    id: PropTypes.string,
+  }),
   currentCategory: PropTypes.string,
   isLoading: PropTypes.bool.isRequired,
   subjectsIsAnimated: PropTypes.bool.isRequired,
   endGame: PropTypes.bool.isRequired,
   fetchGamePlay: PropTypes.func.isRequired,
   sendAnswer: PropTypes.func.isRequired,
+  sendGameAnswers: PropTypes.func.isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const defaultProps = {
@@ -35,20 +39,22 @@ class GameInside extends React.Component {
     ParticleSpawner(this.spawner, 15, 2, 10);
   }
 
-  handleAnswer() {
+  handleAnswer(currentAnswer) {
     const {
       sendAnswer,
       game: {
         questions,
         subjects,
-        answer,
       } = {},
       currentQuestion,
       currentCategory,
       passList,
     } = this.props;
     sendAnswer({
-      answer,
+      answer: {
+        id: currentQuestion.id,
+        answer: currentAnswer,
+      },
       questions,
       subjects,
       currentQuestion,
@@ -69,6 +75,9 @@ class GameInside extends React.Component {
       endGame,
       currentCategory,
       currentQuestion,
+      globalAnswerList,
+      sendGameAnswers,
+      match: { params: { id } },
     } = this.props;
     return !endGame ? (
       <main className="page">
@@ -78,14 +87,7 @@ class GameInside extends React.Component {
             this.spawner = ref;
           }}
         />
-        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-        <video
-          autoPlay
-          loop
-          className="background"
-        >
-          <source src={background} type="video/mp4" />
-        </video>
+        <div className="background" />
         {!isLoading && (
           <div>
             {!currentCategory && (
@@ -110,7 +112,10 @@ class GameInside extends React.Component {
         )}
       </main>
     ) : (
-      <div />
+      <div>
+        {console.log(globalAnswerList)}
+        {sendGameAnswers(id, globalAnswerList)}
+      </div>
     );
   }
 }

@@ -28,6 +28,7 @@ GamingMouseEvents.prototype = {
    * move any DOMElement to mouse position (drag simulation)
    * @param {Class} e The class instance with x and y mouse coordinates
    * @param {DOMElement} target The movable element
+   * @param {Object} boundings -> contains element x,y
    */
   move(e, target, boundings) {
     const { style } = target;

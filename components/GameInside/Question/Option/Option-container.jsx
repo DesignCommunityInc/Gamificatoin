@@ -7,7 +7,7 @@ const propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  subTitle: PropTypes.string,
+  // subTitle: PropTypes.string,
   titleList: PropTypes.arrayOf(PropTypes.string),
   answerList: PropTypes.arrayOf(PropTypes.any),
   passedAnswers: PropTypes.arrayOf(
@@ -27,7 +27,7 @@ const propTypes = {
 const defaultProps = {
   answerList: [],
   titleList: [],
-  subTitle: null,
+  // subTitle: null,
 };
 
 class Option extends React.Component {

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GME from '../../../../utils/GamingMouseEvents';
 import * as types from '../../../../constants/QuestionTypes';
 
 const propTypes = {
+  handleAnswer: PropTypes.func.isRequired,
 };
 
 class TextAnswer extends React.Component {
@@ -16,20 +16,32 @@ class TextAnswer extends React.Component {
   }
 
   handleInput() {
-
+    this.alert = 0;
   }
 
   render() {
+    const { handleAnswer } = this.props;
     return (
       <div className="Question__answer-text__container">
         <textarea
           className="Question__answer-text"
           onInput={this.handleInput}
+          ref={(ref) => {
+            this.textarea = ref;
+          }}
           name=""
           id=""
-          cols="30"
-          rows="10"
+          placeholder="Напишите ответ сюда"
         />
+        <span
+          onClick={() => handleAnswer(this.textarea.value)}
+          role="button"
+          onKeyDown={() => {}}
+          tabIndex="0"
+          className="button button-action"
+        >
+          Ответить
+        </span>
       </div>
     );
   }

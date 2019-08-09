@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as types from '../../../../constants/QuestionTypes';
 
 const propTypes = {
   passedAnswers: PropTypes.arrayOf(
@@ -8,6 +9,7 @@ const propTypes = {
       title: PropTypes.string,
     }),
   ).isRequired,
+  type: PropTypes.string.isRequired,
   isAnyOptionFocused: PropTypes.bool.isRequired,
   handleAnswer: PropTypes.func.isRequired,
   hideQuestion: PropTypes.func.isRequired,
@@ -27,11 +29,24 @@ class Answer extends React.Component {
   }
 
   handleAnswerClick(e) {
-    const { handleAnswer, hideQuestion, passedAnswers } = this.props;
+    const {
+      handleAnswer,
+      hideQuestion,
+      passedAnswers,
+      type,
+    } = this.props;
     if (passedAnswers.length === 0) return;
     hideQuestion();
     setTimeout(() => {
-      handleAnswer();
+      if (type === types.SELECT_ONE) {
+        handleAnswer(passedAnswers[0].title);
+      } else {
+        const answerArray = [];
+        passedAnswers.forEach((awr) => {
+          answerArray.push(awr.title);
+        });
+        handleAnswer(answerArray);
+      }
       this.handleCancel(e);
     }, 1000);
   }

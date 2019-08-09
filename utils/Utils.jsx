@@ -3,6 +3,7 @@ function Utils() { }
 
 Utils.prototype = {
   constructor: Utils,
+  mapRange: (value, from, to, from2, to2) => (value - from) / (to - from) * (to2 - from2) + from2,
   isElementInView: (element, container, fullyInView) => {
     const pageTop = container.scrollTop;
     const pageBottom = pageTop + container.offsetHeight;

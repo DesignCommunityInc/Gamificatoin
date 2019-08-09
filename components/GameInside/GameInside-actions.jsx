@@ -61,6 +61,7 @@ export const chooseCategoryAsync = ({ category, questions }) => async (dispatch)
 };
 // ANSWER THE QUESTION
 export function sendAnswer({
+  answer,
   questions,
   subjects,
   currentQuestion,
@@ -69,6 +70,10 @@ export function sendAnswer({
 }) {
   const sendNextQuestion = data => dispatch => dispatch({
     type: types.SEND_NEXT_QUESTION,
+    payload: { data },
+  });
+  const passAnswer = data => dispatch => dispatch({
+    type: types.PASS_ANSWER_FOR_THE_QUESTION,
     payload: { data },
   });
   const passCategory = data => dispatch => dispatch({
@@ -81,6 +86,7 @@ export function sendAnswer({
   const currentQuestionList = questions[currentCategory];
   const nextQuestion = currentQuestionList[currentQuestionList.indexOf(currentQuestion) + 1];
   return async (dispatch) => {
+    dispatch(passAnswer(answer));
     // check if next question in current category exist
     if (nextQuestion) {
       dispatch(sendNextQuestion(nextQuestion));
@@ -94,10 +100,30 @@ export function sendAnswer({
     categories.forEach((category) => {
       if ((passList.concat(currentCategory)).indexOf(category) === -1) nextCategory = category;
     });
+    console.log(nextCategory === null);
     if (nextCategory) {
       dispatch(chooseCategory({ category: nextCategory, questions }));
       return;
     }
     dispatch(endTheGame());
+  };
+}
+
+export function sendGameAnswers(id, answers) {
+  // const start = () => dispatch => dispatch({
+  //   // type: types.FETCH_GAME_PLAY_START,
+  // });
+  // const success = data => dispatch => dispatch({
+  //   // type: types.FETCH_GAME_PLAY_SUCCESS,
+  //   // payload: { data },
+  // });
+  return async (dispatch) => {
+    try {
+      await API.post(`/game/${id}/complete`, answers).then((response) => {
+        console.log(response);
+      });
+    } catch (e) {
+      handleErrors(e);
+    }
   };
 }

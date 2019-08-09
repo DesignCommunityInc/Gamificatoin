@@ -7,6 +7,9 @@
   left: 0;
   bottom: 0;
   background: $linear-gradient;
+  background: url(assets/background-2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
   @include lowscreen {
     width: 100%;
   }
@@ -174,34 +177,34 @@
   &__count {
     display: block;
     margin: 10px auto;
-    max-width: 50%;
+    max-width: 20%;
     color: $light;
     font-size: 10pt;
     b {
       font-size: 14pt;
       color: white;
     }
-    .Question__container--large & {
-      max-width: 80%;
-    }
+    // .Question__container--large & {
+    //   max-width: 80%;
+    // }
   }
   // .Question__container > .Question__progress
   &__progress {
     display: block;
     position: relative;
     margin: 10px auto;
-    max-width: 50%;
+    max-width: 20%;
     height: 5px;
     background: $light;
     border-radius: $border-radius-average;
     overflow: hidden;
     @include mobile {
-      margin: 10px;
+      margin: 20px;
       max-width: 100%!important;
     }
-    .Question__container--large & {
-      max-width: 80%;
-    }
+    // .Question__container--large & {
+    //   max-width: 80%;
+    // }
     // & .Question__progress > .Question__progress__bar
     &__bar {
       display: block;
@@ -221,20 +224,28 @@
     &__container {
       display: block;
       position: relative;
-      margin: 50px auto;
-      max-width: 80%;
-      max-height: 350px;
+      margin: 0 auto;
+      max-width: 200px;
+      max-height: 200px;
       min-height: 0;
       border-radius: $border-radius-overlarge;
+      transition: $slow;
+      transition-timing-function: cubic-bezier(.31, .95, .46, 1);
       overflow: hidden;
+      cursor: pointer;
       @include lowscreen {
-        max-height: 250px;
       }
       @include mobile {
         margin: 10px;
         border-radius: $border-radius-small;
         max-width: 100%;
         max-height: 150px;
+      }
+      &--fullscreen {
+        max-width: 40vw;
+        max-height: 40vh;
+        transition: $slow;
+        transition-timing-function: cubic-bezier(.31, .95, .46, 1);
       }
     }
   }
@@ -409,13 +420,15 @@
       max-height: 150px;
       padding: 20px;
       vertical-align: middle;
-      color: $purple;
+      color: white;
       font-size: 14pt;
-      font-weight: 300;
+      font-weight: 500;
       border: none;
-      border-radius: $border-radius-average;
+      border-radius: $border-radius-small;
+      border: 1.5px solid white;
       outline: none;
       resize: none;
+      background: $white-40;
       transition: $average;
       @include mobile {
         width: 100%;
@@ -435,6 +448,9 @@
       &:focus {
         max-height: 300px;
         transition: $average;
+      }
+      &::placeholder {
+        color: white;
       }
       &__container {
         display: table-row;
@@ -530,5 +546,12 @@
         height: 100%;
       }
     }
+  }
+  .button {
+    display: block;
+    margin: 0 auto;
+    max-width: 30%;
+    text-overflow: unset;
+    text-align: center;
   }
 }
