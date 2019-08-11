@@ -173,12 +173,14 @@ class Option extends React.Component {
       setReplacePossibility,
       removeAnswers,
       isItPossibleToReplace,
+      setOptionfocused,
     } = this.props;
     if (!type.match(new RegExp(`${types.SEQUENCE}|${types.MATCH}`)) || draggable) return;
     if (isItPossibleToReplace) {
       this.replaceAnswerTile();
     }
     setReplacePossibility(false);
+    setOptionfocused(false);
     removeAnswers();
   }
 
@@ -222,6 +224,7 @@ class Option extends React.Component {
   }
 
   render() {
+    // eslint-disable-next-line react/prop-types
     const { title, id, subTitle } = this.props;
     const {
       draggable,

@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         passedAnswers:
-          state.passedAnswers.concat(action.payload.data),
+        state.passedAnswers.concat(action.payload.data),
       };
     case types.REMOVE_ANSWER_OPTION:
       return {

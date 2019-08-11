@@ -10,10 +10,10 @@
   background: url(assets/background-2.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  z-index: -1;
   @include lowscreen {
     width: 100%;
   }
-  z-index: -1;
 }
 .Game {
   display: block;
@@ -152,14 +152,14 @@
 
 .Question {
   display: table;
-  position: fixed;
+  // position: fixed;
   top: 0;
   table-layout: fixed;
-  width: 100vw;
-  height: 100vh;
+  // width: 100vw;
+  // height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
-  overflow: hidden;
+  // overflow: hidden;
   z-index: z("main-layer");
   transition: $fast;
   animation: zoomInDown 1.5s both;
@@ -184,9 +184,10 @@
       font-size: 14pt;
       color: white;
     }
-    // .Question__container--large & {
-    //   max-width: 80%;
-    // }
+    @include mobile {
+      max-width: 100%;
+      padding: 0 20px;
+    }
   }
   // .Question__container > .Question__progress
   &__progress {
@@ -202,9 +203,6 @@
       margin: 20px;
       max-width: 100%!important;
     }
-    // .Question__container--large & {
-    //   max-width: 80%;
-    // }
     // & .Question__progress > .Question__progress__bar
     &__bar {
       display: block;
@@ -258,6 +256,10 @@
     margin: 0 auto;
     font-size: 20pt;
     font-weight: 500;
+    transition: $fast;
+    @include lowscreen {
+      font-size: 14pt;
+    }
     @include mobile {
       margin: 10px;
       padding: unset;
@@ -271,13 +273,15 @@
     .Question__container--large & {
       max-width: 80%;
       font-size: 14pt;
+      @include lowscreen {
+        font-size: 10pt;
+      }
     }
     p {
       display: inline-block;
-      padding: 0 5px;
+      padding: 2px 5px;
       margin: 3px 5px;
-      background: white;
-      color: $purple;
+      background: $white-40;
       font-weight: 700;
       border-radius: $border-radius-average;
       &:first-child {
@@ -285,10 +289,25 @@
         padding: 0;
         background: none;
         color: white;
+        font-size: 14pt;
         font-weight: 700;
       }
-      & > * {
-        text-transform: uppercase;
+      br {
+        display: none;
+      }
+    }
+    em {
+      font-weight: 500;
+    }
+    strong {
+      color: white;
+      text-transform: uppercase;
+      &::before {
+        content: '#';
+        display: inline-block;
+        padding: 5px;
+        // background: $purple;
+        z-index: -1;
       }
     }
   }
@@ -301,6 +320,9 @@
     text-align: center;
     @include mobile {
       width: 100%;
+    }
+    &--match {
+      height: 50%;
     }
   }
   // .list > .Question__answer
@@ -344,7 +366,7 @@
       padding: 10px;
       top: 0;
       left: 0;
-      font-size: 20pt;
+      font-size: 14pt;
       color: $purple;
       visibility: visible;
       z-index: 99;
@@ -371,7 +393,7 @@
     }
     &--grabbing {
       position: fixed!important;
-      padding: 4% 6%;
+      padding: 3.5% 5.5%;
       margin: -1%;
       font-size: 18pt;
       color: white!important;
@@ -417,7 +439,7 @@
       position: relative;
       width: 80%;
       height: 100%;
-      max-height: 150px;
+      max-height: 60px;
       padding: 20px;
       vertical-align: middle;
       color: white;
@@ -431,26 +453,28 @@
       background: $white-40;
       transition: $average;
       @include mobile {
-        width: 100%;
         padding: 0;
-        max-height: unset;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: $purple;
-      }
-      &::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      &:hover {
-        max-height: 170px;
-        transition: $fast;
-      }
-      &:focus {
-        max-height: 300px;
-        transition: $average;
+        max-height: 150px;
       }
       &::placeholder {
         color: white;
+      }
+      &--sizable {
+        max-height: 150px;
+        &::-webkit-scrollbar-thumb {
+          background: $purple;
+        }
+        &::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        &:hover {
+          max-height: 170px;
+          transition: $fast;
+        }
+        &:focus {
+          max-height: 300px;
+          transition: $average;
+        }
       }
       &__container {
         display: table-row;
@@ -467,9 +491,10 @@
     height: 90%;
     max-width: 80%;
     margin: 20px auto;
-    background: white;
-    border-radius: $border-radius-large;
-    transition: $average;
+    background: $white-40;
+    border-radius: $border-radius-average;
+    border: 2px solid white;
+    transition: all $fast, border 0s;
     @include lowscreen {
       height: 80%;
     }
@@ -485,33 +510,10 @@
       position: relative;
       top: 50%;
       font-weight: 700;
-      color: $grey;
+      color: white;
       transform: translateY(-50%);
       transition: $fast;
       text-align: center;
-    }
-    &--inline {
-      display: inline-block;
-      margin: 20px;
-      @for $i from 1 through 10 {
-        &:first-child:nth-last-child(#{$i}),
-        &:first-child:nth-last-child(#{$i}) ~ div {
-          width: 80% / $i;
-        }
-      }
-      &::before {
-        content: attr(data-attr-before);
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding: 10px;
-        font-weight: 700;
-        font-size: 16pt;
-        color: $purple;
-        transition: $fast;
-        text-align: center;
-      }
     }
     &--passing-answer {
       background: linear-gradient(90deg, white 50%, transparent 50%), linear-gradient(90deg, white 50%, transparent 50%), linear-gradient(0deg, white 50%, transparent 50%), linear-gradient(0deg, white 50%, transparent 50%)!important;
@@ -519,6 +521,7 @@
       background-size: 16px 2px, 16px 3px, 2px 16px, 3px 16px!important;
       background-position: 0 0, 0 100%, 0 0, 100% 0!important;
       animation: borderMoving 2s infinite forwards;
+      border-width: 0;
       &::after {
         transition: $fast;
         color: white!important;
@@ -538,10 +541,8 @@
       display: table-row;
       position: relative;
       height: 30%;
+      min-height: 100px;
       text-align: center;
-      @include lowscreen {
-        height: 30%;
-      }
       @include mobile {
         height: 100%;
       }
@@ -549,9 +550,80 @@
   }
   .button {
     display: block;
-    margin: 0 auto;
-    max-width: 30%;
+    position: absolute;
+    margin: 50px auto;
+    padding: 10px 20px;
+    left: 50%;
+    transform: translateX(-50%) scale(1);
+    border-radius: $border-radius-average;
     text-overflow: unset;
-    text-align: center;
+    color: $purple;
+    transition: $fast;
+    &:active {
+      transform: translateX(-50%) scale(.95);
+    }
+  }
+}
+
+.EndGame {
+  text-align: center;
+  animation: zoomInDown 1.5s both;
+  overflow: hidden;
+  &__view {
+    display: block;
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+    top: 50%;
+    transform: translateY(-50%);
+    & > * {
+      padding: 5px;
+      color: white;
+    }
+    .button {
+      color: $purple;
+      background: white;
+      padding: 6px 20px;
+      font-size: 14pt;
+    }
+    h1 {
+      font-size: 30pt;
+    }
+    h3 {
+      font-size: 18pt;
+    }
+  }
+  &__icon {
+    display: inline-block;
+    position: relative;
+    width: 180px;
+    height: 180px;
+    background: url(assets/end-like.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  &__reward {
+    display: block;
+    position: relative;
+    margin-bottom: 60px;
+    &::before {
+      content: '+';
+      display: block;
+      position: relative;
+      margin-bottom: 10px;
+      font-size: 14pt;
+      font-weight: 500;
+    }
+    span {
+      display: inline-block;
+      width: 100px;
+      padding: 5px 10px;
+      margin: 0 10px;
+      background: $linear-gradient;
+      border-radius: $border-radius-small;
+      color: white;
+      font-weight: 700;
+      opacity: .75;
+    }
   }
 }

@@ -1,0 +1,15 @@
+.Timer {
+  display: block;
+  position: fixed;
+  top: 0;
+  padding: 30px 50px;
+  font-size: 24pt;
+  font-weight: 700;
+  visibility: visible;
+  z-index: z("supertop-layer");
+  animation: 1s zoomInDown forwards;
+  
+  &__unit {
+    animation: 1s zoomInDown forwards;
+  }
+}

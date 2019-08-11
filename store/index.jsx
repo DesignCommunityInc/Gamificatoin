@@ -4,32 +4,33 @@ import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history';
 import rootReducer from '../reducers';
 
-export const history = createBrowserHistory(); 
+export const history = createBrowserHistory();
 
-const initialState = {}
-const enhancers = []
+const initialState = {};
+const enhancers = [];
 const middleware = [
   thunk,
-  routerMiddleware(history)
-]
+  routerMiddleware(history),
+];
 
 if (process.env.NODE_ENV === 'development') {
-  const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__
+  // eslint-disable-next-line no-underscore-dangle
+  const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
 
   if (typeof devToolsExtension === 'function') {
-    enhancers.push(devToolsExtension())
+    enhancers.push(devToolsExtension());
   }
 }
 
 const composedEnhancers = compose(
   applyMiddleware(...middleware),
-  ...enhancers
-)
+  ...enhancers,
+);
 
 const store = createStore(
   rootReducer(history),
   initialState,
-  composedEnhancers
-)
+  composedEnhancers,
+);
 
 export default store;

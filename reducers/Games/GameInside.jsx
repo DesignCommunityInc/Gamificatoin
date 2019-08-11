@@ -17,6 +17,8 @@ const initialState = {
   choosenCategory: null,
   passList: [],
   globalAnswerList: [],
+  endGameData: {},
+  isEndGameDataLoading: true,
 };
 
 export default (state = initialState, action) => {
@@ -71,13 +73,27 @@ export default (state = initialState, action) => {
     case types.PASS_ANSWER_FOR_THE_QUESTION:
       return {
         ...state,
-        globalAnswerList: [...state.globalAnswerList, action.payload.data],
+        globalAnswerList: state.globalAnswerList.concat(action.payload.data),
       };
     case types.END_THE_GAME:
       return {
         ...state,
         endGame: true,
       };
+    case types.SEND_GAME_RESULTS_START:
+      return {
+        ...state,
+        endGameData: {},
+        isEndGameDataLoading: true,
+      };
+    case types.SEND_GAME_RESULTS_SUCCESS:
+      return {
+        state,
+        endGameData: action.payload.data,
+        isEndGameDataLoading: false,
+      };
+    // case types.CLEAR_GAME_SESSION:
+    //   return state;
     default: {
       return state;
     }

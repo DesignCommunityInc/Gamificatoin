@@ -30,10 +30,7 @@ export function fetchUserGamesShort() {
   return async (dispatch) => {
     dispatch(start());
     try {
-      await API.get('/games?info=short').then(response => {
-        console.log(response);
-        dispatch(success(response.data))
-      });
+      await API.get('/games?info=short').then(response => dispatch(success(response.data)));
     } catch (e) {
       handleErrors(e);
     }
@@ -51,10 +48,7 @@ export function fetchTeacherGamesShort() {
   return async (dispatch) => {
     dispatch(start());
     try {
-      await API.get('/games/teacher?info=short').then(response => {
-        console.log(response);
-        dispatch(success(response.data))
-      });
+      await API.get('/games/teacher?info=short').then(response => dispatch(success(response.data)));
     } catch (e) {
       handleErrors(e);
     }

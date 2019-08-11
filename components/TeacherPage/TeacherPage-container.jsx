@@ -1,32 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Achievements from './Achievements';
-import Level from './Level';
 import Gamelist from '../Gamelist';
 import Classmates from '../../containers/ClassmatesContainer';
 import Rate from '../../containers/RateContainer';
 import Header from '../../containers/HeaderContainer';
 import Settings from '../Settings';
+import LastGame from '../LastGame';
 import Utils from '../../utils/Utils';
 
 const propTypes = {
   games: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   IsGamesLoading: PropTypes.bool.isRequired,
+  // shortGames: PropTypes.arrayOf(PropTypes.any),
+  // IsGamesShortLoading: PropTypes.bool,
   userData: PropTypes.objectOf(PropTypes.any).isRequired,
   isUserLoading: PropTypes.bool.isRequired,
+  fetchTeacherGamesShort: PropTypes.func.isRequired,
   fetchUserProfile: PropTypes.func.isRequired,
-  fetchUserGamesShort: PropTypes.func.isRequired,
 };
-
+const defaultProps = {
+  // shortGames: [],
+  // IsGamesShortLoading: true,
+  // isUserLoading: true,
+};
 
 class UserPage extends React.Component {
   componentDidMount() {
     const {
-      fetchUserGamesShort,
+      fetchTeacherGamesShort,
       fetchUserProfile,
     } = this.props;
-    fetchUserGamesShort();
     fetchUserProfile();
+    fetchTeacherGamesShort();
     Utils.scrollTo(document.documentElement, 0, 0);
   }
 
@@ -41,16 +46,12 @@ class UserPage extends React.Component {
       <main className="page">
         <Header />
         <Settings />
-        <Level
-          data={userData}
-          isLoading={isUserLoading}
-        />
+        <LastGame />
         <Gamelist
           title="Мои игры"
           list={games}
           isLoading={IsGamesLoading}
         />
-        <Achievements />
         <section className="Container">
           <Rate
             isLoading={isUserLoading}
@@ -62,7 +63,7 @@ class UserPage extends React.Component {
     );
   }
 }
-
+UserPage.defaultProps = defaultProps;
 UserPage.propTypes = propTypes;
 
 export default UserPage;

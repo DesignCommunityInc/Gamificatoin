@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Categories from './Categories';
-import Question from './Question';
+import Question from './Question/Question-container';
+import EndGame from './EndGame';
+import Timer from '../Timer';
 import ParticleSpawner from '../../utils/Particles';
 
 const propTypes = {
@@ -18,13 +20,14 @@ const propTypes = {
   endGame: PropTypes.bool.isRequired,
   fetchGamePlay: PropTypes.func.isRequired,
   sendAnswer: PropTypes.func.isRequired,
-  sendGameAnswers: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  totalQuestions: PropTypes.number,
 };
 
 const defaultProps = {
   currentQuestion: null,
   currentCategory: null,
+  totalQuestions: 0,
 };
 
 class GameInside extends React.Component {
@@ -34,12 +37,28 @@ class GameInside extends React.Component {
   }
 
   componentDidMount() {
-    const { fetchGamePlay } = this.props;
-    fetchGamePlay(1);
+    const {
+      fetchGamePlay,
+      match: {
+        params: { id },
+      },
+    } = this.props;
+    // window.addEventListener('beforeunload', this.beforeUnload);
+    fetchGamePlay(id);
     ParticleSpawner(this.spawner, 15, 2, 10);
   }
 
-  handleAnswer(currentAnswer) {
+  componentDidUpdate() {
+    localStorage.setItem('game', JSON.stringify(this.props));
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  // beforeUnload(e) {
+  //   e.preventDefault();
+  //   // e.returnValue = '';
+  // }
+
+  handleAnswer(currentAnswer, callback = () => {}) {
     const {
       sendAnswer,
       game: {
@@ -50,17 +69,20 @@ class GameInside extends React.Component {
       currentCategory,
       passList,
     } = this.props;
-    sendAnswer({
-      answer: {
-        id: currentQuestion.id,
-        answer: currentAnswer,
-      },
-      questions,
-      subjects,
-      currentQuestion,
-      currentCategory,
-      passList,
-    });
+    setTimeout(() => {
+      sendAnswer({
+        answer: {
+          id: currentQuestion.id,
+          answer: currentAnswer,
+        },
+        questions,
+        subjects,
+        currentQuestion,
+        currentCategory,
+        passList,
+      });
+      callback();
+    }, 1000);
   }
 
   render() {
@@ -76,10 +98,10 @@ class GameInside extends React.Component {
       currentCategory,
       currentQuestion,
       globalAnswerList,
-      sendGameAnswers,
       match: { params: { id } },
     } = this.props;
-    return !endGame ? (
+    console.log(this.props);
+    return (
       <main className="page">
         <div
           className="particle-spawner particle-spawner--from-page-start"
@@ -88,8 +110,9 @@ class GameInside extends React.Component {
           }}
         />
         <div className="background" />
-        {!isLoading && (
-          <div>
+        {(!isLoading && !endGame) && (
+          <>
+            <Timer />
             {!currentCategory && (
               <Categories
                 subjects={subjects}
@@ -98,7 +121,7 @@ class GameInside extends React.Component {
                 questions={questions}
               />
             )}
-            {currentCategory && (
+            {currentQuestion && (
               <Question
                 ref={(ref) => {
                   this.question = ref;
@@ -106,20 +129,22 @@ class GameInside extends React.Component {
                 {...currentQuestion}
                 endGame={endGame}
                 handleAnswer={this.handleAnswer}
+                startTimer={this.startTimer}
               />
             )}
-          </div>
+          </>
+        )}
+        {endGame && (
+          <EndGame
+            id={id}
+            answerList={globalAnswerList}
+            beforeUnload={this.beforeUnload}
+          />
         )}
       </main>
-    ) : (
-      <div>
-        {console.log(globalAnswerList)}
-        {sendGameAnswers(id, globalAnswerList)}
-      </div>
     );
   }
 }
-
 
 GameInside.propTypes = propTypes;
 GameInside.defaultProps = defaultProps;

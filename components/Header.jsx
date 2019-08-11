@@ -1,43 +1,37 @@
-import React from 'react'
-import { PropTypes } from "prop-types";
-import * as routes from "../constants/Routes";
-import { Link, withRouter } from "react-router-dom";
-import { buttonPressedSound } from "../utils/Audio";
+import React from 'react';
+import { PropTypes } from 'prop-types';
+import { Link, withRouter } from 'react-router-dom';
+import { buttonPressedSound } from '../utils/Audio';
+import * as routes from '../constants/Routes';
 
 const propTypes = {
-  data: PropTypes.object.isRequired,
-  isLoading: PropTypes.bool,
-  // request: PropTypes.shape({         // Стоит вносить в propTypes типы получаемые из апи?
-  //   data: PropTypes.shape({
-  //     id: PropTypes.number.isRequired,
-  //     email: PropTypes.string.isRequired,
-  //     name: PropTypes.string.isRequired,
-  //     surname: PropTypes.string.isRequired,
-  //     img: PropTypes.string.isRequired,
-  //   }).isRequired,
-  // }).isRequired,
+  data: PropTypes.shape({}).isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  location: PropTypes.shape({}).isRequired,
+  toggleSettingsScreen: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 class Header extends React.Component {
   render() {
-    const { 
+    const {
       isLoading,
       data: {
         name,
-        last_name,
-        second_name,
-        photo
-      },
+        last_name: lastName,
+        second_name: secondName,
+        photo,
+      } = {},
       toggleSettingsScreen,
+      logout,
       location: { pathname } = {},
-     } = this.props;
-    const style = { backgroundImage: `url('${photo}')` };
-    return pathname === routes.ROOT ? (
+    } = this.props;
+    return pathname === routes.ROOT && (
       <section className="Header">
         {isLoading ? (
           <div>
             <div className="tile__container">
-              <div className="tile__container__image tile__container__image-loading"/>
+              <div className="tile__container__image tile__container__image-loading" />
               <div className="tile__container__info tile__container__info-loading">
                 <h2> </h2>
                 <h4> </h4>
@@ -46,9 +40,10 @@ class Header extends React.Component {
             </div>
             <div className="settings-container">
               <Link to="/">
-                <span 
-                  role="button" 
-                  className="button button-main button-main-light">
+                <span
+                  role="button"
+                  className="button button-main button-main-light"
+                >
                   Главный экран
                 </span>
               </Link>
@@ -56,14 +51,13 @@ class Header extends React.Component {
               <span role="button" className="button button-main button-main-red">Выход</span>
             </div>
           </div>
-          ) : ( // is not loading
+        ) : ( // is not loading
           <div>
             <div className="tile__container">
-              <div className="tile__container__image" style={style}/>
+              <div className="tile__container__image" style={{ backgroundImage: `url('${photo}')` }} />
               <div className="tile__container__info">
-                <h2>{last_name}</h2>
-                <h4>{name} {second_name}</h4>
-                
+                <h2>{lastName}</h2>
+                <h4>{`${name} ${secondName}`}</h4>
                 <Link to="/my/class/">
                   <span>4Б класс</span>
                 </Link>
@@ -74,41 +68,48 @@ class Header extends React.Component {
             </div>
             <div className="settings-container">
               <Link to="/">
-                <span 
-                  role="button" 
+                <span
+                  role="button"
                   className="button button-main button-main-light"
-                  onClick={() => buttonPressedSound()}>
+                  onClick={() => buttonPressedSound()}
+                  onKeyDown={() => {}}
+                  tabIndex="0"
+                >
                   Главный экран
                 </span>
               </Link>
-              <span 
-                role="button" 
-                className="button button-main button-main-light" 
+              <span
+                role="button"
+                className="button button-main button-main-light"
                 onClick={() => {
-                  toggleSettingsScreen()
-                  buttonPressedSound()
-                }}>
-                Настройки 
+                  toggleSettingsScreen();
+                  buttonPressedSound();
+                }}
+                onKeyDown={() => {}}
+                tabIndex="0"
+              >
+                Настройки
               </span>
-              <span 
-                role="button" 
+              <span
+                role="button"
                 className="button button-main button-main-red"
                 onClick={() => {
                   buttonPressedSound();
-                  this.props.logout();
-                }}>
+                  logout();
+                }}
+                onKeyDown={() => {}}
+                tabIndex="0"
+              >
                 Выход
               </span>
             </div>
           </div>
         )}
       </section>
-    ) : (
-      <div></div>
-    )
+    );
   }
 }
 
 Header.propTypes = propTypes;
 
-export default withRouter(props => <Header {...props}/>);
+export default withRouter(props => <Header {...props} />);

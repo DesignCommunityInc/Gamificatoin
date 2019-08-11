@@ -103,6 +103,8 @@
           border-radius: $border-radius-large;
           overflow: hidden;
           min-height: 150px;
+          background-repeat: no-repeat;
+          background-size: cover;
           &:hover {
             filter: saturate(1.5);
             transition: $fast;
@@ -123,9 +125,9 @@
           border-radius: $border-radius-average;
           overflow: hidden;
           transition: $fast;
+          margin-right: 10px;
           &:hover {
             filter: saturate(1.5);
-            text-indent: 2px;
             transition: $fast;
           }
           &-loading {
@@ -172,14 +174,12 @@
             vertical-align: middle;
             color: $green;
             background: $green-40;
-              
           }
         }
         &__image {
           position: absolute;
           top: 0;
           left: 0;
-          transform: translateY(-15%) rotateY(180deg);
           max-width: 100%;
           z-index: -1;
         }
@@ -219,6 +219,7 @@
           font-size: 10pt;
           &__exp {
             background: $yellow;
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             color: $yellow;
@@ -277,6 +278,7 @@
         font-weight: 500;
         max-height: 100px;
         background: linear-gradient(to top, transparent, $dark);
+        background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         color: $yellow;

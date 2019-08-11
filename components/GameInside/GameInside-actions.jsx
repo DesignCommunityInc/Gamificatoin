@@ -60,6 +60,9 @@ export const chooseCategoryAsync = ({ category, questions }) => async (dispatch)
   }, 2000);
 };
 // ANSWER THE QUESTION
+export const endTheGame = () => dispatch => dispatch({
+  type: types.END_THE_GAME,
+});
 export function sendAnswer({
   answer,
   questions,
@@ -80,13 +83,11 @@ export function sendAnswer({
     type: types.PASS_CATEGORY,
     payload: { data },
   });
-  const endTheGame = () => dispatch => dispatch({
-    type: types.END_THE_GAME,
-  });
   const currentQuestionList = questions[currentCategory];
   const nextQuestion = currentQuestionList[currentQuestionList.indexOf(currentQuestion) + 1];
   return async (dispatch) => {
     dispatch(passAnswer(answer));
+    // localStorage.setItem('answer')
     // check if next question in current category exist
     if (nextQuestion) {
       dispatch(sendNextQuestion(nextQuestion));
@@ -100,7 +101,6 @@ export function sendAnswer({
     categories.forEach((category) => {
       if ((passList.concat(currentCategory)).indexOf(category) === -1) nextCategory = category;
     });
-    console.log(nextCategory === null);
     if (nextCategory) {
       dispatch(chooseCategory({ category: nextCategory, questions }));
       return;
@@ -109,21 +109,27 @@ export function sendAnswer({
   };
 }
 
-export function sendGameAnswers(id, answers) {
-  // const start = () => dispatch => dispatch({
-  //   // type: types.FETCH_GAME_PLAY_START,
-  // });
-  // const success = data => dispatch => dispatch({
-  //   // type: types.FETCH_GAME_PLAY_SUCCESS,
-  //   // payload: { data },
-  // });
+export function sendGameResults(id, answers) {
+  const start = () => dispatch => dispatch({
+    type: types.SEND_GAME_RESULTS_START,
+  });
+  const success = data => dispatch => dispatch({
+    type: types.SEND_GAME_RESULTS_SUCCESS,
+    payload: { data },
+  });
   return async (dispatch) => {
+    dispatch(start());
     try {
       await API.post(`/game/${id}/complete`, answers).then((response) => {
         console.log(response);
+        dispatch(success(response.data));
       });
     } catch (e) {
       handleErrors(e);
     }
   };
 }
+
+// export const clearGameSession = () => dispatch => dispatch({
+//   type: types.CLEAR_GAME_SESSION,
+// });

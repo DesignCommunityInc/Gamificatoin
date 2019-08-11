@@ -37,18 +37,15 @@ class Answer extends React.Component {
     } = this.props;
     if (passedAnswers.length === 0) return;
     hideQuestion();
-    setTimeout(() => {
-      if (type === types.SELECT_ONE) {
-        handleAnswer(passedAnswers[0].title);
-      } else {
-        const answerArray = [];
-        passedAnswers.forEach((awr) => {
-          answerArray.push(awr.title);
-        });
-        handleAnswer(answerArray);
-      }
-      this.handleCancel(e);
-    }, 1000);
+    if (type === types.SELECT_ONE) {
+      handleAnswer(passedAnswers[0].title, this.handleCancel(e));
+    } else {
+      const answerArray = [];
+      passedAnswers.forEach((awr) => {
+        answerArray.push(awr.title);
+      });
+      handleAnswer(answerArray, this.handleCancel(e));
+    }
   }
 
   handleCancel(e) {

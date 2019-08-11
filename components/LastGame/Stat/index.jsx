@@ -1,45 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import Info from './Info';
 
-const defaultTypes = {
+const propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+  info: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
-class Stat extends React.Component {
-  render() {
-    const { title, value, info } = this.props;
-    return (
-      <div className="stat">
-        <span className="stat__title">
-          <p>{title}</p>
-          <p className="stat__title__counter">{value}</p>
-        </span>
-        <div className="stat__bar__wrapper">
-        {info.map((inf, i) => {                    
-           let percent = inf.value / value * 100; 
-           return (<>
-            <div style={{width: percent + '%'}} className="stat__bar">
-              <p>{inf.value}</p>
-            </div>
-           </>) 
-        })}
-
+const Stat = ({ title, value, info }) => (
+  <div className="stat">
+    <span className="stat__title">
+      <p>{title}</p>
+      <p className="stat__title__counter">{value}</p>
+    </span>
+    <div className="stat__bar__wrapper">
+      {/* лучше вынести в компонент и там считать логику */}
+      {info.map(inf => (
+        <div
+          style={{ width: `${inf.value / value * 100}%` }}
+          className="stat__bar"
+        >
+          <p>{inf.value}</p>
         </div>
-        <div className="stat__info__wrapper">
-        {info.map((inf, i) => {                    
-           return (<>
-              <Info
-                name = {inf.name}
-              />
-           </>) 
-        })}
-        </div>
-      </div>
-    )
-  }
-}
+      ))}
+    </div>
+    <div className="stat__info__wrapper">
+      {info.map(inf => (
+        <Info
+          name={inf.name}
+        />
+      ))}
+    </div>
+  </div>
+);
 
-Stat.defaultTypes = defaultTypes;
+Stat.propTypes = propTypes;
 
 export default Stat;

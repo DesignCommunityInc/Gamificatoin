@@ -7,6 +7,7 @@ import gamepreview from './Games/GamePreview';
 import gameInside from './Games/GameInside';
 import answers from './Games/Answer';
 import lastGame from './Teacher/LastGame';
+import timer from './Games/Timer';
 import achievements, { specialAchievements } from './Achievements';
 
 export default history => combineReducers({
@@ -15,9 +16,10 @@ export default history => combineReducers({
   achievements,
   gamepreview,
   gameInside,
+  lastGame,
   gamelist,
   settings,
   answers,
   session,
-  lastGame,
+  timer,
 });

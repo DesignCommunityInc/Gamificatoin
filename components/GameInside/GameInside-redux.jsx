@@ -5,7 +5,7 @@ import {
   fetchGamePlay,
   chooseCategory,
   sendAnswer,
-  sendGameAnswers,
+  sendGameResults,
 } from './GameInside-actions';
 import GameInside from './GameInside-container';
 
@@ -13,6 +13,7 @@ const insideContainer = props => <GameInside {...props} />;
 
 const mapStateToProps = ({ gameInside }) => ({
   game: gameInside.data,
+  timer: gameInside.timer,
   answer: gameInside.answer,
   isLoading: gameInside.isLoading,
   currentCategory: gameInside.currentCategory,
@@ -29,7 +30,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchGamePlay,
   chooseCategory,
   sendAnswer,
-  sendGameAnswers,
+  sendGameResults,
 }, dispatch);
 
 export default connect(

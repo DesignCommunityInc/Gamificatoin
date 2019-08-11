@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AnswerButton from '../AnswerButton';
 import * as types from '../../../../constants/QuestionTypes';
+// import * as types from '../../../../constants/QuestionTypes';
 
 const propTypes = {
+  type: PropTypes.string.isRequired,
   handleAnswer: PropTypes.func.isRequired,
+  hideQuestion: PropTypes.func.isRequired,
 };
 
 class TextAnswer extends React.Component {
@@ -20,28 +24,34 @@ class TextAnswer extends React.Component {
   }
 
   render() {
-    const { handleAnswer } = this.props;
+    const { handleAnswer, hideQuestion, type } = this.props;
     return (
       <div className="Question__answer-text__container">
-        <textarea
-          className="Question__answer-text"
-          onInput={this.handleInput}
-          ref={(ref) => {
-            this.textarea = ref;
+        {type === types.DWORD ? (
+          <textarea
+            placeholder="Напишите ответ сюда"
+            className="Question__answer-text Question__answer-text--sizable"
+            onInput={this.handleInput}
+            ref={(ref) => {
+              this.textarea = ref;
+            }}
+          />
+        ) : (
+          <input
+            placeholder="Напишите ответ сюда"
+            className="Question__answer-text"
+            onInput={this.handleInput}
+            ref={(ref) => {
+              this.textarea = ref;
+            }}
+          />
+        )}
+        <AnswerButton
+          onClick={() => {
+            handleAnswer(this.textarea.value);
+            hideQuestion();
           }}
-          name=""
-          id=""
-          placeholder="Напишите ответ сюда"
         />
-        <span
-          onClick={() => handleAnswer(this.textarea.value)}
-          role="button"
-          onKeyDown={() => {}}
-          tabIndex="0"
-          className="button button-action"
-        >
-          Ответить
-        </span>
       </div>
     );
   }
