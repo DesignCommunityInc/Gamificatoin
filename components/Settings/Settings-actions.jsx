@@ -10,7 +10,6 @@ export const toggleHelpersSettings = hintsEnabled => async (dispatch) => {
     await API.put('/user/settings', {
       S_hints: !hintsEnabled,
     }).then((response) => {
-      console.log(response);
       dispatch({ type: types.SETTINGS_HELPERS_TOGGLE });
     });
   } catch (e) {

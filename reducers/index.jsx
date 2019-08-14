@@ -8,11 +8,10 @@ import gameInside from './Games/GameInside';
 import answers from './Games/Answer';
 import lastGame from './Teacher/LastGame';
 import timer from './Games/Timer';
-import achievements, { specialAchievements } from './Achievements';
+import achievements from './Achievements';
 
 export default history => combineReducers({
   router: connectRouter(history),
-  specialAchievements,
   achievements,
   gamepreview,
   gameInside,

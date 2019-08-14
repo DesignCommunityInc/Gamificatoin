@@ -200,7 +200,6 @@ class Option extends React.Component {
     const footholdIndex = titleList.indexOf(title);
     removeAnswers();
     if (elementIndex === footholdIndex) return;
-    // console.log(answerList, titleList, elementIndex, footholdIndex, type);
     replaceOption(answerList, titleList, elementIndex, footholdIndex, type);
   }
 

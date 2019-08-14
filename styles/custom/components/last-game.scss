@@ -5,21 +5,21 @@
             overflow: hidden;
         }
     }
-    &__Last{
-        margin: 0 10px 20px;
+    &__Last {
         position: relative;
         display: block;
         white-space: nowrap;
         max-width: 1920px;
         padding: unset;
-        margin: 15px 60px;
-        &__container{
-            overflow-y: hidden;
-        }
+        // padding: 0 60px;
+        border-right: 60px solid transparent;
+        border-left: 60px solid transparent;
         @include mobile {
             display: block;
             margin: 15px 20px;
-            overflow-x: unset;
+            padding: unset;
+            border-width: 0;
+            overflow-x: hidden;
             white-space: unset;
         }
         & > *{
@@ -295,13 +295,13 @@
 
         
         .Games__scroller[type='backward']{
-            left: 440px;
+            left: 520px;
             @include mobile {
                 left: 10px;
             }
         }
         .Games__scroller[type='forward']{
-            right: 5px;
+            right: 60px;
             @include mobile {
                 left: 10px;
             }

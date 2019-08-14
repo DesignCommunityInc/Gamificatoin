@@ -10,10 +10,12 @@ const propTypes = {
   title: PropTypes.string,
   isLoading: PropTypes.bool.isRequired,
   pathname: PropTypes.string,
+  error: PropTypes.bool,
 };
 const defaultProps = {
   title: '',
   pathname: null,
+  error: false,
 };
 
 class GameList extends React.Component {
@@ -54,11 +56,11 @@ class GameList extends React.Component {
   }
 
   moveForward() {
-    Utils.forward(this.gamesContainer, -365);
+    Utils.forward(this.gamesContainer, -600);
   }
 
   moveBack() {
-    Utils.backward(this.gamesContainer, 365);
+    Utils.backward(this.gamesContainer, 600);
   }
 
   render() {
@@ -67,8 +69,24 @@ class GameList extends React.Component {
       list,
       isLoading,
       pathname,
+      error,
     } = this.props;
-    console.log(this.props);
+    if (error) {
+      return (
+        <section className="Games Container">
+          {pathname ? (
+            <div className="Container__title Container__title">{title}</div>
+          ) : (
+            <Link to="/games" className="Container__title Container__title-forward">{title}</Link>
+          )}
+          <div className="Games__container Games__container-scroll">
+            <div className="Games__container__wrapper--empty">
+              <span className="empty-title">Новых игр на данный момент нет :(</span>
+            </div>
+          </div>
+        </section>
+      );
+    }
     if (isLoading) {
       return (
         <section className="Games Container">

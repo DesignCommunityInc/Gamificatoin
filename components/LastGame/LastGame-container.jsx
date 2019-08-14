@@ -51,11 +51,11 @@ class LastGame extends React.Component {
   }
 
   moveForward() {
-    Utils.forward(this.gamesContainer, -2500);
+    Utils.forward(this.gamesContainer, -350);
   }
 
   moveBack() {
-    Utils.backward(this.gamesContainer, 2500);
+    Utils.backward(this.gamesContainer, 350);
   }
 
   render() {
@@ -78,7 +78,7 @@ class LastGame extends React.Component {
       );
     }
     return (
-      <section className="Games Container Games__Last Games__container__wrapper">
+      <section className="Games Container Games__Last">
         <div className="game game__last">
           <Link
             to={`games/${id}`}
@@ -143,14 +143,12 @@ class LastGame extends React.Component {
               </div>
             </div>
             {statistic.map(statist => (
-              <div className="stat__ln">
-                <Stat
-                  key={uid()}
-                  title={statist.title}
-                  value={statist.count}
-                  info={statist.stat}
-                />
-              </div>
+              <Stat
+                key={uid()}
+                title={statist.title}
+                value={statist.count}
+                info={statist.stat}
+              />
             ))}
           </div>
         </div>

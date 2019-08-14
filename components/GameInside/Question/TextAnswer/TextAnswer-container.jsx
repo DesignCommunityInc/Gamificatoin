@@ -14,6 +14,7 @@ class TextAnswer extends React.Component {
   constructor() {
     super();
     this.handleInput = this.handleInput.bind(this);
+    this.invalidate = this.invalidate.bind(this);
   }
 
   componentDidMount() {
@@ -21,6 +22,10 @@ class TextAnswer extends React.Component {
 
   handleInput() {
     this.alert = 0;
+  }
+
+  invalidate() {
+    if (this.textarea) this.textarea.value = '';
   }
 
   render() {
@@ -48,7 +53,7 @@ class TextAnswer extends React.Component {
         )}
         <AnswerButton
           onClick={() => {
-            handleAnswer(this.textarea.value);
+            handleAnswer(this.textarea.value, this.invalidate);
             hideQuestion();
           }}
         />
