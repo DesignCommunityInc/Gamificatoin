@@ -56,7 +56,7 @@ class GamePreview extends React.Component {
     return (
       <main className="page">
         <Settings />
-        <Header />
+        {/* <Header /> */}
         <Timer />
         {/* if helpers are available, render alert there => alert = helper */}
         <Alert 

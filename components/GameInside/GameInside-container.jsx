@@ -21,13 +21,11 @@ const propTypes = {
   fetchGamePlay: PropTypes.func.isRequired,
   sendAnswer: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  totalQuestions: PropTypes.number,
 };
 
 const defaultProps = {
   currentQuestion: null,
   currentCategory: null,
-  totalQuestions: 0,
 };
 
 class GameInside extends React.Component {
@@ -44,19 +42,14 @@ class GameInside extends React.Component {
       },
     } = this.props;
     // window.addEventListener('beforeunload', this.beforeUnload);
-    fetchGamePlay(id);
+    if (!localStorage.getItem('game')) fetchGamePlay(id);
     ParticleSpawner(this.spawner, 15, 2, 10);
   }
 
   componentDidUpdate() {
-    localStorage.setItem('game', JSON.stringify(this.props));
+    const { endGame, currentQuestion } = this.props;
+    if (!endGame && currentQuestion) localStorage.setItem('game', JSON.stringify(this.props));
   }
-
-  // eslint-disable-next-line class-methods-use-this
-  // beforeUnload(e) {
-  //   e.preventDefault();
-  //   // e.returnValue = '';
-  // }
 
   handleAnswer(currentAnswer, callback = () => {}) {
     const {
@@ -100,7 +93,6 @@ class GameInside extends React.Component {
       globalAnswerList,
       match: { params: { id } },
     } = this.props;
-    console.log(this.props);
     return (
       <main className="page">
         <div
@@ -138,7 +130,6 @@ class GameInside extends React.Component {
           <EndGame
             id={id}
             answerList={globalAnswerList}
-            beforeUnload={this.beforeUnload}
           />
         )}
       </main>

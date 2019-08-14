@@ -9,6 +9,7 @@ const propTypes = {
     seconds: PropTypes.number.isRequired,
   }),
   currentQuestion: PropTypes.shape({}),
+  endGame: PropTypes.bool.isRequired,
   setTimer: PropTypes.func.isRequired,
   endTheGame: PropTypes.func.isRequired,
 };
@@ -35,8 +36,8 @@ class Timer extends React.Component {
   }
 
   componentDidUpdate() {
-    const { currentQuestion, timer } = this.props;
-    if (currentQuestion && !timer) {
+    const { currentQuestion, timer, endGame } = this.props;
+    if (currentQuestion && !timer && !endGame) {
       this.start();
     }
   }
@@ -76,7 +77,7 @@ class Timer extends React.Component {
     min = min > 0 && seconds - 1 < 0 ? minutes - 1 : minutes;
     sec = sec >= 0 && seconds - 1 < 0 ? 59 : seconds - 1;
 
-    console.log(hour, min, sec);
+    localStorage.setItem('timer', JSON.stringify({ hours: hour, minutes: min, seconds: sec }));
     setTimer({ hours: hour, minutes: min, seconds: sec });
     if (hour === 0 && min === 0 && sec === 0) {
       clearInterval(this.timerInterval);

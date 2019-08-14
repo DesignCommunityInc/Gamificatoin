@@ -1,4 +1,4 @@
-import * as types from "../../constants/ActionTypes";
+import * as types from '../../constants/ActionTypes';
 
 const initialData = {
   completed: {
@@ -9,14 +9,16 @@ const initialData = {
   },
   invites: {
     data: [],
-  }
-}
+  },
+};
 const initialState = {
   data: initialData,
   shortData: [],
+  error: null,
   isDataLoading: true,
   isShortDataLoading: true,
-}
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.FETCH_USER_GAMES_START:
@@ -24,38 +26,57 @@ export default (state = initialState, action) => {
         ...state,
         data: initialData,
         isDataLoading: true,
-      }
+      };
     case types.FETCH_USER_GAMES_SUCCESS:
       return {
         ...state,
         data: action.payload.data,
         isDataLoading: false,
-      }
+      };
+    case types.FETCH_TEACHER_GAMES_START:
+      return {
+        ...state,
+        data: initialData,
+        isDataLoading: true,
+      };
+    case types.FETCH_TEACHER_GAMES_SUCCESS:
+      return {
+        ...state,
+        data: action.payload.data,
+        isDataLoading: false,
+      };
     case types.FETCH_USER_GAMES_SHORT_START:
       return {
         ...state,
         shortData: [],
         isShortDataLoading: true,
-      }
+        error: false,
+      };
     case types.FETCH_USER_GAMES_SHORT_SUCCESS:
       return {
         ...state,
         shortData: action.payload.data,
         isShortDataLoading: false,
-      }
+      };
+    case types.FETCH_USER_GAMES_SHORT_FAILURE:
+      return {
+        ...state,
+        error: true,
+        isShortDataLoading: false,
+      };
     case types.FETCH_TEACHER_GAMES_SHORT_START:
-        return {
-          ...state,
-          shortData: [],
-          isShortDataLoading: true,
-        }
+      return {
+        ...state,
+        shortData: [],
+        isShortDataLoading: true,
+      };
     case types.FETCH_TEACHER_GAMES_SHORT_SUCCESS:
       return {
         ...state,
         shortData: action.payload.data,
         isShortDataLoading: false,
-      }
+      };
     default:
-      return state
+      return state;
   }
-}
+};

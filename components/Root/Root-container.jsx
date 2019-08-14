@@ -10,6 +10,9 @@ import {
 } from 'react-transition-group';
 import UserPage from '../UserPage';
 import TeacherPage from '../TeacherPage';
+import TeacherGamePage from '../TeacherGamePage';
+import TeacherGameSettingsPage from '../TeacherGameSettingsPage';
+import TeacherCreatingPage from '../TeacherCreatingPage';
 import AchievementsPage from '../AchievementPage';
 import GamePreview from '../GamePreview';
 import GamePage from '../GamePage';
@@ -24,21 +27,23 @@ const propTypes = {
 class Root extends React.Component {
   constructor() {
     super();
-    this.role = 6;
+    this.role = JSON.parse(localStorage.getItem('User')).role;
+    // this.role = 5;
   }
 
   componentDidMount() {
     if (this.role !== 5) return;
     const { restore } = this.props;
     const game = JSON.parse(localStorage.getItem('game'));
+    const timer = JSON.parse(localStorage.getItem('timer'));
     if (game) {
-      restore(game);
+      restore(game, timer);
     }
   }
 
   switchRender() {
     switch (this.role) {
-      case 6: return (
+      case '6': return (
         <Route render={({ location }) => (
           <TransitionGroup>
             <CSSTransition
@@ -48,6 +53,9 @@ class Root extends React.Component {
             >
               <Switch location={location}>
                 <Route exact path={routes.ROOT} component={TeacherPage} />
+                <Route exact path={routes.GAME_LIST_PAGE} component={TeacherGamePage} />
+                <Route exact path={routes.GAME_PREVIEW_PAGE} component={TeacherGameSettingsPage} />
+                <Route exact path={routes.GAME_CREATING_PAGE} component={TeacherCreatingPage} />
               </Switch>
             </CSSTransition>
           </TransitionGroup>
@@ -80,7 +88,10 @@ class Root extends React.Component {
 
   render() {
     return (
-      <>{this.switchRender()}</>
+      <>
+        <link rel="stylesheet" href="https://cdn.rawgit.com/mfd/09b70eb47474836f25a21660282ce0fd/raw/e06a670afcb2b861ed2ac4a1ef752d062ef6b46b/Gilroy.css" />
+        {this.switchRender()}
+      </>
     );
   }
 }
