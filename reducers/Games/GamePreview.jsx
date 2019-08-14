@@ -19,6 +19,18 @@ export default (state = initialState, action) => {
         data: action.payload.data,
         isLoading: false,
       };
+    case types.FETCH_TEACHER_GAME_PREVIEW_START:
+      return {
+        ...state,
+        data: {},
+        isLoading: true,
+      };
+    case types.FETCH_TEACHER_GAME_PREVIEW_SUCCESS:
+      return {
+        ...state,
+        data: action.payload.data,
+        isLoading: false,
+      };
     default:
       return state;
   }
