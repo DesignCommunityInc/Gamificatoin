@@ -1,22 +1,26 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
-import { fetchAchievements } from '../../../actions/Achievements';
 import { connect } from 'react-redux';
-import AchievementsContainer from "./Achievements-container";
+import fetchAchievements, { sortChooser, filterToggler } from './Achievements-actions';
+import AchievementsContainer from './Achievements-container';
 
 const achievementsContainer = props => <AchievementsContainer {...props} />;
 
 const mapStateToProps = ({ achievements }) => ({
-    achievements: achievements.data,
-    isLoading: achievements.isLoading,
-    error: achievements.error,
+  achievements: achievements.achievements,
+  isLoading: achievements.isLoading,
+  filter: achievements.filter,
+  sort: achievements.sort,
+  page: achievements.page,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchAchievements,
+  sortChooser,
+  filterToggler,
 }, dispatch);
 
-export default connect (
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(achievementsContainer);

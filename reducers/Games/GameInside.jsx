@@ -24,7 +24,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.FETCH_GAME_PLAY_START:
-      return state;
+      return initialState;
     case types.FETCH_GAME_PLAY_SUCCESS:
       return {
         ...state,
@@ -81,14 +81,10 @@ export default (state = initialState, action) => {
         endGame: true,
       };
     case types.SEND_GAME_RESULTS_START:
-      return {
-        ...state,
-        endGameData: {},
-        isEndGameDataLoading: true,
-      };
+      return state;
     case types.SEND_GAME_RESULTS_SUCCESS:
       return {
-        state,
+        ...state,
         endGameData: action.payload.data,
         isEndGameDataLoading: false,
       };

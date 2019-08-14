@@ -14,10 +14,14 @@ const propTypes = {
   IsGamesLoading: PropTypes.bool.isRequired,
   userData: PropTypes.objectOf(PropTypes.any).isRequired,
   isUserLoading: PropTypes.bool.isRequired,
+  gamesError: PropTypes.bool,
   fetchUserProfile: PropTypes.func.isRequired,
   fetchUserGamesShort: PropTypes.func.isRequired,
 };
 
+const defaultProps = {
+  gamesError: false,
+};
 
 class UserPage extends React.Component {
   componentDidMount() {
@@ -36,6 +40,7 @@ class UserPage extends React.Component {
       IsGamesLoading,
       userData,
       isUserLoading,
+      gamesError,
     } = this.props;
     return (
       <main className="page">
@@ -49,6 +54,7 @@ class UserPage extends React.Component {
           title="Мои игры"
           list={games}
           isLoading={IsGamesLoading}
+          error={gamesError}
         />
         <Achievements />
         <section className="Container">
@@ -64,5 +70,6 @@ class UserPage extends React.Component {
 }
 
 UserPage.propTypes = propTypes;
+UserPage.defaultProps = defaultProps;
 
 export default UserPage;

@@ -10,7 +10,7 @@
     position: absolute;
     width: 50px;
     height: 50px;
-    top: 50%;
+    top: 47%;
     background: $light;
     opacity: .4;
     border-radius: 50%;
@@ -78,157 +78,164 @@
       font-weight: 700;
       z-index: z("background-layer");
     }
-
     &__wrapper {
       display: inline-block;
       position: relative;
-      
-      .game {
-        display: inline-block;
-        position: relative;
-        width: 600px;
-        margin-right: 20px;
+      &--empty {
+        width: 100%;
+        .empty-title {
+          display: block;
+          color: $light;
+          text-align: center;
+          font-size: 24pt;
+          padding: 110px;
+        }
+      } 
+    } 
+  }
+  .game {
+    display: inline-block;
+    position: relative;
+    width: 600px;
+    margin-right: 20px;
+    transition: $fast;
+    overflow: hidden;
+    @include mobile {
+      width: 365px;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+    &__tile {
+      display: block;
+      position: relative;
+      padding: 20px 25px;
+      border-radius: $border-radius-large;
+      overflow: hidden;
+      min-height: 150px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      &:hover {
+        filter: saturate(1.5);
         transition: $fast;
-        overflow: hidden;
-        @include mobile {
-          width: 365px;
-        }
-        &:last-child {
-          margin-right: 0;
-        }
-        &__tile {
-          display: block;
-          position: relative;
-          padding: 20px 25px;
-          border-radius: $border-radius-large;
-          overflow: hidden;
-          min-height: 150px;
-          background-repeat: no-repeat;
-          background-size: cover;
-          &:hover {
-            filter: saturate(1.5);
-            transition: $fast;
-          }
-          
-          &-loading {
-            background: $light;
-          }
-        }
-        &__author {
-          display: inline-block;
-          position: relative;
-          max-width: 100%;
-          min-width: 30%;
-          padding: 2px 5px;
-          margin-top: 10px;
-          background: $light-violet;
-          border-radius: $border-radius-average;
-          overflow: hidden;
-          transition: $fast;
-          margin-right: 10px;
-          &:hover {
-            filter: saturate(1.5);
-            transition: $fast;
-          }
-          &-loading {
-            height: 30px;
-          }
-          &__image {
-            display: inline-block;
-            vertical-align: middle;
-            width: 25px;
-            height: 25px;
-            background: $linear-gradient;
-            border-radius: 50%;
-            margin-right: 10px;
-          }
-          &__info {
-            display: inline-block;
-            vertical-align: middle;
-          
-            & > * {
-              color: $dark;
-              font-weight: 500;
-              &:last-child {
-                color: $grey;
-              }
-            }
-          }
-        }
-        &__results {
-          padding: 3px 0;
-          font-size: 10pt;
-
-          &::before {
-            content: '✔';
-            display: inline-block;
-            position: relative;
-            width: 15px;
-            height: 15px;
-            padding: 3px;
-            font-size: 8pt;
-            margin-right: 10px;
-            border-radius: 3px;
-            line-height: 15px;
-            text-align: center;
-            vertical-align: middle;
-            color: $green;
-            background: $green-40;
-          }
-        }
-        &__image {
-          position: absolute;
-          top: 0;
-          left: 0;
-          max-width: 100%;
-          z-index: -1;
-        }
-        &__name {
-          font-size: 18pt;
-        }
-        &__difficulty {
-          color: $grey;
-          font-size: 10pt;
-        }
-        &__questions {
-          padding: 10px 0;
-          font-size: 10pt;
-
-          &::before {
-              content: 'ico';
-              font-weight: 700;
-              margin-right: 10px;
-          }
-        }
-        &__time {
-          font-size: 10pt;
-          &::before {
-              content: 'ico';
-              font-weight: 700;
-              margin-right: 10px;
-          }
-        }
-        &__reward {
-          display: block;
-          position: absolute;
-          padding: 5px 10px;
-          border-radius: 3px;
-          background: $dark-40;
-          top: 10px;
-          right: 10px;
-          font-size: 10pt;
-          &__exp {
-            background: $yellow;
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: $yellow;
+      }
+      
+      &-loading {
+        background: $light;
+      }
+    }
+    &__author {
+      display: inline-block;
+      position: relative;
+      max-width: 100%;
+      min-width: 30%;
+      padding: 2px 5px;
+      margin-top: 10px;
+      background: $light-violet;
+      border-radius: $border-radius-average;
+      overflow: hidden;
+      transition: $fast;
+      margin-right: 10px;
+      &:hover {
+        filter: saturate(1.5);
+        transition: $fast;
+      }
+      &-loading {
+        height: 30px;
+      }
+      &__image {
+        display: inline-block;
+        vertical-align: middle;
+        width: 25px;
+        height: 25px;
+        background: $linear-gradient;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+      &__info {
+        display: inline-block;
+        vertical-align: middle;
+      
+        & > * {
+          color: $dark;
+          font-weight: 500;
+          &:last-child {
+            color: $grey;
           }
         }
       }
     }
-  }
+    &__results {
+      padding: 3px 0;
+      font-size: 10pt;
 
+      &::before {
+        content: '✔';
+        display: inline-block;
+        position: relative;
+        width: 15px;
+        height: 15px;
+        padding: 3px;
+        font-size: 8pt;
+        margin-right: 10px;
+        border-radius: 3px;
+        line-height: 15px;
+        text-align: center;
+        vertical-align: middle;
+        color: $green;
+        background: $green-40;
+      }
+    }
+    &__image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      max-width: 100%;
+      z-index: -1;
+    }
+    &__name {
+      font-size: 18pt;
+    }
+    &__difficulty {
+      color: white;
+      font-size: 10pt;
+    }
+    &__questions {
+      padding: 10px 0;
+      font-size: 10pt;
+
+      &::before {
+          content: 'ico';
+          font-weight: 700;
+          margin-right: 10px;
+      }
+    }
+    &__time {
+      font-size: 10pt;
+      &::before {
+          content: 'ico';
+          font-weight: 700;
+          margin-right: 10px;
+      }
+    }
+    &__reward {
+      display: block;
+      position: absolute;
+      padding: 5px 10px;
+      border-radius: 3px;
+      background: $dark-40;
+      top: 10px;
+      right: 10px;
+      font-size: 10pt;
+      &__exp {
+        background: $yellow;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: $yellow;
+      }
+    }
+  }
   &-Preview {
     .game {
       height: 250px;

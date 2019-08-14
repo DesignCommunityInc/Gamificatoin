@@ -19,6 +19,7 @@
   display: block;
   position: relative;
   &-fullscreen {
+    position: fixed;
     width: 100vw;
     height: 100vh;
     z-index: z("top-layer");
@@ -282,6 +283,7 @@
       padding: 2px 5px;
       margin: 3px 5px;
       background: $white-40;
+      font-size: 14pt;
       font-weight: 700;
       border-radius: $border-radius-average;
       &:first-child {
@@ -613,6 +615,7 @@
       margin-bottom: 10px;
       font-size: 14pt;
       font-weight: 500;
+      transition: $slow;
     }
     span {
       display: inline-block;

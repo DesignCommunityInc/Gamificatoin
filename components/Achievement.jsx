@@ -1,33 +1,34 @@
-import React from 'react'
-import { PropTypes } from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 // import Achievement from './Achievement';
 
 const propTypes = {
-    icon: PropTypes.string.isRequired,
-    info: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-    }).isRequired,
-    reward: PropTypes.number.isRequired,   
+  name: PropTypes.string,
+  description: PropTypes.string,
+  reward: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  progress: PropTypes.number,
+  isLoading: PropTypes.bool,
 };
 
-const defaultTypes = {
-    icon: null,
-    info: {
-        name: '',
-        description: '',
-    },
-    reward: 300,
+const defaultProps = {
+  name: '',
+  description: '',
+  reward: '',
+  progress: 0,
+  isLoading: false,
 };
 
-const Achievement = ({ 
-  title,
-  description, 
-  reward, 
-  progress = 0,
+const Achievement = ({
+  name,
+  description,
+  reward,
+  progress,
   isLoading,
 }) => {
-  if(isLoading) {
+  if (isLoading) {
     return (
       <div className="achievement">
         <div className="achievement__icon__container">
@@ -39,7 +40,7 @@ const Achievement = ({
           <h5> </h5>
         </div>
       </div>
-    )
+    );
   }
   const style = { width: `${progress}%` };
   return (
@@ -47,21 +48,22 @@ const Achievement = ({
       <div className="achievement__icon__container">
         <span className="achievement__icon" />
         <div className="achievement__progress">
-          <span 
-            className="achievement__progress-done" 
+          <span
+            className="achievement__progress-done"
             style={style}
           />
         </div>
       </div>
       <div className="achievement__info">
-          <h4>{title}</h4>
-          <span className="achievement__reward">{reward} xp</span>
-          <h5>{description}</h5>
+        <h4>{name}</h4>
+        <span className="achievement__reward">{`${reward} xp`}</span>
+        <h5>{description}</h5>
       </div>
     </div>
-  )
-}
-// Achievement.propTypes = propTypes;
-// Achievement.defaultTypes = defaultTypes;
+  );
+};
+
+Achievement.propTypes = propTypes;
+Achievement.defaultProps = defaultProps;
 
 export default Achievement;

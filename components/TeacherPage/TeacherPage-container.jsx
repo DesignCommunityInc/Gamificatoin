@@ -7,6 +7,7 @@ import Header from '../../containers/HeaderContainer';
 import Settings from '../Settings';
 import LastGame from '../LastGame';
 import Utils from '../../utils/Utils';
+// import API from '../../utils/API';
 
 const propTypes = {
   games: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
@@ -26,6 +27,14 @@ const defaultProps = {
 
 class UserPage extends React.Component {
   componentDidMount() {
+    // API.post('/games', {
+    //   name: 'test',
+    //   class: 2,
+    //   description: 'test123',
+    //   publicity: 1,
+    //   randomize: 1,
+    //   type: 1,
+    // });
     const {
       fetchTeacherGamesShort,
       fetchUserProfile,

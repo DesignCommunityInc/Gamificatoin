@@ -1,64 +1,84 @@
-import * as types from "../constants/ActionTypes";
+import * as types from '../constants/ActionTypes';
 
 const initialState = {
-  data: [],
-  isLoading: true,
-  shortData: {
+  achievements: [],
+  page: 1,
+  filter: [],
+  sort: {},
+  shortAchievements: {
     data: [],
-    isLoading: true,
   },
-}
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case types.FETCH_ACHIEVEMENTS_START:
-      return {
-        ...state,
-        // data: [],
-        // isLoading: true,
-      }
-    case types.FETCH_ACHIEVEMENTS_SUCCESS:
-      return {
-        ...state,
-        data: state.data.concat(action.payload.data),
-        isLoading: false,
-      }
-    case types.FETCH_ACHIEVEMENTS_SHORT_START:
-      return {
-        ...state,
-      }
-    case types.FETCH_ACHIEVEMENTS_SHORT_SUCCESS:
-      return {
-        ...state,
-        shortData: { 
-          data: action.payload.data, 
-          isLoading: false,
-        },
-      }
-    default:
-      return state
-  }
-}
-
-const specialInitialState = {
-  data: {
+  mainAchievements: {
     last: {},
     progress: [],
   },
   isLoading: true,
-}
-export function specialAchievements(state = specialInitialState, action) {
-  switch(action.type) {
+  isShortAchievementsLoading: true,
+  isMainAchievementsLoading: true,
+};
+
+export default (state = initialState, action) => {
+  switch (action.type) {
+    // case types.FETCH_ACHIEVEMENTS_START:
+    //   return {
+    //     ...state,
+    //     // data: [],
+    //     // isLoading: true,
+    //   };
+    case types.FETCH_ACHIEVEMENTS_SUCCESS:
+      return {
+        ...state,
+        achievements: state.achievements.concat(action.payload.data),
+        page: state.page + 1,
+        isLoading: true,
+      };
+    case types.FETCH_ACHIEVEMENTS_FAILURE:
+      return {
+        ...state,
+        achievements: state.achievements.concat(action.payload.data),
+        isLoading: false,
+      };
+    case types.SORT_ACHIEVEMENTS:
+      return {
+        ...state,
+        sort: action.payload.sort,
+      };
+    case types.FILTER_ACHIEVEMENTS:
+      // console.log(action.payload.filter);
+      return {
+        ...state,
+        filter: action.payload.filter,
+      };
+    case types.FETCH_ACHIEVEMENTS_SHORT_START:
+      return {
+        ...state,
+        shortAchievements: {
+          data: [],
+        },
+        isShortAchievementsLoading: true,
+      };
+    case types.FETCH_ACHIEVEMENTS_SHORT_SUCCESS:
+      return {
+        ...state,
+        shortAchievements: action.payload.data,
+        isShortAchievementsLoading: false,
+      };
     case types.FETCH_SPECIAL_ACHIEVEMENTS_START:
       return {
         ...state,
-      }
+        mainAchievements: {
+          last: {},
+          progress: [],
+        },
+        isMainAchievementsLoading: true,
+      };
     case types.FETCH_SPECIAL_ACHIEVEMENTS_SUCCESS:
       return {
         ...state,
-        data: action.payload.data,
-        isLoading: false,
-      }
+        mainAchievements: action.payload.data,
+        isMainAchievementsLoading: false,
+      };
     default:
-      return state
+      return state;
   }
-}
+};

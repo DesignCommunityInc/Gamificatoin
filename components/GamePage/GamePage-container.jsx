@@ -11,6 +11,10 @@ const propTypes = {
   isLoading: PropTypes.bool.isRequired,
   data: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
+  error: PropTypes.shape({}),
+};
+const defaultProps = {
+  error: null,
 };
 
 class GamePage extends React.Component {
@@ -27,6 +31,7 @@ class GamePage extends React.Component {
         recommendation,
         completed,
       } = {},
+      error,
       location: {
         pathname,
       } = {},
@@ -54,22 +59,25 @@ class GamePage extends React.Component {
             list={invites.data}
             isLoading={isLoading}
             pathname={pathname}
+            error={error}
           />
         )}
-        {recommendation.data !== null && (
+        {!error && recommendation.data !== null && (
           <Gamelist
             title={recommendation.title}
             list={recommendation.data}
             isLoading={isLoading}
             pathname={pathname}
+            error={error}
           />
         )}
-        {completed.data !== null && (
+        {!error && completed.data !== null && (
           <Gamelist
             title={completed.title}
             list={completed.data}
             isLoading={isLoading}
             pathname={pathname}
+            error={error}
           />
         )}
       </main>
@@ -79,5 +87,6 @@ class GamePage extends React.Component {
 
 
 GamePage.propTypes = propTypes;
+GamePage.defaultProps = defaultProps;
 
 export default GamePage;

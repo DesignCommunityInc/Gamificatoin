@@ -10,6 +10,7 @@ const timerContainer = props => <Timer {...props} />;
 const mapStateToProps = ({ timer, gameInside }) => ({
   timer: timer.timer,
   game: gameInside.data,
+  endGame: gameInside.endGame,
   currentQuestion: gameInside.currentQuestion,
 });
 

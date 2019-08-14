@@ -205,6 +205,9 @@
           height: 100%;
           background: $linear-gradient;
           border-radius: $border-radius-large;
+          &--loading {
+            background: $light;
+          }
         }
         &__icon {
           display: inline-block;
@@ -216,6 +219,9 @@
           background: $linear-gradient;
           background-repeat: no-repeat;
           background-size: cover;
+          &--loading {
+            background: white;
+          }
           @include mobile {
             display: block;
             margin: 0 auto;
@@ -259,6 +265,16 @@
               text-align: center;
               max-width: 100%;
           }
+          // &--loading {
+          //   h2 {
+          //     padding: 5px 10px;
+          //     background: black;
+          //   }
+          //   h3 {
+          //     padding: 5px 10px;
+          //     background: black;
+          //   }
+          // }
           h2 {
             display: inline-block;
             font-weight: 700;

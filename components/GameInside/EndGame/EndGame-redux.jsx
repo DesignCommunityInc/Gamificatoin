@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { sendGameResults } from '../GameInside-actions';
+import setTimer from '../../Timer/Timer-actions';
 import EndGame from './EndGame-container';
 
 const endGameContainer = props => <EndGame {...props} />;
@@ -13,7 +14,7 @@ const mapStateToProps = ({ gameInside }) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   sendGameResults,
-  // clearGameSession,
+  setTimer,
 }, dispatch);
 
 export default connect(

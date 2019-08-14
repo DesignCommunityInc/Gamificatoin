@@ -18,6 +18,7 @@ export function fetchGamePlay(id) {
         response.data.totalQuestions = Object.values(questions).reduce((accumulator, current) => accumulator + current.length, 0);
         const { subjects } = response.data;
         const sub = subjects.slice(0);
+        dispatch(success(response.data));
         const interval = setInterval(() => {
           sub.shift();
           dispatch({ type: types.ANIMATE_GAME_CATEGORIES });
@@ -26,7 +27,6 @@ export function fetchGamePlay(id) {
             dispatch({ type: types.ANIMATE_GAME_CATEGORIES_END });
           }
         }, 300);
-        dispatch(success(response.data));
       });
     } catch (e) {
       handleErrors(e);
@@ -59,10 +59,11 @@ export const chooseCategoryAsync = ({ category, questions }) => async (dispatch)
     }, 500);
   }, 2000);
 };
-// ANSWER THE QUESTION
 export const endTheGame = () => dispatch => dispatch({
   type: types.END_THE_GAME,
 });
+
+// ANSWER THE QUESTION
 export function sendAnswer({
   answer,
   questions,
@@ -84,10 +85,16 @@ export function sendAnswer({
     payload: { data },
   });
   const currentQuestionList = questions[currentCategory];
-  const nextQuestion = currentQuestionList[currentQuestionList.indexOf(currentQuestion) + 1];
+  let nextQuestion = null;
+  currentQuestionList.forEach((question, idx) => {
+    const q = JSON.stringify(question);
+    const cq = JSON.stringify(currentQuestion);
+    if (q === cq) {
+      nextQuestion = currentQuestionList[idx + 1];
+    }
+  });
   return async (dispatch) => {
     dispatch(passAnswer(answer));
-    // localStorage.setItem('answer')
     // check if next question in current category exist
     if (nextQuestion) {
       dispatch(sendNextQuestion(nextQuestion));
@@ -121,7 +128,8 @@ export function sendGameResults(id, answers) {
     dispatch(start());
     try {
       await API.post(`/game/${id}/complete`, answers).then((response) => {
-        console.log(response);
+        localStorage.removeItem('game');
+        localStorage.removeItem('timer');
         dispatch(success(response.data));
       });
     } catch (e) {
