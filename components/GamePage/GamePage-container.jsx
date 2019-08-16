@@ -1,7 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom';
-import Header from '../../containers/HeaderContainer';
+import Header from '../Header';
 import Settings from '../Settings';
 import Gamelist from '../Gamelist';
 import Mode from './Mode';
@@ -11,10 +10,6 @@ const propTypes = {
   isLoading: PropTypes.bool.isRequired,
   data: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
-  error: PropTypes.shape({}),
-};
-const defaultProps = {
-  error: null,
 };
 
 class GamePage extends React.Component {
@@ -31,7 +26,6 @@ class GamePage extends React.Component {
         recommendation,
         completed,
       } = {},
-      error,
       location: {
         pathname,
       } = {},
@@ -41,7 +35,6 @@ class GamePage extends React.Component {
         <Header />
         <Settings />
         <section className="Games Container">
-          <Link to="/" className="Container__title Container__title-backward">Мои игры</Link>
           <div className="Games__container Games__container-bottom-offset">
             <Mode
               title="1 на 1"
@@ -53,33 +46,29 @@ class GamePage extends React.Component {
             />
           </div>
         </section>
-        {invites.data !== null && (
-          <Gamelist
-            title={invites.title}
-            list={invites.data}
-            isLoading={isLoading}
-            pathname={pathname}
-            error={error}
-          />
-        )}
-        {!error && recommendation.data !== null && (
-          <Gamelist
-            title={recommendation.title}
-            list={recommendation.data}
-            isLoading={isLoading}
-            pathname={pathname}
-            error={error}
-          />
-        )}
-        {!error && completed.data !== null && (
-          <Gamelist
-            title={completed.title}
-            list={completed.data}
-            isLoading={isLoading}
-            pathname={pathname}
-            error={error}
-          />
-        )}
+        <Gamelist
+          title={invites.title}
+          list={invites.data}
+          isLoading={isLoading}
+          pathname={pathname}
+          error={invites.data === null}
+        />
+        <Gamelist
+          title={recommendation.title}
+          list={recommendation.data}
+          isLoading={isLoading}
+          pathname={pathname}
+          error={recommendation.data === null}
+          emptyTitle="У вас пока нет рекомендаций :("
+        />
+        <Gamelist
+          title={completed.title}
+          list={completed.data}
+          isLoading={isLoading}
+          pathname={pathname}
+          error={completed.data === null}
+          emptyTitle="Вы еще не прошли ни одну игру :("
+        />
       </main>
     );
   }
@@ -87,6 +76,5 @@ class GamePage extends React.Component {
 
 
 GamePage.propTypes = propTypes;
-GamePage.defaultProps = defaultProps;
 
 export default GamePage;

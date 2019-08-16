@@ -1,16 +1,16 @@
 
 .Header { 
     position: relative;
+    white-space: nowrap;
     padding: $container-padding;
     width: 100%;
     white-space: nowrap;
     transition: $average;
-    z-index: z("main-layer");
+    z-index: z("top-layer");
     @include mobile {
         padding: $container-padding-mobile;
     }
     .tile {
-
       &__container {
         display: inline-block;
         position: relative;
@@ -18,7 +18,27 @@
         vertical-align: middle;
         padding: 10px;
         overflow: hidden;
-
+        &--short {
+          display: block;
+          position: relative;
+          float: right;
+          width: 40px;
+          height: 40px;
+          margin: 10px 25px;
+          cursor: pointer;
+          border-radius: 50%;
+          overflow: hidden;
+          &__image {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            &--loading {
+              background: $light-violet;
+            }
+          }
+        }
         &__image {
           display: inline-block;
           position: relative;
@@ -29,7 +49,6 @@
           vertical-align: middle;
           background-repeat: no-repeat;
           background-size: cover;
-
           &-loading {
             background: $light-violet;
           }
@@ -98,7 +117,66 @@
     padding: 10px;
     vertical-align: middle;
     overflow: hidden;
-    
+    &--short {
+      display: block;
+      position: absolute;
+      max-width: 200px;
+      right: 0;
+      top: 0;
+      padding: 10px;
+      padding-top: 60px;
+      margin: $container-padding;
+      background: white;
+      visibility: hidden;
+      opacity: 0;
+      border-radius: $border-radius-average;
+      border: 1px solid $light;
+      z-index: -1;
+      transition: $fast;
+      &:hover {
+        visibility: visible;
+        transition: $average;
+        opacity: 1;
+      }
+      .button {
+        display: block;
+      }
+      &__burger {
+        display: block;
+        float: right;
+        width: 22px;
+        height: 20px;
+        margin: 22px 12px;
+        overflow: hidden;
+        transition: $fast;
+        transition-timing-function: cubic-bezier(.31, .95, .46, 2);
+        cursor: pointer;
+        &:hover {
+          span {
+            margin-left: 30%;
+          }
+          span:nth-child(2) {
+            margin-left: -30%;            
+          }
+          & + .settings-container--short {
+            visibility: visible;
+            transition: $average;
+            opacity: 1;
+          }
+        }
+        span {
+          display: block;
+          position: relative;
+          width: 100%;
+          margin: 2px 0;
+          height: 3px;
+          background: $violet;
+          border-radius: 3px;
+          transition: $fast;
+          transition-timing-function: cubic-bezier(.31, .95, .46, 2);
+        }
+      }
+    }
     .button {
       display: block;
       margin: {

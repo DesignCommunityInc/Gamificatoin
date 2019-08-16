@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
 import uid from 'uid';
@@ -10,14 +11,17 @@ const propTypes = {
   achievements: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isLoading: PropTypes.bool.isRequired,
   page: PropTypes.number.isRequired,
+  error: PropTypes.bool.isRequired,
+  desc: PropTypes.bool.isRequired,
   filter: PropTypes.arrayOf(PropTypes.string).isRequired,
-  sort: PropTypes.shape({}).isRequired,
+  sort: PropTypes.string.isRequired,
   fetchAchievements: PropTypes.func.isRequired,
+  clearAchievements: PropTypes.func.isRequired,
   filterToggler: PropTypes.func.isRequired,
   sortChooser: PropTypes.func.isRequired,
+  toggleSortDirection: PropTypes.func.isRequired,
 };
 const defaultProps = {
-  // achievements: [],
 };
 
 class AchievementsContainer extends React.Component {
@@ -28,45 +32,43 @@ class AchievementsContainer extends React.Component {
   }
 
   componentDidMount() {
+    const { sortChooser, filterToggler, filter } = this.props;
+    filterToggler('with exp', filter);
+    sortChooser('id', true);
     this.applyFilter();
-    this.handleScroll();
   }
-
-  // componentDidUpdate(previousProps) {
-  //   const { achievements } = this.props;
-  //   if (previousProps.achievements !== achievements) {
-  //     this.processing = false;
-  //     console.log(achievements);
-  //   }
-  // }
 
   handleScroll() {
     const {
       fetchAchievements,
+      error,
       filter,
       sort,
       page,
+      desc,
     } = this.props;
-    const scroll = () => {
-      const elementInView = Utils.isElementInView(this.preloader.container, this.scroller, false);
-      if (this.scroller && elementInView && !this.processing) {
-        this.processing = true;
-        fetchAchievements({ page, filter, sort }).then(() => {
-          this.processing = false;
-        });
-      }
-    };
-    scroll();
+    const elementInView = Utils.isElementInView(this.preloader.container, this.scroller, false);
+    if (this.scroller && elementInView && !this.processing && !error) {
+      this.processing = true;
+      fetchAchievements({
+        page,
+        filter,
+        sort,
+        desc,
+      }).then(() => {
+        this.processing = false;
+      });
+    }
+    return elementInView || error;
   }
 
   applyFilter() {
-    const {
-      fetchAchievements,
-      filter,
-      sort,
-      page,
-    } = this.props;
-    fetchAchievements({ page, filter, sort });
+    const { clearAchievements } = this.props;
+    clearAchievements();
+    const interVal = setInterval(() => {
+      const inView = this.handleScroll();
+      if (!inView) clearInterval(interVal);
+    }, 10);
   }
 
   render() {
@@ -75,8 +77,10 @@ class AchievementsContainer extends React.Component {
       isLoading,
       filter,
       sort,
+      desc,
       filterToggler,
       sortChooser,
+      toggleSortDirection,
     } = this.props;
     return (
       <section className="Achievements Container">
@@ -84,10 +88,20 @@ class AchievementsContainer extends React.Component {
         <Filter
           sort={sort}
           sortAction={sortChooser}
-          sortFields={['id', 'exp_add', 'progress']}
+          sortFields={[
+            { id: 'Порядок' },
+            { exp_add: 'Опыт' },
+            { progress: 'Прогресс' },
+          ]}
           filter={filter}
           filterAction={filterToggler}
-          filterFields={['performed', 'with exp', 'without exp']}
+          filterFields={[
+            { performed: 'Полученные' },
+            { 'with exp': 'С прогрессом' },
+            { 'without exp': 'Без прогресса' },
+          ]}
+          desc={desc}
+          descToggler={toggleSortDirection}
           apply={this.applyFilter}
         />
         <div

@@ -6,16 +6,19 @@ import Game from './Game';
 import Utils from '../utils/Utils';
 
 const propTypes = {
-  list: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  list: PropTypes.arrayOf(PropTypes.shape({})),
   title: PropTypes.string,
   isLoading: PropTypes.bool.isRequired,
   pathname: PropTypes.string,
   error: PropTypes.bool,
+  emptyTitle: PropTypes.string,
 };
 const defaultProps = {
   title: '',
   pathname: null,
   error: false,
+  list: [],
+  emptyTitle: 'Вы уже прошли все игры :(',
 };
 
 class GameList extends React.Component {
@@ -70,6 +73,7 @@ class GameList extends React.Component {
       isLoading,
       pathname,
       error,
+      emptyTitle,
     } = this.props;
     if (error) {
       return (
@@ -81,7 +85,7 @@ class GameList extends React.Component {
           )}
           <div className="Games__container Games__container-scroll">
             <div className="Games__container__wrapper--empty">
-              <span className="empty-title">Новых игр на данный момент нет :(</span>
+              <span className="empty-title">{emptyTitle}</span>
             </div>
           </div>
         </section>

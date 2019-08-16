@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Header from '../../containers/HeaderContainer';
+import Header from '../Header';
 import MainAchievements from './MainAchievements';
 import Settings from '../Settings';
 import Achievements from './Achievements';

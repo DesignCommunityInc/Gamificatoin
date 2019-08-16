@@ -4,7 +4,8 @@ const initialState = {
   achievements: [],
   page: 1,
   filter: [],
-  sort: {},
+  sort: 'id',
+  desc: true,
   shortAchievements: {
     data: [],
   },
@@ -12,6 +13,7 @@ const initialState = {
     last: {},
     progress: [],
   },
+  error: false,
   isLoading: true,
   isShortAchievementsLoading: true,
   isMainAchievementsLoading: true,
@@ -31,12 +33,25 @@ export default (state = initialState, action) => {
         achievements: state.achievements.concat(action.payload.data),
         page: state.page + 1,
         isLoading: true,
+        error: false,
+      };
+    case types.CLEAR_ACHIEVEMENTS:
+      return {
+        ...state,
+        achievements: [],
+        isLoading: true,
+        error: false,
+        page: 1,
+      };
+    case types.FETCH_ACHIEVEMENTS_EMPTY:
+      return {
+        ...state,
+        isLoading: false,
       };
     case types.FETCH_ACHIEVEMENTS_FAILURE:
       return {
         ...state,
-        achievements: state.achievements.concat(action.payload.data),
-        isLoading: false,
+        error: true,
       };
     case types.SORT_ACHIEVEMENTS:
       return {
@@ -44,10 +59,14 @@ export default (state = initialState, action) => {
         sort: action.payload.sort,
       };
     case types.FILTER_ACHIEVEMENTS:
-      // console.log(action.payload.filter);
       return {
         ...state,
         filter: action.payload.filter,
+      };
+    case types.TOGGLE_SORT_DIRECTION:
+      return {
+        ...state,
+        desc: !state.desc,
       };
     case types.FETCH_ACHIEVEMENTS_SHORT_START:
       return {

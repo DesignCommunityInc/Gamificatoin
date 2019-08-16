@@ -36,7 +36,6 @@ export function fetchMainAchievements() {
     dispatch(start());
     try {
       await API.get('/achievements?info=main').then((response) => {
-        console.log(response);
         dispatch(success(response.data));
       });
     } catch (e) {

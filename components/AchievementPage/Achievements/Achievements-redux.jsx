@@ -1,7 +1,12 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import fetchAchievements, { sortChooser, filterToggler } from './Achievements-actions';
+import fetchAchievements, {
+  sortChooser,
+  filterToggler,
+  clearAchievements,
+  toggleSortDirection,
+} from './Achievements-actions';
 import AchievementsContainer from './Achievements-container';
 
 const achievementsContainer = props => <AchievementsContainer {...props} />;
@@ -12,12 +17,16 @@ const mapStateToProps = ({ achievements }) => ({
   filter: achievements.filter,
   sort: achievements.sort,
   page: achievements.page,
+  desc: achievements.desc,
+  error: achievements.error,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchAchievements,
   sortChooser,
   filterToggler,
+  clearAchievements,
+  toggleSortDirection,
 }, dispatch);
 
 export default connect(

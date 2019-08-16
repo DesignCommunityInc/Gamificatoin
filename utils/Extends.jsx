@@ -25,7 +25,6 @@ Element.prototype.animateScrolling = function (value, duration = 300) {
     if (currentTime < duration) setTimeout(foo, increment);
     else this.processing = false;
     this.scrollLeft = offset;
-    console.log(this.scrollLeft);
   };
   foo();
 };

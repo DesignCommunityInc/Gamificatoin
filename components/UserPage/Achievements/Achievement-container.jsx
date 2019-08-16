@@ -24,7 +24,6 @@ class AchievementContainer extends React.Component {
       } = {},
       isLoading,
     } = this.props;
-    console.log(data);
     if (isLoading) {
       return (
         <section className="Achievements Container">

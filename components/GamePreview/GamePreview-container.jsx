@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Header from '../../containers/HeaderContainer';
+import Header from '../Header';
 import Settings from '../Settings';
 import Info from './Info';
 import Classmates from '../Classmates';
@@ -37,13 +37,9 @@ class GamePreview extends React.Component {
   }
 
   handleStart() {
-    // const { start } = this.state;
     if (this.alert) {
       this.alert.showAlert();
     }
-    // if (start) {
-    // }
-    // this.setState({ start: true });
   }
 
   handleStartSubmit() {
@@ -52,20 +48,20 @@ class GamePreview extends React.Component {
   }
 
   render() {
-    const { preview } = this.props;
+    const { preview: { img } = {} } = this.props;
     return (
       <main className="page">
         <Settings />
         {/* <Header /> */}
         <Timer />
         {/* if helpers are available, render alert there => alert = helper */}
-        <Alert 
+        <Alert
           ref={(ref) => {
             this.alert = ref;
-          }} 
+          }}
           onClick={this.handleStartSubmit}
         />
-        <Info image={preview.img}/>
+        <Info image={img}/>
         <section className="Container">
           <Classmates />
           <Rules />

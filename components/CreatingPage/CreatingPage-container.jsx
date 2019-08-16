@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 // import { PropTypes } from "prop-types";
-import Header from '../../containers/HeaderContainer';
+import Header from '../Header';
 import Settings from '../Settings';
 import Utils from '../../utils/Utils';
 import { Link } from 'react-router-dom';

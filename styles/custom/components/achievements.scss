@@ -12,6 +12,7 @@
     padding: 20px 10px;
 
     &-scroller {
+      min-height: 300px;
       max-height: 410px;
       // box-shadow: inset 0px -200px 69px -185px rgba(204,204,204,1);
       border: 3px solid $light;

@@ -19,6 +19,7 @@ import GamePage from '../GamePage';
 import * as routes from '../../constants/Routes';
 import GameInside from '../GameInside';
 import CreatingPage from '../CreatingPage';
+import UserViewPage from '../UserViewPage';
 
 const propTypes = {
   restore: PropTypes.func.isRequired,
@@ -27,8 +28,8 @@ const propTypes = {
 class Root extends React.Component {
   constructor() {
     super();
-    this.role = JSON.parse(localStorage.getItem('User')).role;
-    // this.role = 5;
+    // this.role = JSON.parse(localStorage.getItem('User')).role;
+    this.role = 5;
   }
 
   componentDidMount() {
@@ -77,6 +78,7 @@ class Root extends React.Component {
                 <Route exact path={routes.GAME_PLAYING_PAGE} component={GameInside} />
                 <Route exact path={routes.GAME_LIST_PAGE} component={GamePage} />
                 <Route exact path={routes.GAME_CREATING_PAGE} component={CreatingPage} />
+                <Route exact path={routes.USER_VIEW_PAGE} component={UserViewPage} />
               </Switch>
             </CSSTransition>
           </TransitionGroup>

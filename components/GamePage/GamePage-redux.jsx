@@ -9,7 +9,6 @@ const gamesContainer = props => <GamePage {...props} />;
 const mapStateToProps = ({ gamelist }) => ({
   data: gamelist.data,
   isLoading: gamelist.isDataLoading,
-  error: gamelist.error,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

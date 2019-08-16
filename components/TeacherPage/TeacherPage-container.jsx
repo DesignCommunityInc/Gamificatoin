@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Gamelist from '../Gamelist';
 import Classmates from '../../containers/ClassmatesContainer';
 import Rate from '../../containers/RateContainer';
-import Header from '../../containers/HeaderContainer';
+import Header from '../Header';
 import Settings from '../Settings';
 import LastGame from '../LastGame';
 import Utils from '../../utils/Utils';

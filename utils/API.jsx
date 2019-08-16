@@ -4,8 +4,8 @@ export default axios.create({
   baseURL: 'http://10.0.4.129/api/',
   responseType: 'json',
   headers: {
-    'X-Auth-Token': JSON.parse(localStorage.getItem('User')).token,
-    // 'X-Auth-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBwLnV1ZC5zY2hvb2xcLyIsImlhdCI6MTU2NTczNTgyMSwibmJmIjoxNTY1NzQzMDIxfQ.JBQlYjSPhIzsgOGZlR76DTSpt6XAuEqtfoRvV9gYaAk',
+    // 'X-Auth-Token': JSON.parse(localStorage.getItem('User')).token,
+    'X-Auth-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBwLnV1ZC5zY2hvb2xcLyIsImlhdCI6MTU2NTk0MTMxNCwibmJmIjoxNTY1OTQ4NTE0fQ._lQ-hcsr4p2JdoeWgU9o1KCyjOKMvDe5vtzKgrsQV40',
   },
 });
 

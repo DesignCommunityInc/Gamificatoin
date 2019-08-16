@@ -51,9 +51,11 @@ class EndGame extends React.Component {
             <Link to={routes.ROOT} className="button button-main button-iconless">Перейти на главный экран</Link>
           </div>
         </div>
-        <Achievements
-          achievementList={achievements}
-        />
+        {/* {achievements && (
+          <Achievements
+            achievementList={achievements}
+          />
+        )} */}
       </>
     );
   }

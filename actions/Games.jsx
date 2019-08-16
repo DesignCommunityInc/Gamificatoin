@@ -137,16 +137,11 @@ export function fetchGameList() {
     type: types.FETCH_USER_GAMES_SUCCESS,
     payload: { data },
   });
-  const error = data => dispatch => dispatch({
-    type: types.FETCH_USER_GAMES_SHORT_FAILURE,
-    payload: { data },
-  });
   return async (dispatch) => {
     dispatch(start());
     try {
       await API.get('/games').then(response => dispatch(success(response.data)));
     } catch (e) {
-      dispatch(error(e));
       handleErrors(e);
     }
   };
