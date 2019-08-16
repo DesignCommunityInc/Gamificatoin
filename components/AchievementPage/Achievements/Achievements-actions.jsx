@@ -46,7 +46,6 @@ export const sortChooser = sort => dispatch => dispatch({
 });
 
 export const filterToggler = (field, filter) => (dispatch) => {
-  console.log(field, filter);
   if (filter.indexOf(field) !== -1) filter.splice(filter.indexOf(field), 1);
   else filter.push(field);
   dispatch({

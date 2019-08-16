@@ -2,14 +2,15 @@
   display: block;
   position: fixed;
   top: 0;
-  padding: 30px 50px;
-  font-size: 32pt;
+  right: 0;
+  margin: 100px 30px;
+  opacity: .5;
+  font-size: 24pt;
   font-weight: 300;
   visibility: visible;
   z-index: z("supertop-layer");
   animation: 1s zoomInDown forwards;
-  
-  &__unit {
-    animation: 1s zoomInDown forwards;
+  @include mobile {
+    margin: 5px 20px;
   }
 }

@@ -36,7 +36,6 @@ class Info extends React.Component {
     );
     return(
       <section className="Games Container Games-Preview">
-      <Link to={ROOT} className="Container__title Container__title-backward">Игра</Link> 
       <div className="Games__container">
         <div className="Games__container__wrapper">
           <div className="game">

@@ -29,7 +29,7 @@ class Root extends React.Component {
   constructor() {
     super();
     // this.role = JSON.parse(localStorage.getItem('User')).role;
-    this.role = 5;
+    this.role = '6';
   }
 
   componentDidMount() {

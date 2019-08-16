@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const propTypes = {
   name: PropTypes.string,
   description: PropTypes.string,
-  reward: PropTypes.oneOfType([
+  exp_add: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
   ]),
@@ -16,7 +16,7 @@ const propTypes = {
 const defaultProps = {
   name: '',
   description: '',
-  reward: '',
+  exp_add: '',
   progress: 0,
   isLoading: false,
 };
@@ -24,7 +24,7 @@ const defaultProps = {
 const Achievement = ({
   name,
   description,
-  reward,
+  exp_add: reward,
   progress,
   isLoading,
 }) => {

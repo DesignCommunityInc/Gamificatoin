@@ -65,10 +65,7 @@ class AchievementsContainer extends React.Component {
   applyFilter() {
     const { clearAchievements } = this.props;
     clearAchievements();
-    const interVal = setInterval(() => {
-      const inView = this.handleScroll();
-      if (!inView) clearInterval(interVal);
-    }, 10);
+    this.handleScroll();
   }
 
   render() {

@@ -93,11 +93,7 @@ class Timer extends React.Component {
     const { hours, minutes, seconds } = timer;
     return (
       <div className="Timer">
-        <span className="Timer__unit">{hours}</span>
-        <span>:</span>
-        <span className="Timer__unit">{minutes}</span>
-        <span>:</span>
-        <span className="Timer__unit">{seconds}</span>
+        {`${hours}:${minutes}:${seconds}`}
       </div>
     );
   }

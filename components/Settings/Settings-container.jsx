@@ -11,6 +11,8 @@ const propTypes = {
   toggleHelpersSettings: PropTypes.func.isRequired,
   toggleSettingsScreen: PropTypes.func.isRequired,
   toggleLockSettings: PropTypes.func.isRequired,
+  saveUserSettigs: PropTypes.func.isRequired,
+  getUserSettigs: PropTypes.func.isRequired,
 };
 const defaultTypes = {
 };
@@ -27,6 +29,8 @@ class Settings extends React.Component {
   }
 
   componentDidMount() {
+    const { getUserSettigs } = this.props;
+    getUserSettigs();
     document.addEventListener('keydown', this.handleSettingsToggleKeyPress, false);
   }
 
@@ -42,13 +46,8 @@ class Settings extends React.Component {
 
   handleSettingsToggleKeyPress(e) {
     const { visible, toggleSettingsScreen } = this.props;
-    switch (e.keyCode) {
-      case 79: // O
-        return !visible && toggleSettingsScreen();
-      case 27: // Esc
-        return visible && toggleSettingsScreen();
-      default: return false;
-    }
+    if (e.keyCode === 27) return visible && toggleSettingsScreen();
+    return true;
   }
 
   render() {
@@ -66,6 +65,7 @@ class Settings extends React.Component {
       toggleSettingsScreen,
       toggleHelpersSettings,
       toggleLockSettings,
+      saveUserSettigs,
       // counter,
     } = this.props;
     const { counter, allowedLength } = this.state;
@@ -122,7 +122,7 @@ class Settings extends React.Component {
             <span className="Settings__field-name">Закрытый профиль</span>
             <span className="Settings__field-value">
               <Toggle
-                onClick={() => toggleLockSettings()}
+                onClick={toggleLockSettings}
                 enabled={isProfileLocked}
               />
             </span>
@@ -131,14 +131,27 @@ class Settings extends React.Component {
             <span className="Settings__field-name">Подсказки</span>
             <span className="Settings__field-value">
               <Toggle
-                onClick={() => toggleHelpersSettings()}
+                onClick={toggleHelpersSettings}
                 enabled={isHelpersEnabled}
               />
             </span>
           </div>
           <div className="Settings__footer">
             <hr />
-            <span role="button" className="button button-main button-main-red button-main-red-colorful">Выход</span>
+            <span
+              role="button"
+              className="button button-main button-main-violet button-main-violet-colorful"
+              onClick={() => saveUserSettigs({
+                S_hidden: isProfileLocked,
+                S_hints: isHelpersEnabled,
+                nickname: null,
+                S_favorite_subject: null,
+              })}
+              onKeyDown={() => {}}
+              tabIndex="0"
+            >
+              Сохранить
+            </span>
           </div>
         </div>
       </section>

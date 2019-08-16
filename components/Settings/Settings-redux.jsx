@@ -3,7 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Settings from './Settings-container';
 import toggleSettingsScreen from '../../actions/Settings';
-import { toggleLockSettings, toggleHelpersSettings } from './Settings-actions';
+import {
+  toggleLockSettings,
+  toggleHelpersSettings,
+  saveUserSettigs,
+  getUserSettigs,
+} from './Settings-actions';
 
 const settingsContainer = props => <Settings {...props} />;
 
@@ -19,6 +24,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   toggleSettingsScreen,
   toggleLockSettings,
   toggleHelpersSettings,
+  saveUserSettigs,
+  getUserSettigs,
 }, dispatch);
 
 export default connect(

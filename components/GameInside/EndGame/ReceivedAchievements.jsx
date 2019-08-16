@@ -64,6 +64,7 @@ class Achievements extends React.Component {
       name,
     } = mainAchievement;
     const { translateOutUp, increaseWidth, swipeTitles } = this.state;
+    console.log(achievementList);
     return (
       <div className={`received-achievements ${translateOutUp ? 'received-achievements--animate' : ''}`}>
         <div className={`received-achievements__main ${increaseWidth ? 'received-achievements__main--animate' : ''}`}>

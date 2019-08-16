@@ -6,7 +6,6 @@ import Info from './Info';
 import Classmates from '../Classmates';
 import Rules from './Rules';
 import Utils from '../../utils/Utils';
-import Timer from '../Timer';
 import Alert from '../Alert';
 
 const propTypes = {
@@ -52,8 +51,9 @@ class GamePreview extends React.Component {
     return (
       <main className="page">
         <Settings />
-        {/* <Header /> */}
-        <Timer />
+        <Header
+          title="Правила игры"
+        />
         {/* if helpers are available, render alert there => alert = helper */}
         <Alert
           ref={(ref) => {
@@ -61,13 +61,16 @@ class GamePreview extends React.Component {
           }}
           onClick={this.handleStartSubmit}
         />
-        <Info image={img}/>
+        <Info image={img} />
         <section className="Container">
           <Classmates />
           <Rules />
         </section>
         <section className="Container">
           <span
+            role="button"
+            onKeyDown={() => {}}
+            tabIndex="0"
             onClick={this.handleStart}
             className="button button-action">
             Играть

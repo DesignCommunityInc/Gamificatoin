@@ -254,10 +254,12 @@
     position: relative;
     padding: 10px 0;
     max-width: 50%;
+    max-height: 400px;
     margin: 0 auto;
     font-size: 20pt;
     font-weight: 500;
     transition: $fast;
+    overflow: auto;
     @include lowscreen {
       font-size: 14pt;
     }
@@ -267,9 +269,12 @@
       max-width: 100%!important;
       max-height: 170px;
       overflow-y: scroll;
-      &::-webkit-scrollbar-track {
-        background: transparent; 
-      }
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent; 
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $white-40; 
     }
     .Question__container--large & {
       max-width: 80%;
@@ -442,10 +447,11 @@
       width: 80%;
       height: 100%;
       max-height: 60px;
-      padding: 20px;
+      padding: 15px;
+      margin-top: 50px;
       vertical-align: middle;
       color: white;
-      font-size: 14pt;
+      font-size: 10pt;
       font-weight: 500;
       border: none;
       border-radius: $border-radius-small;
@@ -474,8 +480,12 @@
           transition: $fast;
         }
         &:focus {
-          max-height: 300px;
+          background: white;
+          color: $dark;
           transition: $average;
+          &::placeholder {
+            color: $dark;
+          }
         }
       }
       &__container {

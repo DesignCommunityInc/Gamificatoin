@@ -14,6 +14,7 @@
         // padding: 0 60px;
         border-right: 60px solid transparent;
         border-left: 60px solid transparent;
+        overflow: hidden;
         @include mobile {
             display: block;
             margin: 15px 20px;
