@@ -7,7 +7,7 @@ import TeacherGameSettingsPage from "./TeacherGameSettingsPage-container";
 const gameView = props => <TeacherGameSettingsPage {...props} />;
 
 const mapStateToProps = ({ gamepreview }) => ({
-  data: gamepreview.data,
+  data: gamepreview.teacherData,
   isLoading: gamepreview.isDataLoading,
 });
 

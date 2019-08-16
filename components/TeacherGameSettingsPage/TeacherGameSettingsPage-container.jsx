@@ -32,7 +32,8 @@ class TeacherGameSettingsPage extends React.Component {
 
   handleTabSelect(idx) {
     console.log(this.state);
-    if(this.state.activeIndex === idx){
+    const { activeIndex } = this.state;
+    if (activeIndex === idx) {
       idx = null;
     }
     this.setState({activeIndex: idx});
@@ -46,20 +47,20 @@ class TeacherGameSettingsPage extends React.Component {
         name,
         image,
         description,
-        questions = [],
-        participants = [],
-      } = [],
+        questions,
+        participants,
+      },
       location: {
         pathname,
       } = {},
     } = this.props;
-    console.log(questions);
+    console.log(this.props);
     return (
       <main className="page">
         <Header />
         {/* <Settings /> */}
         <section className="Games Container">
-          <Link to="/" className="Container__title Container__title-backward">Редактирование игры</Link>
+          {/* <Link to="/" className="Container__title Container__title-backward">Редактирование игры</Link> */}
           <div className="Game__inforamtion__wrapper">
             <div style={{backgroundImage: `url(${image})`}} className="game__image"></div>
             <form action="">
@@ -84,7 +85,8 @@ class TeacherGameSettingsPage extends React.Component {
               <Participant 
                 name = 'Имя'
                 secondname = 'Фамилия' 
-                middlename = 'Отчество' 
+                middlename = 'Отчество'
+                type = 'notStartde'
               />
             </div>
           </div>
@@ -96,15 +98,10 @@ class TeacherGameSettingsPage extends React.Component {
           </div>
           <div className="Questions__wrapper">
             {questions.map((question, idx) => (
-              <Question 
-                title={`Вопрос №${question.id}`}
+              <Question
+                {...question}
                 counter={idx+1}
-                id = {idx}
-                specType={question.type}
-                specUUD={question.direction[0]}
-                text={question.question}
-                subject={question.subject}
-                answers={question.answer}
+                idx = {idx}
                 active={idx === this.state.activeIndex ? 'question--viewed' : ''} 
                 onClick={this.handleTabSelect}
               />

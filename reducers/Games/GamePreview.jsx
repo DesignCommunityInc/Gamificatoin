@@ -1,7 +1,13 @@
 import * as types from '../../constants/ActionTypes';
 
+const initialData = {
+  questions: [],
+  participants: [],
+};
+
 const initialState = {
   data: {},
+  teacherData: initialData,
   isLoading: false,
 };
 
@@ -22,13 +28,13 @@ export default (state = initialState, action) => {
     case types.FETCH_TEACHER_GAME_PREVIEW_START:
       return {
         ...state,
-        data: {},
+        teacherData: initialData,
         isLoading: true,
       };
     case types.FETCH_TEACHER_GAME_PREVIEW_SUCCESS:
       return {
         ...state,
-        data: action.payload.data,
+        teacherData: action.payload.data,
         isLoading: false,
       };
     default:

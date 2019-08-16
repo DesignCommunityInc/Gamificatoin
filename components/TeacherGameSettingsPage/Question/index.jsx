@@ -15,14 +15,17 @@ class Question extends React.Component {
   viewQuestionText(id) {
     // const currentState = this.state.active;
     console.log(this);
-    this.props.onClick(this.props.id);
+    this.props.onClick(this.props.idx);
     // this.setState({ active: !currentState });
   }
 
 
   render() {
-    const { text, counter, title, specUUD, specType, image, isLoading, id , active, subject, answers=[]} = this.props;
-    console.log(this.props);
+    // title={`Вопрос №${question.id}`}
+
+    // specUUD={question.direction[0]}
+
+    const { direction, question, counter, title, specUUD, type, image, isLoading, id , active, subject, answer = [] } = this.props;
     if(isLoading) return (
       <div>Loading...</div>
     );
@@ -36,10 +39,10 @@ class Question extends React.Component {
           <div onClick={this.viewQuestionText} className="question__view__button--mobile"> </div>
         </div>
         <div className="question__information">
-          <div className="question__information__title">{title}</div>
+          <div className="question__information__title">{`Вопрос №${id}`}</div>
           <div className="question__information__specs">
-            <p className="spec__type">{specType}</p>
-            <p className="spec__uud">{specUUD}</p>
+            <p className="spec__type">{type}</p>
+            <p className="spec__uud">{direction[0]}</p>
           </div>
         </div>
         <div className="question__view__button__wrapper">
@@ -54,20 +57,30 @@ class Question extends React.Component {
           </div>
           <div className="question__bigView__text">
             <p className="question__bigView__text__title">Текст вопроса</p>
-            <p className="question__bigView__text__content">{text}</p>
+            <p className="question__bigView__text__content">{question}</p>
           </div>
           <div className="question__bigView__text">
             <p className="question__bigView__text__title">Ответы</p>
             <div className="question__bigView__text__wrapper"> 
-              {answers.map((answer, idx) => {
-                if(answer['n']){
-                  return(<p type="wrong">{answer['n']}</p>)
-                }else if(answer['y']){
-                  return(<p type="correct">{answer['y']}</p>)
-                }else{
-                  return(<p>{answer}</p>)
-                }
-              })}  
+              {answer.map((answerA, idx) => (
+                // if(answerA['n']){
+                //   <p type="wrong">{answerA['n']}</p>
+                // }else if(answerA['y']){
+                //   <p type="correct">{answerA['y']}</p>
+                // }else{
+                //   <p>{answerA}</p>
+                // }
+                <>
+                  {answerA['n'] ? (
+                      <p type="wrong">{answerA['n']}</p>
+                    ) : answerA['y'] ? (
+                      <p type="correct">{answerA['y']}</p>
+                    ) : (
+                      <p>{answerA}</p>
+                    )
+                  } 
+                </>
+              ))}  
             </div>
           </div>
         </div>

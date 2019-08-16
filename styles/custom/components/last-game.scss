@@ -295,14 +295,14 @@
         }
 
         
-        .Games__scroller[type='backward']{
-            left: 520px;
+        .Games__scroller[type=backward]{
+            left: 440px;
             @include mobile {
                 left: 10px;
             }
         }
-        .Games__scroller[type='forward']{
-            right: 60px;
+        .Games__scroller[type=forward]{
+            right: 0px;
             @include mobile {
                 left: 10px;
             }
