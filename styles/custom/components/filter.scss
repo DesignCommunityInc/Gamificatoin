@@ -6,12 +6,22 @@
   padding: 10px 5px 20px;
   overflow: visible;
   z-index: z("top-layer");
+  &--inline {
+    padding: unset;
+    height: 100%;
+    overflow: hidden;
+    padding-bottom: 75px;
+  }
 
   &__container {
     display: inline-block;
     position: relative;
     z-index: z("sub-layer");
-
+    &--inline {
+      display: block;
+      height: 100%;
+      overflow: auto;
+    }
     .button {
       &:hover + .Filter__body {
         visibility: visible;
@@ -26,6 +36,12 @@
       display: block;
       max-width: unset;
       text-align: center;
+    }
+    &--inline {
+      padding: 10px;
+      text-align: center;
+      font-weight: 700;
+      border-bottom: 1px solid $light;
     }
   }
   &__body {
@@ -52,6 +68,39 @@
       position: relative;
       height: 5px;
       width: 100%;
+    }
+    &--inline {
+      position: relative;
+      left: 0;
+      top: 0;
+      opacity: 1;
+      visibility: visible;
+      box-shadow: none;
+      &::before {
+        content: none;
+      }
+      div {
+        padding: 5px 0;
+        font-weight: 700;
+        & > div {
+          padding: 5px 15px;
+        }
+      }
+    }
+  }
+  &__footer {
+    display: block;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 0;
+    background: white;
+    z-index: z("main-layer");
+    .button {
+      display: block;
+      max-width: 100%;
+      padding: 10px;
+      border-top: 1px solid $light;
     }
   }
   &__field {
@@ -87,11 +136,22 @@
       overflow: hidden;
       text-overflow: ellipsis;
       color: $violet;
+      &--inline {
+        
+      }
     }
     &-value {
       padding: 0 10px;
       min-width: 30%;
       text-align: right;
+      &--inline {
+        min-width: 20%;
+        padding: unset;
+        text-align: center;
+        .check {
+          padding: 0;
+        }
+      }
     }
   }
 }

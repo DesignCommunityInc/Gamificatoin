@@ -1,0 +1,337 @@
+@import '../../../styles/custom/variables.scss';
+@import '../../../styles/custom/icons.scss';
+@import '../../../styles/custom/mixins.scss';
+@import '../../../styles/custom/global.scss';
+
+.Editor-Background {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: $dark-40;
+  width: 100%;
+  height: 100%;
+  z-index: z("top-layer");
+}
+
+.Question-Editor {
+  display: block;
+  position: fixed;
+  width: 100%;
+  max-width: 900px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  // overflow: hidden;
+  @include mobile {
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: unset;
+  }
+  z-index: z("top-layer");
+  .right {
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    width: 24.5%;
+    margin-left: .5%;
+    height: 100%;
+    background: white;
+    border-radius: $border-radius-large;
+    overflow: hidden;
+    @include mobile {
+      display: block;
+      width: 100%;
+      height: 28%;
+      margin: unset;
+      margin-top: 4%;
+      border-radius: 0;
+    }
+  }
+  &__main {
+    display: inline-block;
+    position: relative;
+    width: 75%;
+    height: 100%;
+    background: white;
+    border-radius: $border-radius-large;
+    overflow: hidden;
+    @include mobile {
+      display: block;
+      width: 100%;
+      height: 70%;
+      border-radius: 0;
+    }
+  }
+  &__footer {
+    display: block;
+    position: relative;
+    .pagging {
+      display: block;
+      margin-top: 5px;
+      float: right;
+      &__container {
+        display: inline-block;
+        position: relative;
+        background: white;
+        border-radius: $border-radius-average;
+        vertical-align: middle;
+        min-width: 350px;
+        text-align: center;
+        .active-page {
+          color: $violet;
+          font-weight: 900;
+        }
+        span {
+          display: inline-block;
+          padding: 5.5px 10px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: $fast;
+          user-select: none;
+          &:hover {
+            color: $violet;
+          }
+          &:last-child {
+            min-width: 60px;
+            text-align: center;
+          }
+        }
+      }
+      & > span {
+        display: inline-block;
+        position: relative;
+        padding: 5px 11px;
+        vertical-align: middle;
+        background: white;
+        border-radius: $border-radius-average;
+        transition: $fast;
+        user-select: none;
+        cursor: pointer;
+        &[type=backward] {
+          margin-right: 5px;
+        }
+        &[type=forward] {
+          margin-left: 5px;
+        }
+        &:hover {
+          color: $violet;
+        }
+        &:active {
+          transform: scale(.9);
+          transition: $fast;
+          will-change: transform;
+          backface-visibility: hidden;
+        }
+      }
+    }
+    .save-button {
+      display: block;
+      float: right;
+      width: 24.5%;
+      margin-top: 5px;
+      max-width: unset;
+      padding: 6px;
+      margin-left: .5%;
+      text-align: center;
+      background: $linear-gradient;
+      color: white;
+      border-radius: $border-radius-average;
+    }
+  }
+  .Editor {
+
+    &__header {
+      display: block;
+      position: relative;
+      padding: 10px;
+    }
+    &__title {
+      display: inline-block;
+      padding: 10px;
+      font-weight: 700;
+      &::before {
+        content: 'ico';
+        margin-right: 10px;
+      }
+    }
+    &__search {
+      display: block;
+      float: right;
+      width: 40%;
+      padding: 10px 10px 5px;
+      margin-right: 10px;
+      font-weight: 300;
+      border: none;
+      border-bottom: 1px solid $light;
+      &:focus {
+        border-color: $violet;
+
+      }
+    }
+
+    &__container {
+      display: block;
+      position: relative;
+      height: 100%;
+      padding: {
+        top: 40px;
+        bottom: 60px;
+      };
+      overflow: auto;
+    }
+    &__titles {
+      display: block;
+      position: absolute;
+      width: 100%;
+      top: 0;
+      padding: 10px 0;
+      border-bottom: 2px solid $light;
+      span {
+        text-align: center;
+        display: inline-block;
+        width: 25%;
+        &:nth-child(1) {
+          width: 10.5%;
+        }
+        &:nth-child(2) {
+          width: 19%;
+          text-align: left;
+        }
+        &:nth-child(3) {
+          width: 28%;
+        }
+        &:nth-child(4) {
+          width: 28%;
+        }
+        &:last-child {
+          width: 14.5%;
+          text-align: left;
+        }
+        @include mobile {
+          width: 28%;
+          &:nth-child(2) {
+            width: 20%;
+          }
+          &:last-child {
+            display: none;
+          }
+        }
+      }
+    }
+
+    &__body {
+      display: block;
+      position: relative;
+      height: 100%;
+      overflow: scroll;
+    }
+    &__question {
+      display: block;
+      overflow: hidden;
+      border-bottom: 1px solid $light;
+      margin: 5px 0;
+      cursor: pointer;
+      &:first-child {
+        margin-top: 20px;
+      }
+      &__checkbox {
+        display: block;
+        float: left;
+        width: 10.5%;
+        line-height: 35px;
+        text-align: center;
+        cursor: pointer;
+      }
+      &__body {
+        & > * {
+          text-align: center;
+          display: inline-block;
+          padding: 15px;
+          vertical-align: middle;
+          font-weight: 700;
+          user-select: none;
+          &:nth-child(1) {
+            text-align: left;
+            padding-left: 0px;
+            color: $violet;
+            width: 19%;
+          }
+          &:nth-child(2) {
+            width: 28%;
+          }
+          &:nth-child(3) {
+            width: 28%;
+          }
+          &:last-child {
+            width: 14.5%;
+          }
+          @include mobile {
+            padding: 15px 5px;
+            &:nth-child(1) {
+              width: 30%;
+            }
+            &:nth-child(2) {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+            &:last-child {
+              display: none;
+            }
+          }
+        }
+      }
+      &__description {
+        max-height: 0;
+        padding: {
+          left: 10.5%;
+          right: 1.5%;
+        }
+        font-size: 10pt!important;
+        transition: .1s;
+        &--active {
+          transition: .5s ease-in;
+          max-height: 1000px
+        }
+      }
+      &__arrow {
+        text-align: center;
+        &::after {
+          content: '❮';
+          line-height: 20px;
+          display: inline-block;
+          position: relative;
+          transform: rotate(90deg) scale(.6);
+          // animation: .3s easing forwards;
+          transition: $fast;
+        }
+        &--active {
+          &::after {
+            // animation: .3s rotator270 forwards;
+            transform: rotate(270deg) scale(1);
+            transition: $fast;
+          }
+        }
+        @keyframes easing {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+        @keyframes rotator270 {
+          0% {
+            transform: rotate(90deg);
+          }
+          100% {
+            transform: rotate(270deg);
+          }
+        }
+      }
+    }
+  }
+}
