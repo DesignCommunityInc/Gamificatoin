@@ -5,7 +5,7 @@ export default axios.create({
   responseType: 'json',
   headers: {
     // 'X-Auth-Token': JSON.parse(localStorage.getItem('User')).token,
-    'X-Auth-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBwLnV1ZC5zY2hvb2xcLyIsImlhdCI6MTU2NTk4NDMwNSwibmJmIjoxNTY1OTkxNTA1fQ.syzAb56x5PH6OIu3PAes3Vf_sAHygNHRftmUaGDuZS4',
+    'X-Auth-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBwLnV1ZC5zY2hvb2xcLyIsImlhdCI6MTU2NjIxNDg0NCwibmJmIjoxNTY2MjIyMDQ0fQ.aCBkTIX6v38c1GWA44ZKliRanGQ7JHmbU4alInzfv3I',
   },
 });
 
@@ -19,11 +19,11 @@ export function logout() {
 }
 
 export function handleErrors(error) {
-  if (error.response) {
+  console.log(`😱 Axios request failed: ${error}`);
+  if (!error.response) {
     return;
   }
-  console.log(`😱 Axios request failed: ${error}`);
-  console.log(error);
+  console.log(error.response);
   switch (error.response.status) {
     case 401: {
       logout();

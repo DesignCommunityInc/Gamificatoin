@@ -9,11 +9,13 @@ import answers from './Games/Answer';
 import lastGame from './Teacher/LastGame';
 import timer from './Games/Timer';
 import achievements from './Achievements';
+import gameEditor from './Teacher/GameEditior';
 
 export default history => combineReducers({
   router: connectRouter(history),
   achievements,
   gamepreview,
+  gameEditor,
   gameInside,
   lastGame,
   gamelist,
