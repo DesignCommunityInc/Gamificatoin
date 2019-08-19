@@ -7,7 +7,7 @@ class Participant extends React.Component {
 
 
   render() {
-    const { isLoading, name, middlename, secondname, type} = this.props;
+    const { isLoading, name, patronymic, surname, type} = this.props;
     // console.log(this.props);
 
     if(isLoading) return (
@@ -17,11 +17,11 @@ class Participant extends React.Component {
     return(
       <div className="participant">
         <div className="participant__info">
-          <p className="participant__info__middlename">{secondname}</p>
-          <p className="participant__info__name__secondname">{name} {middlename}</p>
+          <p className="participant__info__middlename">{surname}</p>
+          <p className="participant__info__name__secondname">{name} {patronymic}</p>
         </div>
         <div type={type} className="participant__status">
-          прошел
+          {type === "complete" ? "прошел" : "не приступал"}
         </div>
       </div>
     )

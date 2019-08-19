@@ -33,6 +33,10 @@ $fast: ease-in-out .1s;
 $average: ease-in-out .2s;
 $slow: ease-in-out .3s;
 
+$fast-linear: .1s;
+$average-linear: .2s;
+$slow-linear: .3s;
+
 @function z($name) {
     @if index($z-indexes, $name) {
         @return (length($z-indexes) - index($z-indexes, $name)) + 1;

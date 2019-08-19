@@ -8,7 +8,7 @@ const propTypes = {
 };
 const defaultProps = {
     id: 0,
-    title: 'Заголовок',
+    title: '',
     value: ''
 };
 

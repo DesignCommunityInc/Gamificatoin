@@ -34,10 +34,11 @@ class TeacherGamePage extends React.Component {
     console.log(started);
     return (
       <main className="page">
-        <Header />
+        <Header 
+          title="Мои игры"
+        />
         <Settings />
         <section className="Games Container">
-          <Link to="/" className="Container__title Container__title-backward">Мои игры</Link>
           <div className="Games__container Games__container-bottom-offset">
             <div className="Message Message__v1">
               <p className="Message__title">Для начала.</p>

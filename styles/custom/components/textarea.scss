@@ -1,0 +1,46 @@
+.text__area{
+  position: relative;
+      display: block;
+      margin-top: 30px;
+      &__title{
+          position: absolute;
+          display: block;
+          font-size: 13pt;
+          font-weight: 400;
+          color: $dark;
+          padding: 0px 20px;
+          background: white;
+          top: -5px;
+          left: 10px;
+          width: fit-content;
+          transition: .1s;
+      }
+      & > textarea{
+        margin-top: 10px;
+        border: 1.5px solid $light-grey;
+        border-radius: $border-radius-large;
+        max-width: 100%;
+        min-width: 100%;
+        min-height: 60px;
+        max-height: 200px;
+        padding: 10px 15px;
+        font-size: 14pt;
+        font-weight: 400;
+        height: fit-content;
+        padding-top: 20px;
+        transition: .2s;
+        overflow: hidden;
+        resize: none;
+        &:focus{
+            padding-top: 10px;
+            height: auto;
+            overflow-y: auto;
+        }
+        &:focus + .text__area__title{
+            color: $light-grey;
+            font-size: 14pt;
+            opacity: 0;
+        }
+    }
+
+}

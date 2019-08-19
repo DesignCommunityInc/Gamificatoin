@@ -5,7 +5,7 @@ import { ROOT } from '../../../constants/Routes'
 class Question extends React.Component {
   constructor() {
     super();
-    // this.imageMoving = this.imageMoving.bind(this);
+    this.renderAnswer = this.renderAnswer.bind(this);
     this.viewQuestionText = this.viewQuestionText.bind(this);
     this.state = {
         active: false,
@@ -13,17 +13,30 @@ class Question extends React.Component {
   }
 
   viewQuestionText(id) {
-    // const currentState = this.state.active;
-    console.log(this);
     this.props.onClick(this.props.idx);
-    // this.setState({ active: !currentState });
   }
 
+  renderAnswer(answerA){
+    if( typeof (answerA) == "Array" ){
+      answerA.map((answerV) => (
+        this.renderAnswer(answerV)
+      ))
+    }
+    return (
+      <>
+        {answerA['n'] ? (
+            <p type="wrong">{answerA['n']}</p>
+          ) : answerA['y'] ? (
+            <p type="correct">{answerA['y']}</p>
+          ) : (
+            <p>{answerA}</p>
+          )
+        } 
+      </>
+    )
+  }
 
   render() {
-    // title={`Вопрос №${question.id}`}
-
-    // specUUD={question.direction[0]}
 
     const { direction, question, counter, title, specUUD, type, image, isLoading, id , active, subject, answer = [] } = this.props;
     if(isLoading) return (
@@ -46,11 +59,15 @@ class Question extends React.Component {
           </div>
         </div>
         <div className="question__view__button__wrapper">
-          <div onClick={this.viewQuestionText} className="question__view__button"></div>
+          <div onClick={this.viewQuestionText} className="question__view__button">
+            <span className="question__view__button__dot"></span>
+            <span className="question__view__button__dot"></span>
+            <span className="question__view__button__dot"></span>
+          </div>
         </div>
         <div className="question__bigView">
           <div className="question__bigView__title">
-            <p>{title}</p>
+            <p>{`Вопрос №${id}`}</p>
           </div>
           <div className="question__bigView__tags">
             <p type="subject">{subject}</p>
@@ -62,25 +79,9 @@ class Question extends React.Component {
           <div className="question__bigView__text">
             <p className="question__bigView__text__title">Ответы</p>
             <div className="question__bigView__text__wrapper"> 
-              {answer.map((answerA, idx) => (
-                // if(answerA['n']){
-                //   <p type="wrong">{answerA['n']}</p>
-                // }else if(answerA['y']){
-                //   <p type="correct">{answerA['y']}</p>
-                // }else{
-                //   <p>{answerA}</p>
-                // }
-                <>
-                  {answerA['n'] ? (
-                      <p type="wrong">{answerA['n']}</p>
-                    ) : answerA['y'] ? (
-                      <p type="correct">{answerA['y']}</p>
-                    ) : (
-                      <p>{answerA}</p>
-                    )
-                  } 
-                </>
-              ))}  
+              {/* {answer && answer.map((answerA, idx) => (
+                this.renderAnswer(answerA)
+              ))}   */}
             </div>
           </div>
         </div>
