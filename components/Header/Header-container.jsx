@@ -2,6 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import Timer from '../Timer';
+import { logout } from '../../utils/API';
 import * as routes from '../../constants/Routes';
 
 const propTypes = {
@@ -10,7 +11,6 @@ const propTypes = {
   title: PropTypes.string,
   location: PropTypes.shape({}).isRequired,
   toggleSettingsScreen: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
   fetchUserProfile: PropTypes.func.isRequired,
 };
 const defaultProps = {
@@ -34,7 +34,6 @@ class Header extends React.Component {
         photo,
       } = {},
       toggleSettingsScreen,
-      logout,
       location: { pathname } = {},
     } = this.props;
     return (

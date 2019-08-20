@@ -15,7 +15,6 @@ export function fetchGamePlay(id) {
       await API.get(`/game/${id}/play`).then((response) => {
         const { questions } = response.data;
         // eslint-disable-next-line max-len
-        response.data.totalQuestions = Object.values(questions).reduce((accumulator, current) => accumulator + current.length, 0);
         const { subjects } = response.data;
         const sub = subjects.slice(0);
         dispatch(success(response.data));

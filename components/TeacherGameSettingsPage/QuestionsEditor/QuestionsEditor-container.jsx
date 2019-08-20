@@ -137,6 +137,7 @@ class QuestionEditor extends React.Component {
       game_id,
       fetchTeacherGamePreview,
     } = this.props;
+    console.log(pathname);
     return (
       <>
         <div
