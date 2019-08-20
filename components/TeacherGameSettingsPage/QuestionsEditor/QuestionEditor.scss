@@ -11,7 +11,7 @@
   background: $dark-40;
   width: 100%;
   height: 100%;
-  z-index: z("top-layer");
+  z-index: z("supertop-layer");
 }
 
 .Question-Editor {
@@ -30,7 +30,7 @@
     left: 0;
     transform: unset;
   }
-  z-index: z("top-layer");
+  z-index: z("supertop-layer");
   .right {
     display: inline-block;
     position: relative;

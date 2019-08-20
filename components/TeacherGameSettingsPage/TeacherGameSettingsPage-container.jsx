@@ -8,6 +8,7 @@ import Question from './Question';
 import Textarea from '../Textarea';
 import Participant from './Participant';
 import Detail from './Detail';
+import QuestionEditor from './QuestionsEditor';
 
 const propTypes = {
   fetchTeacherGamePreview: PropTypes.func.isRequired,
@@ -68,7 +69,15 @@ class TeacherGameSettingsPage extends React.Component {
       location: {
         pathname,
       } = {},
+      match: {
+        params: { id },
+      } = {},
+      questionListVisibility,
+      toggleQuestionListVisibility,
+      fetchTeacherGamePreview,
     } = this.props;
+
+    console.log(description);
 
     const completedLenght = completed ? completed.length : 0;
     const notPlayedLenght = not_played ? not_played.length : 0;
@@ -79,6 +88,12 @@ class TeacherGameSettingsPage extends React.Component {
 
     return (
       <main className="page">
+        { questionListVisibility && (
+          <QuestionEditor 
+            game_id={id}
+            fetchTeacherGamePreview={fetchTeacherGamePreview}
+          />
+        )}
         <Header 
           title="Редактирование"
         />
@@ -114,7 +129,7 @@ class TeacherGameSettingsPage extends React.Component {
                   </div>
                 <Textarea 
                     title="описание игры"
-                    value={description && description}
+                    value={description}
                 />
               </div>
             </form>
@@ -124,10 +139,10 @@ class TeacherGameSettingsPage extends React.Component {
         <div className="Container__title">Вопросы игры</div>
           <div className="Buttons__wrapper">
             <span role="button" className="button">Создать вопрос</span>
-            <span role="button" className="button">Добавить вопрос из банка</span>
+            <span role="button" onClick={toggleQuestionListVisibility} className="button">Добавить вопрос из банка</span>
           </div>
           <div className="Questions__wrapper">
-            {questions.map((question, idx) => (
+            {questions && questions.map((question, idx) => (
               <Question
                 {...question}
                 counter={idx+1}

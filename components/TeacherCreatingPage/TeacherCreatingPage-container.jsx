@@ -32,7 +32,7 @@ class TeacherCreatingPage extends React.Component {
         activeGameType: null,
         activeType: null,
         gameName: null,
-        gameDescription: null,
+        gameDescription: 'Описание',
         startDate: null,
         startTime: null,
         endDate: null,
@@ -122,6 +122,7 @@ class TeacherCreatingPage extends React.Component {
 
  createGameRequest() {
     const { activeType, activeGameType, activeClass, gameName, gameDescription, timeToGoH, timeToGoM, startDate, startTime, endDate, endTime } = this.state;
+    const { history, createGame } = this.props;
     const fields = {
         name: gameName,
         description: gameDescription,
@@ -133,7 +134,7 @@ class TeacherCreatingPage extends React.Component {
         start_date: startDate + " " + startTime,
         finish_date: endDate + " " + endTime,
     }
-    console.log(fields);
+    createGame(fields, history);
  }
 
   render() {
@@ -141,10 +142,8 @@ class TeacherCreatingPage extends React.Component {
       isLoading,
       data: {
       } = {},
-      location: {
-        pathname,
-      } = {},
-        timeRegEx = "^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$"
+      history,
+      timeRegEx = "^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$",
     } = this.props;
 
     // console.log(started);
@@ -266,13 +265,13 @@ class TeacherCreatingPage extends React.Component {
                         name = "Онлайн"
                         id="1"
                         onClick={this.handleGameTypeSelect}
-                        active={parseInt(this.state.activeGameType) === 0 ? "Options__game__type--active" : ""}
+                        active={parseInt(this.state.activeGameType) === 1 ? "Options__game__type--active" : ""}
                     />
                     <GameType 
                         name = "Оффлайн"
                         id="0"
                         onClick={this.handleGameTypeSelect}
-                        active={parseInt(this.state.activeGameType) === 1 ? "Options__game__type--active" : ""}
+                        active={parseInt(this.state.activeGameType) === 0 ? "Options__game__type--active" : ""}
                     />
                 </div>
                 </div>

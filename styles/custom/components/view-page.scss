@@ -1,0 +1,63 @@
+.ViewPage{
+  position: relative;
+  display: block;
+  &__main{
+    position: relative;
+    display: block;
+    max-width: 750px;
+    height: 300px;
+    margin: 60px auto 60px;
+    &__info{
+      position: relative;
+      display: table-cell;
+      width: 40vh;
+      border-right: 50px solid transparent;
+      &__image{
+        position: relative;
+        display: block;
+        margin: auto;
+        width: 190px;
+        height: 190px;
+        background: $light-grey;
+        border-radius: 100%;
+      }
+      &__first{
+        position: relative;
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-size: 23pt;
+        font-weight: 700;
+        margin: 15px 0px;
+      }
+      &__second{
+        position: relative;
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-size: 18pt;
+        font-weight: 400;
+      }
+    }
+    &__extra__content{
+      position: relative;
+      display: table-cell;
+      width: 40vh;
+      border-left: 50px solid transparent;
+      vertical-align: top;
+      &__line{
+        display: block;
+        margin: 40px 0;
+        &__title{
+          font-size: 14pt;
+          font-weight: 600;
+        }
+        &__value{
+          font-size: 40pt;
+          color: $violet;
+          font-weight: 700; 
+        }
+      }
+    }
+  }
+}

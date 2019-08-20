@@ -1,6 +1,8 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import Utils from '../../../utils/Utils';
+import { withRouter } from 'react-router-dom';
+import ExtraContent from './ExtraContent';
 
 const propTypes = {
 };
@@ -15,9 +17,29 @@ class UserPage extends React.Component {
   }
 
   render() {
+    const {
+      level,
+      achievements_count,
+    } = this.props;
     return (
-      <section className="ViewPage">
-        <div>asd</div>
+      <section className="ViewPage Container">
+        <div className="ViewPage__main">
+          <div className="ViewPage__main__info">
+            <div className="ViewPage__main__info__image"></div>
+            <p className="ViewPage__main__info__first">Кочетков</p>
+            <p className="ViewPage__main__info__second">Антов Антонович</p>
+          </div>
+          <div className="ViewPage__main__extra__content">
+            <ExtraContent 
+              title="Уровень"
+              value={level}
+            />
+            <ExtraContent 
+              title="Кол-во достижений"
+              value={achievements_count}
+            />
+          </div>
+        </div>
       </section>
     );
   }
@@ -26,4 +48,4 @@ class UserPage extends React.Component {
 UserPage.propTypes = propTypes;
 UserPage.defaultProps = defaultProps;
 
-export default UserPage;
+export default withRouter(props => <UserPage {...props} />) ;

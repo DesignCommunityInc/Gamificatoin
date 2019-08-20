@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import TeacherCreatingPage from "./TeacherCreatingPage-container";
+import { createGame } from './TeacherCreatingPage-action';
 
 const gameView = props => <TeacherCreatingPage {...props} />;
 
@@ -11,7 +12,7 @@ const mapStateToProps = ({ gamelist }) => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  // fetchTeacherGames,
+  createGame,
 }, dispatch);
 
 export default connect (

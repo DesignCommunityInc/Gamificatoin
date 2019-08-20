@@ -1,7 +1,9 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import UserContainer from './UserContainer-container';
+
 
 const userContainer = props => <UserContainer {...props} />;
 
@@ -15,3 +17,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(userContainer);
+ 

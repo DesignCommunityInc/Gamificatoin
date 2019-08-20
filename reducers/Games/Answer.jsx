@@ -6,6 +6,7 @@ const initialState = {
   isItPossibleToReplace: false,
   isOptionFocused: false,
 };
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.THROW_ANSWER_OPTION:

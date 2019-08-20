@@ -23,6 +23,7 @@ const propTypes = {
   filterAction: PropTypes.func.isRequired,
   saveQuestions: PropTypes.func.isRequired,
   toggleQuestionListVisibility: PropTypes.func.isRequired,
+  fetchTeacherGamePreview: PropTypes.func.isRequired,
 };
 const defaultTypes = {
 };
@@ -133,6 +134,8 @@ class QuestionEditor extends React.Component {
       currentPage,
       saveQuestions,
       toggleQuestionListVisibility,
+      game_id,
+      fetchTeacherGamePreview,
     } = this.props;
     return (
       <>
@@ -181,7 +184,7 @@ class QuestionEditor extends React.Component {
           <div className="Question-Editor__footer">
             <div
               className="button button-main button-iconless save-button"
-              onClick={() => saveQuestions({ id: 12, questions: selectedQuestions })}
+              onClick={() => saveQuestions({ game_id, questions: selectedQuestions }).then( () => fetchTeacherGamePreview(game_id) )}
               role="button"
               tabIndex="0"
               onKeyDown={() => {}}

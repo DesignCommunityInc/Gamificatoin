@@ -10,6 +10,7 @@ import lastGame from './Teacher/LastGame';
 import timer from './Games/Timer';
 import achievements from './Achievements';
 import gameEditor from './Teacher/GameEditior';
+import userView from './UserView';
 
 export default history => combineReducers({
   router: connectRouter(history),
@@ -23,4 +24,5 @@ export default history => combineReducers({
   answers,
   session,
   timer,
+  userView,
 });

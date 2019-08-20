@@ -29,7 +29,7 @@ class Root extends React.Component {
   constructor() {
     super();
     // this.role = JSON.parse(localStorage.getItem('User')).role;
-    this.role = '6';
+    this.role = '5';
   }
 
   componentDidMount() {
@@ -57,6 +57,7 @@ class Root extends React.Component {
                 <Route exact path={routes.GAME_LIST_PAGE} component={TeacherGamePage} />
                 <Route exact path={routes.GAME_PREVIEW_PAGE} component={TeacherGameSettingsPage} />
                 <Route exact path={routes.GAME_CREATING_PAGE} component={TeacherCreatingPage} />
+                <Route exact path={routes.USER_VIEW_PAGE} component={UserViewPage} />
               </Switch>
             </CSSTransition>
           </TransitionGroup>

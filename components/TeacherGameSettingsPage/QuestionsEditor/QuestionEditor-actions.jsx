@@ -22,7 +22,6 @@ export const fetchQuestionList = ({ game_id, page, filters }) => {
           filters,
         },
       }).then((response) => {
-        console.log(response);
         dispatch(success(response.data));
       });
     } catch (e) {
@@ -63,15 +62,14 @@ export const filterAction = (field, id, filter) => (dispatch) => {
   });
 };
 
-export const saveQuestions = ({ id, questions }) => {
+export const saveQuestions = ({ game_id, questions }) => {
   const success = () => dispatch => dispatch({
     type: types.QUESTION_LIST_VISIBILITY_TOGGLE,
   });
 
   return async (dispatch) => {
-    console.log(id, questions);
     try {
-      await API.post(`games/${id}/questions`, { questions }).then((response) => {
+      await API.post(`games/${game_id}/questions`, { questions }).then((response) => {
         console.log(response);
         dispatch(success(response.data));
       });
