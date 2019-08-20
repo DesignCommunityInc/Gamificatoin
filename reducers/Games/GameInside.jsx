@@ -6,12 +6,12 @@ const initialState = {
     subjects: [],
     answer: [],
   },
+  answersCount: 1,
   animatedSubjects: 0,
   subjectsIsAnimated: false,
   isLoading: true,
   currentQuestion: null,
   currentCategory: null,
-  totalQuestions: null,
   categoriesVisible: true,
   endGame: false,
   choosenCategory: null,
@@ -73,6 +73,7 @@ export default (state = initialState, action) => {
     case types.PASS_ANSWER_FOR_THE_QUESTION:
       return {
         ...state,
+        answersCount: state.answersCount + 1,
         globalAnswerList: state.globalAnswerList.concat(action.payload.data),
       };
     case types.END_THE_GAME:

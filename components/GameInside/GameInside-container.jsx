@@ -9,6 +9,7 @@ import ParticleSpawner from '../../utils/Particles';
 const propTypes = {
   game: PropTypes.shape({}).isRequired,
   animatedSubjects: PropTypes.number.isRequired,
+  answersCount: PropTypes.number.isRequired,
   passList: PropTypes.arrayOf(PropTypes.string).isRequired,
   globalAnswerList: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   currentQuestion: PropTypes.shape({
@@ -92,7 +93,10 @@ class GameInside extends React.Component {
       currentQuestion,
       globalAnswerList,
       match: { params: { id } },
+      passList,
+      answersCount,
     } = this.props;
+    console.log(this.props);
     return (
       <main className="page">
         <div
@@ -119,7 +123,11 @@ class GameInside extends React.Component {
                   this.question = ref;
                 }}
                 {...currentQuestion}
+                totalQuestions={Object.values(questions)
+                  .reduce((accumulator, current) => accumulator + current.length, 0)}
+                category={currentCategory}
                 endGame={endGame}
+                answersCount={answersCount}
                 handleAnswer={this.handleAnswer}
                 startTimer={this.startTimer}
               />

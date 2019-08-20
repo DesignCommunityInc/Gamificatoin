@@ -13,6 +13,9 @@ const propTypes = {
   id: PropTypes.string,
   answer: PropTypes.arrayOf(PropTypes.any),
   question: PropTypes.string,
+  category: PropTypes.string.isRequired,
+  totalQuestions: PropTypes.number.isRequired,
+  answersCount: PropTypes.number.isRequired,
   type: PropTypes.string,
   // isLoading: PropTypes.bool.isRequired,
   // eslint-disable-next-line camelcase
@@ -26,6 +29,8 @@ const defaultProps = {
   question: '',
   // eslint-disable-next-line camelcase
   question_image: '',
+  // totalQuestions: 1,
+  // answersCount: 1,
   answer: [],
 };
 
@@ -196,20 +201,26 @@ class Question extends React.Component {
       endGame,
       type,
       handleAnswer,
+      answersCount,
+      totalQuestions,
+      category,
     } = this.props;
     const { showQuestion, showImage } = this.state;
-    const count = 15;
-    const total = 30;
-    const progress = count / total * 100;
+    const progress = answersCount / totalQuestions * 100;
     return (
       <section className={`Game-fullscreen Question ${endGame || !showQuestion ? 'Question--fadeout' : ''}`}>
         <div className={question.length > 100 ? 'Question__container Question__container--large' : 'Question__container'}>
           <div className="Question__count">
-            <b>{`Вопрос № ${count} `}</b>
-            {`из ${total}`}
+            <b>{`Вопрос № ${answersCount} `}</b>
+            {`из ${totalQuestions}`}
           </div>
           <div className="Question__progress">
             <div className="Question__progress__bar" style={{ width: `${progress}%` }} />
+          </div>
+          <div className="Question__category">
+            <span style={{ marginLeft: `${progress}%` }}>
+              {category}
+            </span>
           </div>
           {image && (
             <div

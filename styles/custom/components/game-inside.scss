@@ -214,6 +214,23 @@
       background: $violet;
     }
   }
+  &__category {
+    display: block;
+    position: relative;
+    max-width: 20%;
+    margin: 10px auto;
+    @include mobile {
+      margin: 0 20px;
+      max-width: 100%!important;
+    }
+    span {
+      padding: 5px 10px;
+      background: white;
+      font-weight: 700;
+      white-space: nowrap;
+      border-radius: 0 10px 10px 10px;
+    }
+  }
   // Question__container > .Question__image
   &__image {
     display: block;

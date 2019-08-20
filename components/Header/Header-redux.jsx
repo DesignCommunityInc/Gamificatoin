@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import toggleSettingsScreen from '../../actions/Settings';
 import { fetchUserProfile } from '../../actions/Session';
-import { logout } from '../../utils/API';
 import Header from './Header-container';
 
 const headerContainer = props => <Header {...props} />;
@@ -16,7 +15,6 @@ const mapStateToProps = ({ session }) => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   toggleSettingsScreen,
   fetchUserProfile,
-  logout,
 }, dispatch);
 
 export default connect(

@@ -47,7 +47,8 @@ class Timer extends React.Component {
   }
 
   start() {
-    const { game: { test: { time } } = {}, setTimer } = this.props;
+    const { game: { test: { time } = {} } = {}, setTimer } = this.props;
+    if (!time) return;
     const t = {
       seconds: 0,
       minutes: parseInt(time.split(/:/)[1], 10),

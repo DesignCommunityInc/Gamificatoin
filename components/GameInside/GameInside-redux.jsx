@@ -15,6 +15,7 @@ const mapStateToProps = ({ gameInside }) => ({
   game: gameInside.data,
   timer: gameInside.timer,
   answer: gameInside.answer,
+  answersCount: gameInside.answersCount,
   isLoading: gameInside.isLoading,
   currentCategory: gameInside.currentCategory,
   currentQuestion: gameInside.currentQuestion,

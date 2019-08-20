@@ -133,7 +133,11 @@ class QuestionEditor extends React.Component {
       currentPage,
       saveQuestions,
       toggleQuestionListVisibility,
+      location: {
+        pathname,
+      } = {},
     } = this.props;
+    console.log(pathname);
     return (
       <>
         <div
