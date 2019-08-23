@@ -6,9 +6,15 @@ const propTypes = {
   id: PropTypes.number,
   image: PropTypes.string,
   name: PropTypes.string,
-  difficulty: PropTypes.string,
+  difficulty: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   // eslint-disable-next-line camelcase
-  questions_count: PropTypes.string,
+  questions_count: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   time: PropTypes.string,
   experience: PropTypes.number,
   creator: PropTypes.shape({}),
@@ -66,9 +72,9 @@ const Game = ({
           <div className="game__results">{results} балла</div>
         } */}
         <div className="game__name">{name}</div>
-        <div className="game__difficulty">{`${difficulty} уровень сложности`}</div>
+        {difficulty && <div className="game__difficulty">{`${difficulty} уровень сложности`}</div>}
         <div className="game__questions">{`${questions} плитка`}</div>
-        <div className="game__time">{`${time} минут`}</div>
+        {time && <div className="game__time">{`${time} минут`}</div>}
         <div className="game__reward">
           <div className="game__reward__exp">{`+ ${experience} xp`}</div>
         </div>

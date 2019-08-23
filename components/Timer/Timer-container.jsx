@@ -10,12 +10,14 @@ const propTypes = {
   }),
   currentQuestion: PropTypes.shape({}),
   endGame: PropTypes.bool.isRequired,
+  white: PropTypes.bool,
   setTimer: PropTypes.func.isRequired,
   endTheGame: PropTypes.func.isRequired,
 };
 const defaultProps = {
   game: {},
   timer: null,
+  white: false,
   currentQuestion: null,
 };
 
@@ -89,11 +91,11 @@ class Timer extends React.Component {
   }
 
   render() {
-    const { timer } = this.props;
+    const { timer, white } = this.props;
     if (!timer) return false;
     const { hours, minutes, seconds } = timer;
     return (
-      <div className="Timer">
+      <div className={`Timer ${white ? 'Timer--white' : ''}`}>
         {`${hours}:${minutes}:${seconds}`}
       </div>
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { endTheGame } from '../GameInside/GameInside-actions';
+import { endTheGame } from '../_pages/GameInside/GameInside-actions';
 import setTimer from './Timer-actions';
 import Timer from './Timer-container';
 

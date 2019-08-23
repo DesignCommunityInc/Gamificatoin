@@ -1,0 +1,78 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import UserContainer from './UserContainer';
+import Header from '../../Header';
+import Settings from '../../Settings';
+import Utils from '../../../utils/Utils';
+import Achievements from '../../AchievementList';
+
+const propTypes = {
+  data: PropTypes.shape({}).isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  match: PropTypes.shape({}).isRequired,
+  achievements: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  fetchUserView: PropTypes.func.isRequired,
+  fetchUserAchievements: PropTypes.func.isRequired,
+};
+
+class UserPage extends React.Component {
+  componentDidMount() {
+    const {
+      fetchUserView,
+      fetchUserAchievements,
+      match: {
+        params: { id },
+      } = {},
+    } = this.props;
+    fetchUserView(id);
+    fetchUserAchievements(id);
+    // Utils.scrollTo(document.documentElement, 0, 0);
+  }
+
+  render() {
+    const {
+      data,
+      isLoading,
+      data: {
+        hidden,
+        nickname,
+      } = {},
+      achievements,
+    } = this.props;
+    if (!hidden) {
+      return (
+        <main className="page">
+          <Header
+            title={nickname}
+          />
+          <Settings />
+          <UserContainer
+            isLoading={isLoading}
+            {...data}
+          />
+          <Achievements
+            achievements={{ data: achievements }}
+            isLoading={isLoading}
+            details={false}
+          />
+        </main>
+      );
+    }
+    return (
+      <main className="page">
+        <Header
+          title={nickname}
+        />
+        <Settings />
+        <UserContainer
+          isLoading={isLoading}
+          {...data}
+        />
+      </main>
+    );
+  }
+}
+
+UserPage.propTypes = propTypes;
+
+export default UserPage;

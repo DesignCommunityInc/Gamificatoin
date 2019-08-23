@@ -22,9 +22,9 @@
           display: block;
           position: relative;
           float: right;
-          width: 40px;
-          height: 40px;
-          margin: 10px 25px;
+          width: 50px;
+          height: 50px;
+          margin: 5px 25px;
           cursor: pointer;
           border-radius: 50%;
           overflow: hidden;
@@ -126,7 +126,7 @@
       top: 0;
       padding: 10px;
       padding-top: 60px;
-      margin: $container-padding;
+      margin: 15px 60px;
       background: white;
       visibility: hidden;
       opacity: 0;
@@ -134,10 +134,18 @@
       border: 1px solid $light;
       z-index: -1;
       transition: $fast;
+      @include mobile {
+        margin: 0 15px;
+        padding-top: 80px;
+      }
       &:hover {
-        visibility: visible;
-        transition: $average;
         opacity: 1;
+        visibility: visible;
+        margin: $container-padding;
+        transition: $fast;
+        @include mobile {
+          margin: 0;
+        }
       }
       .button {
         display: block;
@@ -162,7 +170,11 @@
           & + .settings-container--short {
             visibility: visible;
             transition: $average;
+            margin: $container-padding;
             opacity: 1;
+            @include mobile {
+              margin: 0;
+            }
           }
         }
         span {

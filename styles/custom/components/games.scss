@@ -305,9 +305,27 @@
     font-size: 15pt;
     font-weight: 700;
     background: $linear-gradient;
-
+    background: url(assets/background-2.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
     &:last-child{
+      background: url(assets/background-endgame.jpg);
+      background-size: cover;
+      background-repeat: no-repeat;
       margin-right: 0;
+    }
+    &--teacher {
+      p {
+        display: inline-block;
+        &::before {
+          content: 'Инструмент'!important;
+          display: block;
+          position: relative;
+          font-size: 12pt;
+          font-weight: 300;
+          text-align: left;
+        }
+      }
     }
     p {
       display: inline-block;

@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 const propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   classOption: PropTypes.string,
   defaultChecked: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 const defaultProps = {
   classOption: '',
+  name: null,
 };
 
 const CheckBox = ({

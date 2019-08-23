@@ -4,6 +4,8 @@ const initialState = {
   visible: false,
   isHelpersEnabled: false,
   isLocked: false,
+  nickName: '',
+  nickNameLength: 0,
 };
 
 export default (state = initialState, action) => {
@@ -23,9 +25,11 @@ export default (state = initialState, action) => {
         ...state,
         isLocked: action.payload ? action.payload.data : !state.isLocked,
       };
-    case types.SETTINGS_NICKNAME_LENGTH_SET:
+    case types.SET_SETTINGS_NICKNAME:
       return {
         ...state,
+        nickName: action.payload.data,
+        nickNameLength: action.payload.data.length, // string
       };
     default:
       return state;

@@ -1,22 +1,4 @@
 .Games{
-    &__mode{
-        min-height: 133px;
-        max-width: 230px;
-        & > p{
-            // ,argin-top
-            &::before{
-                content: unset;
-            }
-            // &::after{
-            //     content: '+';
-            //     display: block;
-            //     position: relative;
-            //     font-size: 12pt;
-            //     font-weight: 300;
-            //     text-align: center;
-            // }
-        }
-    }
     .Game__inforamtion__wrapper{    
         position: relative;
         display: block;
@@ -61,7 +43,7 @@
                 font-weight: 600;
                 height: 24px;
             }
-            &s{
+            s {
                 position: relative;
                 white-space: nowrap;
                 display: block;
@@ -205,7 +187,7 @@
 
     .Questions{
         position: relative;
-        z-index: z("top-layer");
+        z-index: z("top-layer")!important;
         &__wrapper{
             position: relative;
             display: block;

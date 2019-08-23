@@ -1,7 +1,7 @@
 import React from 'react';
 // import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Rate from "../components/Rate";
+import Rate from "../components/Rate/Rate-container";
 
 const rateContainer = props => <Rate {...props} />;
 

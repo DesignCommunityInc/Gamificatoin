@@ -8,33 +8,41 @@ import {
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group';
-import UserPage from '../UserPage';
-import TeacherPage from '../TeacherPage';
-import TeacherGamePage from '../TeacherGamePage';
-import TeacherGameSettingsPage from '../TeacherGameSettingsPage';
-import TeacherCreatingPage from '../TeacherCreatingPage';
-import AchievementsPage from '../AchievementPage';
-import GamePreview from '../GamePreview';
-import GamePage from '../GamePage';
+import UserPage from '../_pages/UserPage';
+import TeacherPage from '../_pages/TeacherPage';
+import TeacherGamePage from '../_pages/TeacherGamePage';
+import TeacherGameSettingsPage from '../_pages/TeacherGameSettingsPage';
+import AchievementsPage from '../_pages/AchievementPage';
+import GamePreview from '../_pages/GamePreview';
+import GamePage from '../_pages/GamePage';
+import GameInside from '../_pages/GameInside';
+import CreatingPage from '../_pages/CreatingPage';
+import UserViewPage from '../_pages/UserViewPage';
+import Classmates from '../_pages/ClassmatesPage';
 import * as routes from '../../constants/Routes';
-import GameInside from '../GameInside';
-import CreatingPage from '../CreatingPage';
-import UserViewPage from '../UserViewPage';
 
 const propTypes = {
   restore: PropTypes.func.isRequired,
+  fetchUserProfile: PropTypes.func.isRequired,
+  fetchClassmates: PropTypes.func.isRequired,
 };
 
 class Root extends React.Component {
   constructor() {
     super();
-    // this.role = JSON.parse(localStorage.getItem('User')).role;
-    this.role = '5';
+    this.role = JSON.parse(localStorage.getItem('User')).role;
+    // this.role = '6';
   }
 
   componentDidMount() {
-    if (this.role !== 5) return;
-    const { restore } = this.props;
+    const {
+      restore,
+      fetchUserProfile,
+      fetchClassmates,
+    } = this.props;
+    fetchUserProfile();
+    fetchClassmates();
+    if (this.role !== '5') return; // 5 === ученик
     const game = JSON.parse(localStorage.getItem('game'));
     const timer = JSON.parse(localStorage.getItem('timer'));
     if (game) {
@@ -56,8 +64,9 @@ class Root extends React.Component {
                 <Route exact path={routes.ROOT} component={TeacherPage} />
                 <Route exact path={routes.GAME_LIST_PAGE} component={TeacherGamePage} />
                 <Route exact path={routes.GAME_PREVIEW_PAGE} component={TeacherGameSettingsPage} />
-                <Route exact path={routes.GAME_CREATING_PAGE} component={TeacherCreatingPage} />
+                <Route exact path={routes.GAME_CREATING_PAGE} component={CreatingPage} />
                 <Route exact path={routes.USER_VIEW_PAGE} component={UserViewPage} />
+                <Route exact path={routes.CLASSMATES_PAGE} component={Classmates} />
               </Switch>
             </CSSTransition>
           </TransitionGroup>
@@ -80,6 +89,7 @@ class Root extends React.Component {
                 <Route exact path={routes.GAME_LIST_PAGE} component={GamePage} />
                 <Route exact path={routes.GAME_CREATING_PAGE} component={CreatingPage} />
                 <Route exact path={routes.USER_VIEW_PAGE} component={UserViewPage} />
+                <Route exact path={routes.CLASSMATES_PAGE} component={Classmates} />
               </Switch>
             </CSSTransition>
           </TransitionGroup>

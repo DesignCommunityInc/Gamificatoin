@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Checkbox from './Checkbox';
 
 const propTypes = {
-  inline: PropTypes.bool.isRequired,
+  inline: PropTypes.bool,
   sort: PropTypes.string,
   desc: PropTypes.bool,
   sortAction: PropTypes.func,
@@ -25,6 +25,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  inline: false,
   sortFields: [],
   sortAction: () => {},
   desc: false,
@@ -107,13 +108,12 @@ const Filter = ({
             key={uid()}
             htmlFor={Object.keys(srt)[0]}
             className="Filter__field"
-            name="radiobutton"
           >
             <span className="Filter__field-name">{Object.values(srt)[0]}</span>
             <span className="Filter__field-value">
               <Checkbox
                 id={Object.keys(srt)[0]}
-                type="radiobutton"
+                type="radio"
                 onClick={() => sortAction(Object.keys(srt)[0])}
                 defaultChecked={sort === Object.keys(srt)[0]}
               />

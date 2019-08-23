@@ -45,12 +45,23 @@
         width: 100%;
         position: relative;
         margin-top: 30px;
-        
+        .Preloader {
+          display: inline-block!important;
+          vertical-align: middle;
+          width: 30px;
+          height: 30px;
+          margin-right: 10px;
+          overflow: visible;
+        }
         &__position {
           font-size: 20pt;
           vertical-align: middle;
           font-weight: 900;
           padding-right: 20px;
+          &--loading {
+            width: 20px;
+            height: 20px;
+          }
         }
         &__image {
           display: inline-block;

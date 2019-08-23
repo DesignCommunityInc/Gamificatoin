@@ -68,93 +68,74 @@ form{
 .Options{
   position: relative;
   display: block;
-  &__inside__wrapper{
+  &__inside__wrapper {
     position: relative;
     display: block;
     width: 100%;
-    margin-left: 10px;
-    margin-top: 30px;
-    &__title{
+    padding: 10px;
+    margin-bottom: 30px;
+    &__title {
       font-size: 18pt;
       font-weight: 700;
-      margin-bottom: 5px;
-      margin-left: 10px;
+      padding: 10px 0;
     }
-    @include mobile {
-      width: 100%;
-      margin-left: 0px;
+    .Games__container {
+      border: none;
     }
   }
-  &__side{
-      position: relative;
-      display: table-cell;
-      &__left{
-        border-right: 50px solid transparent;
-        max-width: 45vw;
-        @include mobile {
-            max-width: 100%;
-            border-right: unset;
-        }
+  &__side {
+    position: relative;
+    display: table-cell;
+    &__left {
+      width: 50%;
+      @include mobile {
+        max-width: 100%;
       }
-      &__right{
-        border-left: 50px solid transparent;
-        width: 50%;
-        input[type=submit]{
-            cursor: pointer;
-            display: block;
-            width: 24%;
-            padding: 15px;
-            margin-top: 30px;
-            font-size: 14pt;
-            font-weight: 700;
-            background: linear-gradient(to left, #7C6ACE, #9E63BF);
-            border-radius: 3px;
-            color: white;
-            transition: .1s ease-in-out;
-            border: none;
-        }
-        @include mobile {
-            border-left: unset;
-            width: 100%;
-            margin-top: 30px;
-        }
+    }
+    &__right {
+      width: 50%;
+      input[type=submit] {
+        cursor: pointer;
+        display: block;
+        width: 24%;
+        padding: 15px;
+        margin-top: 30px;
+        font-size: 14pt;
+        font-weight: 700;
+        background: linear-gradient(to left, #7C6ACE, #9E63BF);
+        border-radius: 3px;
+        color: white;
+        transition: .1s ease-in-out;
+        border: none;
       }
       @include mobile {
-        display: block;
+        border-left: unset;
         width: 100%;
+        margin-top: 30px;
       }
-  }
-  &__type__wrapper{
-    position: relative;
-    display: block;
-    width: 100%;
-    height: auto;
-    margin-left: 10px;
-    margin-top: 25px;
+    }
     @include mobile {
+      display: block;
       width: 100%;
-      margin-left: 0px;
     }
   }
-  &__type{
+  &__type {
     position: relative;
     display: inline-block;
     height: 120px;
-    width: 300px;
-    margin-right: 20px;
-    background: $linear-gradient;
+    width: 48%;
+    text-align: center;
+    line-height: 120px;
+    margin-right: 2%;
     border-radius: $border-radius-large;
-    cursor: pointer;
+    background: $linear-gradient;
+    background: url(assets/background-2.jpg);
+    font-size: 18pt;
+    color: white;
+    font-weight: 700;
     transition: .2s;
-    opacity: 0.7;
-    & > p{
-        position: relative;
-        top: 36%;
-        font-size: 18pt;
-        color: white;
-        font-weight: 700;
-        text-align: center;
-    }
+    opacity: 0.5;
+    cursor: pointer;
     &--active{
         opacity: 1;
     }
@@ -163,34 +144,22 @@ form{
       transform: translateY(-3px);
       opacity: 1;
     }
-    @include mobile {
-      width: 220px;
-    }
   }
-  &__class{
+  &__class {
     position: relative;
     display: inline-block;
     background: $linear-gradient;
     height: 100px;
     width: 100px;
+    text-align: center;
+    line-height: 100px;
     border-radius: $border-radius-large;
     cursor: pointer;
     transition: .2s;
     margin-right: 15px;
-    opacity: 0.7;
-        & > p{
-        position: relative;
-        top: 36%;
-        font-size: 18pt;
-        color: white;
-        font-weight: 700;
-        text-align: center;
-            @include mobile {
-                top: 31%;
-            }
-        }
-    &--active{
-        opacity: 1;
+    opacity: 0.5;
+    &--active {
+      opacity: 1;
     }
     &:hover{
       box-shadow: 0px 7px 50px 0px rgba(0,0,0,0.15);
@@ -198,54 +167,21 @@ form{
       opacity: 1;
     }
     @include mobile {
-        height: 70px;
-        width: 70px;
+      height: 70px;
+      width: 70px;
     }
   }
-  &__game__type{
-    position: relative;
-    display: inline-block;
-    background: $linear-gradient;
-    height: 130px;
-    width: 330px;
-    border-radius: $border-radius-large;
-    cursor: pointer;
-    transition: .2s;
-    margin-right: 15px;
-    white-space: pre-wrap;  
-    opacity: 0.7;
-    & > p{
-      position: relative;
-      top: 36%;
-      font-size: 18pt;
-      color: white;
-      font-weight: 700;
-      text-align: center;
-    }
-    &--active{
-        opacity: 1;
-    }
-    &:hover{
-      box-shadow: 0px 7px 50px 0px rgba(0,0,0,0.15);
-      transform: translateY(-3px);
-      opacity: 1;
-    }
-    @include mobile {
-      width: 220px;
-      height: 100px;
-    }
-  }
-  &__row{
+  &__row {
     position: relative;
     display: block;
     height: 100px;
     width: 100%;
-    margin-bottom: 10px;
-    & > :nth-child(2){
-        text-align: right;
-        @include mobile {
-            text-align: left;
-        }
+    padding: 20px;
+    & > :nth-child(2) {
+      text-align: right;
+      @include mobile {
+          text-align: left;
+      }
     }
     &__title{
         position: relative;
@@ -257,6 +193,13 @@ form{
         @include mobile {
             display: block;
         }
+    }
+    &__select {
+      width: 200px;
+      padding: 10px;
+      &__option {
+        padding: 5px;
+      }
     }
     &__input{
         position: relative;

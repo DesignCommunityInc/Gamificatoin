@@ -6,16 +6,12 @@ const initialState = {
   filter: [],
   sort: 'id',
   desc: true,
-  shortAchievements: {
-    data: [],
-  },
   mainAchievements: {
     last: {},
     progress: [],
   },
   error: false,
   isLoading: true,
-  isShortAchievementsLoading: true,
   isMainAchievementsLoading: true,
 };
 
@@ -67,20 +63,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         desc: !state.desc,
-      };
-    case types.FETCH_ACHIEVEMENTS_SHORT_START:
-      return {
-        ...state,
-        shortAchievements: {
-          data: [],
-        },
-        isShortAchievementsLoading: true,
-      };
-    case types.FETCH_ACHIEVEMENTS_SHORT_SUCCESS:
-      return {
-        ...state,
-        shortAchievements: action.payload.data,
-        isShortAchievementsLoading: false,
       };
     case types.FETCH_SPECIAL_ACHIEVEMENTS_START:
       return {
