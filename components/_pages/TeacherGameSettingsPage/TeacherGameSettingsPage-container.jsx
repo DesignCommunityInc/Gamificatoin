@@ -1,20 +1,27 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom';
+import uid from 'uid';
 import Header from '../../Header';
 import Settings from '../../Settings';
-import Gamelist from '../../Gamelist';
 import Question from './Question';
 import Textarea from '../../Textarea';
 import Participant from './Participant';
 import Detail from './Detail';
 import QuestionEditor from './QuestionsEditor';
+import Button from '../../Button';
+import UserAdd from './UserAdd';
+import { invite } from './TeacherGameSettingsPage-actions';
 
 const propTypes = {
   fetchTeacherGamePreview: PropTypes.func.isRequired,
   // isLoading: PropTypes.bool.isRequired,
+  users: PropTypes.shape({}).isRequired,
   data: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
+  questionListVisibility: PropTypes.bool.isRequired,
+  toggleQuestionListVisibility: PropTypes.func.isRequired,
+  getInvites: PropTypes.func.isRequired,
 };
 
 class TeacherGameSettingsPage extends React.Component {
@@ -22,35 +29,46 @@ class TeacherGameSettingsPage extends React.Component {
     super();
     this.handleTabSelect = this.handleTabSelect.bind(this);
     this.viewDetails = this.viewDetails.bind(this);
+    this.inviteUser = this.inviteUser.bind(this);
     this.state = {
       activeIndex: null,
-      viewDetails: false
-    }
+      viewDetails: false,
+    };
   }
-  
+
   componentDidMount() {
-    const { fetchTeacherGamePreview } = this.props;
-    const id = this.props.match.params.id;
+    const {
+      fetchTeacherGamePreview,
+      match: {
+        params: { id },
+      } = {},
+      getInvites,
+    } = this.props;
+    getInvites(id);
     fetchTeacherGamePreview(id);
+  }
+
+  inviteUser(userId) {
+    const { fetchTeacherGamePreview, match: { params: { id } } = {}, getInvites } = this.props;
+    invite(id, [userId]).then(() => {
+      fetchTeacherGamePreview(id);
+      getInvites(id);
+    });
   }
 
   handleTabSelect(idx) {
     const { activeIndex } = this.state;
-    if (activeIndex === idx) {
-      idx = null;
-    }
-    this.setState({activeIndex: idx});
- }
+    this.setState({ activeIndex: activeIndex === idx ? null : idx });
+  }
 
- viewDetails() {
+  viewDetails() {
     const { viewDetails } = this.state;
-    this.setState({viewDetails: !viewDetails});
- }
+    this.setState({ viewDetails: !viewDetails });
+  }
 
   render() {
-    let counter = 1;
     const {
-      isLoading,
+      // isLoading,
       data: {
         name,
         image,
@@ -63,96 +81,110 @@ class TeacherGameSettingsPage extends React.Component {
         start_date,
         participants: {
           completed,
-          not_played
+          not_played,
         } = {},
-      },
-      location: {
-        pathname,
       } = {},
       match: {
         params: { id },
       } = {},
+      users,
       questionListVisibility,
       toggleQuestionListVisibility,
       fetchTeacherGamePreview,
     } = this.props;
+    const {
+      activeIndex,
+      viewDetails,
+    } = this.state;
 
     const completedLenght = completed ? completed.length : 0;
     const notPlayedLenght = not_played ? not_played.length : 0;
 
-    const { viewDetails } = this.state;
-
-    const viewDetailClass = viewDetails ? 'Game__information__details--active' : '';
-
     return (
       <main className="page">
-        { questionListVisibility && (
-          <QuestionEditor 
+        {questionListVisibility && (
+          <QuestionEditor
             game_id={id}
             fetchTeacherGamePreview={fetchTeacherGamePreview}
           />
         )}
-        <Header 
-          title="Редактирование"
-        />
+        <Header title="Редактирование" />
         <Settings />
         <section className="Games Container">
-          <div className="Game__inforamtion__wrapper">
-            <div style={{backgroundImage: `url(${image})`}} className="game__image"></div>
+          <div className="Games__information__wrapper">
+            <div
+              style={{ backgroundImage: `url('${image}')` }}
+              className="game__image"
+            />
             <form action="">
-              <input type="text" defaultValue={name} placeholder="Введите название игры"/>
-              <div className="button view__details__button" onClick={this.viewDetails}>
-                  <span/>
-                  <span/>
-                  <span/>
+              <input type="text" defaultValue={name} placeholder="Введите название игры" />
+              <div
+                className="button view__details__button"
+                onClick={this.viewDetails}
+                role="button"
+                onKeyDown={() => {}}
+                tabIndex="0"
+              >
+                <span />
+                <span />
+                <span />
               </div>
               <div className="Game__information__details__wrapper">
-                  <div className={`Game__information__details ${viewDetailClass}`}>
-                    <Detail 
-                        title="Время [чч:мм]"
-                        value={time}
-                    />
-                    <Detail 
-                        title="Даты проведения"
-                        value={`${start_date} - ${finish_date}`}
-                    />
-                    <Detail 
-                        title="Класс"
-                        value={difficulty}
-                    />
-                    <Detail 
-                        title="Тип"
-                        value={type}
-                    />
-                  </div>
-                <Textarea 
-                    title="описание игры"
-                    value={description}
+                <div className={`Game__information__details ${viewDetails ? 'Game__information__details--active' : ''}`}>
+                  <Detail
+                    title="Время [чч:мм]"
+                    value={time}
+                  />
+                  <Detail
+                    title="Даты проведения"
+                    value={`${start_date} - ${finish_date}`}
+                  />
+                  <Detail
+                    title="Класс"
+                    value={difficulty}
+                  />
+                  <Detail
+                    title="Тип"
+                    value={type}
+                  />
+                </div>
+                <Textarea
+                  title="описание игры"
+                  value={description}
                 />
               </div>
             </form>
-          </div>          
+          </div>
         </section>
         <section className="Questions Container">
-        <div className="Container__title">Вопросы игры</div>
+          <div className="Container__title">Вопросы игры</div>
           <div className="Buttons__wrapper">
-            <span role="button" className="button">Создать вопрос</span>
-            <span role="button" onClick={toggleQuestionListVisibility} className="button">Добавить вопрос из банка</span>
+            <Button
+              onClick={toggleQuestionListVisibility}
+              className="button"
+              title="Добавить вопрос из банка"
+            />
           </div>
           <div className="Questions__wrapper">
             {questions && questions.map((question, idx) => (
               <Question
+                // key={uid()}
                 {...question}
-                counter={idx+1}
-                idx = {idx}
-                active={idx === this.state.activeIndex ? 'question--viewed' : ''} 
+                counter={idx + 1}
+                idx={idx}
+                active={idx === activeIndex ? 'question--viewed' : ''}
                 onClick={this.handleTabSelect}
               />
-            ))}     
+            ))}
           </div>
         </section>
         <section className="Participants Container">
-          <div className="Container__title">Участники <p className="Container__title__counter">{ completedLenght + notPlayedLenght }</p></div>
+          <div className="Container__title">
+            Участники
+            <p className="Container__title__counter">
+              {completedLenght + notPlayedLenght}
+            </p>
+          </div>
           <div className="Participants__wrapper">
             <div className="Participants__info">
               <div className="info">
@@ -163,18 +195,24 @@ class TeacherGameSettingsPage extends React.Component {
               </div>
             </div>
             <div className="Participants">
-            {completed && completed.map((participant, idx) => (
-              <Participant 
-                {...participant}
-                type="complete"
+              <UserAdd
+                users={users}
+                onClick={this.inviteUser}
               />
-            ))}    
-            {not_played && not_played.map((participant, idx) => (
-              <Participant 
-                {...participant}
-                type="notStartde"
-              />
-            ))}    
+              {completed && completed.map(participant => (
+                <Participant
+                  key={uid()}
+                  {...participant}
+                  type="complete"
+                />
+              ))}
+              {not_played && not_played.map(participant => (
+                <Participant
+                  key={uid()}
+                  {...participant}
+                  type="notStartde"
+                />
+              ))}
             </div>
           </div>
         </section>

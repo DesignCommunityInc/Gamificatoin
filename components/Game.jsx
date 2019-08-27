@@ -73,16 +73,16 @@ const Game = ({
         } */}
         <div className="game__name">{name}</div>
         {difficulty && <div className="game__difficulty">{`${difficulty} уровень сложности`}</div>}
-        <div className="game__questions">{`${questions} плитка`}</div>
+        {questions && <div className="game__questions">{`${questions} плиток`}</div>}
         {time && <div className="game__time">{`${time} минут`}</div>}
         <div className="game__reward">
           <div className="game__reward__exp">{`+ ${experience} xp`}</div>
         </div>
       </Link>
       {creator != null && (
-        <Link to="/teacher" className="game__author">
-          {/* style={{backgroundImage: `url('${creator.image}')`}} */}
+        <Link to="/teacher" className="game__author" >
           <div className="game__author__image" />
+          {/* style={{ backgroundImage: `url('${creator.image}')` }} */}
           <div className="game__author__info">
             {/* eslint-disable-next-line react/prop-types */}
             <h5>{creator.second_name}</h5>

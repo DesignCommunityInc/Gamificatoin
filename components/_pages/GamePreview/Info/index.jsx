@@ -42,7 +42,10 @@ class Info extends React.Component {
   }
 
   render() {
-    const { image, isLoading } = this.props;
+    const {
+      image,
+      isLoading,
+    } = this.props;
     if (isLoading) {
       return (
         <div />

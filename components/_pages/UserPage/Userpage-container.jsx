@@ -53,6 +53,7 @@ class UserPage extends React.Component {
       IsGamesLoading,
       gamesError,
     } = this.props;
+    const { class_letter, class_number } = userData;
     return (
       <main className="page">
         <Header />
@@ -79,6 +80,7 @@ class UserPage extends React.Component {
           <Classmates
             mateList={classmates}
             isLoading={isClassmatesLoading}
+            tagList={[`${class_letter}${class_number}`]}
           />
         </section>
       </main>

@@ -10,6 +10,19 @@
     transform: scale3d(1.475, 1.475, 1.475);
     animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
   }
+}
+
+@keyframes zoomInDownCenter {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale3d(2, 2, 2);
+    animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale3d(1.475, 1.475, 1.475);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+  }
 } 
 
 @keyframes zoomOutDown {

@@ -3,10 +3,10 @@ import * as types from '../../../../constants/ActionTypes';
 import API, { handleErrors } from '../../../../utils/API';
 
 // eslint-disable-next-line camelcase
-export const fetchQuestionList = ({ game_id, page, filters }) => {
+export const fetchQuestionList = (params) => {
   const start = () => dispatch => dispatch({
     type: types.FETCH_QUESTION_LIST_START,
-    payload: { data: page },
+    payload: { data: params.page },
   });
   const success = data => dispatch => dispatch({
     type: types.FETCH_QUESTION_LIST_SUCCESS,
@@ -16,15 +16,7 @@ export const fetchQuestionList = ({ game_id, page, filters }) => {
   return async (dispatch) => {
     dispatch(start());
     try {
-      await API.get('/questions', {
-        params: {
-          game_id,
-          page,
-          filters,
-        },
-      }).then((response) => {
-        dispatch(success(response.data));
-      });
+      await API.get('/questions', { params }).then(response => dispatch(success(response.data)));
     } catch (e) {
       handleErrors(e);
     }
@@ -54,9 +46,7 @@ export const fetchFilterList = () => {
 
 export const filterAction = (field, id, filter) => (dispatch) => {
   const newFilter = filter;
-  const contains = newFilter[field] !== undefined;
-  if (!contains) newFilter[field] = id;
-  else newFilter[field] = undefined;
+  newFilter[field] = id;
   dispatch({
     type: types.QUESTION_LIST_FILTER_PASS,
     payload: { data: newFilter },

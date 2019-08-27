@@ -45,13 +45,16 @@ const AchievementList = ({
     {details && <Link to="/achievements" className="Container__title Container__title-forward">Мои достижения</Link>}
     {!details && <div className="Container__title Container__title-forward">Достижения</div>}
     <div className="Achievements__container">
-      {data.map(achievement => (
+      {data && data.map(achievement => (
         <Achievement
           key={uid()}
           {...achievement}
           isLoading={isLoading}
         />
       ))}
+      {!data && (
+        <div className="Achievements__container--empty">Пока нет никаких достижений</div>
+      )}
       {(details && count) && (
         <Link
           to="/achievements"

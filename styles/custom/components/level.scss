@@ -3,6 +3,10 @@
   position: relative;
   padding: $container-padding;
   background: $linear-gradient;
+  background: url(assets/level_background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center; 
   margin-bottom: 80px;
   transition: $slow;
   z-index: z("main-layer");
@@ -122,7 +126,10 @@
   }
   &__subtitle {
     color: $light;
-    font-size: 10pt; 
+    background: $white-40;
+    padding: 5px 20px;
+    font-size: 10pt;
+    white-space: nowrap;
     b {
         color: white;
     }

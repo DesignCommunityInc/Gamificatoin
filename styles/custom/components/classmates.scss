@@ -1,7 +1,9 @@
 .Classmates {
-  display: inline-block;
-  width: 50%;
-  vertical-align: top;
+  &--inline {
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+  }
   @include mobile {
     display: block;
     width: 100%;
@@ -41,12 +43,12 @@
         background: linear-gradient(to right, #7B74C2, #9E63BF);
         background-repeat: no-repeat;
         background-size: cover;
-
+        z-index: z("main-layer");
         &:nth-child(2) {
-          z-index: -1;
+          z-index: z("sub-layer");
         }
         &:nth-child(3) {
-          z-index: -2;
+          z-index: z("background-layer");
         }
         &:nth-child(2),
         &:nth-child(3) {
@@ -61,85 +63,85 @@
     }
   }
 
-  .mate {
-    display: inline-table;
-    position: relative;
-    width: 25%;
-    height: 60px;
-    vertical-align: top;
-    padding: 10px 0px;
-    padding-right: 100px;
-    @include lowscreen {
-      width: 33.3%;
-      padding-right: 20px;
-    }
-    @include mobile {
-        width: 50%;
-        padding: 10px;
-    }
-    &__icon {
-      display: inline-block;
-      position: relative;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: $light;
-      background-repeat: no-repeat;
-      background-size: cover;
-      @include mobile {
-        display: block;
-        margin: 0 auto;
-      }
-      &__container {
-        display: table-cell;
-        position: relative;
-        @include mobile {
-          display: block;
-          margin: 0 auto;
-          width: unset;
-        }
-      }
-    }
-    &__info {
-      display: table-cell;
-      position: relative;
-      padding-left: 20px;
-      padding-top: 5px;
-      vertical-align: top;
-      @include mobile {
-          display: block;
-          padding: 10px;
-          text-align: center;
-          max-width: 100%;
-      }
-      &-loading {
-        & > * {
-          background: $light;
-          padding: 10px 40px;
-        }
-        h5 {
-          max-width: 80%;
-          @include mobile {
-            max-width: 100%;
-          }
-        }
-      }
-      h4 {
-        display: inline-block;
-        max-width: 55%;
-        font-weight: 700;
-        @include mobile {
-          margin: unset;
-          white-space: unset;
-          overflow: unset;
-        }
-      }
-      h5 {
-        display: block;
-        padding: 5px 0;
-        font-weight: 500;
-        color: $grey;
-      }
-    }
-  }
+  // .mate {
+  //   display: inline-table;
+  //   position: relative;
+  //   width: 25%;
+  //   height: 60px;
+  //   vertical-align: top;
+  //   padding: 10px 0px;
+  //   padding-right: 100px;
+  //   @include lowscreen {
+  //     width: 33.3%;
+  //     padding-right: 20px;
+  //   }
+  //   @include mobile {
+  //       width: 50%;
+  //       padding: 10px;
+  //   }
+  //   &__icon {
+  //     display: inline-block;
+  //     position: relative;
+  //     width: 60px;
+  //     height: 60px;
+  //     border-radius: 50%;
+  //     background: $light;
+  //     background-repeat: no-repeat;
+  //     background-size: cover;
+  //     @include mobile {
+  //       display: block;
+  //       margin: 0 auto;
+  //     }
+  //     &__container {
+  //       display: table-cell;
+  //       position: relative;
+  //       @include mobile {
+  //         display: block;
+  //         margin: 0 auto;
+  //         width: unset;
+  //       }
+  //     }
+  //   }
+  //   &__info {
+  //     display: table-cell;
+  //     position: relative;
+  //     padding-left: 20px;
+  //     padding-top: 5px;
+  //     vertical-align: top;
+  //     @include mobile {
+  //         display: block;
+  //         padding: 10px;
+  //         text-align: center;
+  //         max-width: 100%;
+  //     }
+  //     &-loading {
+  //       & > * {
+  //         background: $light;
+  //         padding: 10px 40px;
+  //       }
+  //       h5 {
+  //         max-width: 80%;
+  //         @include mobile {
+  //           max-width: 100%;
+  //         }
+  //       }
+  //     }
+  //     h4 {
+  //       display: inline-block;
+  //       max-width: 55%;
+  //       font-weight: 700;
+  //       @include mobile {
+  //         margin: unset;
+  //         white-space: unset;
+  //         overflow: unset;
+  //       }
+  //     }
+  //     h5 {
+  //       display: block;
+  //       padding: 5px 0;
+  //       font-weight: 500;
+  //       color: $grey;
+  //     }
+  //   }
+  // }
 }

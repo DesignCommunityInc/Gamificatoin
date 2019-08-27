@@ -11,8 +11,8 @@ const mapStateToProps = ({ gamelist, session }) => ({
   IsGamesLoading: gamelist.isShortDataLoading,
   userData: session.data,
   isUserLoading: session.isLoading,
-  classmates: session.classmates,
-  isClassmatesLoading: session.isClassmatesLoading,
+  classmates: session.classmatesShort,
+  isClassmatesLoading: session.isClassmatesShortLoading,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

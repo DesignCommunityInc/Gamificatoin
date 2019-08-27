@@ -1,65 +1,89 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import uid from 'uid';
 import Header from '../../Header';
-import { Link } from 'react-router-dom';
 import Settings from '../../Settings';
-import Utils from '../../../utils/Utils';
+import Classmate from './Classmate';
 
 const propTypes = {
+  data: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.shape({})),
+    PropTypes.shape({}),
+  ]).isRequired,
+  userData: PropTypes.shape({}).isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  fetchUserClassmates: PropTypes.func.isRequired,
 };
 
 class ClassmatesPage extends React.Component {
   componentDidMount() {
-    // const {
-    //   fetchMainAchievements,
-    // } = this.props;
-    // fetchMainAchievements();
-    // Utils.scrollTo(document.documentElement, 0, 0);
+    const {
+      fetchUserClassmates,
+    } = this.props;
+    fetchUserClassmates();
   }
 
   render() {
     const {
-      data: {
-        name,
-        second_name,
-        last_name,
-        photo,
+      userData: {
+        roles,
       } = {},
+      data,
       isLoading,
     } = this.props;
+    let role = null;
+    if (roles) {
+      [role] = Object.keys(roles);
+    }
     return (
       <main className="page">
         <Settings />
         <Header title="Мой класс" />
-        {/* {isLoading ? (
-          <section className="Classmates Container">
-            <div className="Container__title Container__title-forward Container__title-loading" />
-            <div className="Achievements__container">
-              {[...Array(8)].map(() => (
-                <Achievement
-                  isLoading
-                  key={uid()}
-                />
-              ))}
-              {details && (
-                <div role="button" className="button button-info button-forward">
-                  Эти и еще много достижений, которые Вы можете открыть, ждут Вас!
-                </div>
-              )}
-            </div>
-          </section>
-        ) : ( */}
-        <section className="Classmates Container">
-          <div className="Classmates__container Classmates__container--large">
-            <div className="mate">
-              <div className="mate__icon__container">
-                <span className="mate__icon" style={{ backgroundImage: `url('${photo}')` }} />
-              </div>
-              <div className="mate__info">
-                <h4>{name}</h4>
-                <h5>{`${second_name} ${last_name}`}</h5>
-              </div>
-            </div>
+        <section className="Achievements Container">
+          <div className="Achievements__container">
+            {role === '5' && (
+              <>
+                {isLoading ? ([...Array(8)].map(() => (
+                  <Classmate
+                    key={uid()}
+                    isLoading={isLoading}
+                  />
+                ))) : (
+                  data.map(mate => (
+                    <Classmate
+                      key={uid()}
+                      {...mate}
+                      isLoading={isLoading}
+                    />
+                  )))}
+              </>
+            )}
+            {role === '6' && (
+              <>
+                {isLoading ? ([...Array(8)].map(() => (
+                  <Classmate
+                    key={uid()}
+                    isLoading={isLoading}
+                  />
+                ))) : (
+                  Object.keys(data).map(number => (
+                    <div key={uid()}>
+                      {Object.keys(data[number]).map(letter => (
+                        <div key={uid()}>
+                          <div className="Achievements__splitter-1">{`${number}${letter}`}</div>
+                          {data[number][letter].map(user => (
+                            <Classmate
+                              key={uid()}
+                              {...user}
+                              isLoading={isLoading}
+                            />
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  )))}
+              </>
+            )}
           </div>
         </section>
       </main>

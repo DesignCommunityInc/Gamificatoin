@@ -6,33 +6,36 @@ import Settings from '../../Settings';
 import Type from './Type';
 import Textarea from '../../Textarea';
 import Button from '../../Button';
-import Utils from '../../../utils/Utils';
+import UserAdd from './UserAdd';
+import List from './List';
+import createGame, { generateGame, generateTeacherGame } from './CreatingPage-action';
 
 const propTypes = {
   // isLoading: PropTypes.bool.isRequired,
   history: PropTypes.shape({}).isRequired,
-  data: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({}).isRequired,
+  classmates: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.shape({})),
+    PropTypes.shape({}),
+  ]).isRequired,
   userData: PropTypes.shape({}).isRequired,
+  filterList: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
-  createGame: PropTypes.func.isRequired,
-  generateGame: PropTypes.func.isRequired,
 };
 
-class TeacherCreatingPage extends React.Component {
+class CreatingPage extends React.Component {
   constructor() {
     super();
-    this.moveForward = this.moveForward.bind(this);
     this.createGameRequest = this.createGameRequest.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClassSelect = this.handleClassSelect.bind(this);
     this.handleGameTypeSelect = this.handleGameTypeSelect.bind(this);
     this.handleTypeSelect = this.handleTypeSelect.bind(this);
-    this.moveBack = this.moveBack.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleScroll = this.handleScroll.bind(this);
-    this.scrollVisibility = this.scrollVisibility.bind(this);
+    this.handleRangeSelect = this.handleRangeSelect.bind(this);
+    this.handleUserSelect = this.handleUserSelect.bind(this);
+    this.handleSubjectSelect = this.handleSubjectSelect.bind(this);
     this.state = {
-      activeClass: null,
+      activeClass: 1,
       activeGameType: null,
       activeType: null,
       gameName: null,
@@ -43,43 +46,17 @@ class TeacherCreatingPage extends React.Component {
       endTime: null,
       timeToGoM: null,
       timeToGoH: null,
-      range: 1,
+      activeSubject: null,
+      activeDirection: null,
+      activeRange: 0,
+      activeUsers: [],
       questionCount: 10,
     };
   }
 
-  scrollVisibility() {
-    if (this.wrapper.offsetWidth <= this.classesContainer.offsetWidth && this.forward) {
-      this.forward.classList.add('hidden');
-    }
-  }
-
-  handleScroll() {
-    const container = this.classesContainer;
-    const limit = container.scrollWidth - container.clientWidth;
-    switch (Math.floor(container.scrollLeft)) {
-      case limit: this.forward.classList.add('hidden');
-        break;
-      case 0: this.backward.classList.add('hidden');
-        break;
-      default:
-        this.backward.classList.remove('hidden');
-        this.forward.classList.remove('hidden');
-        break;
-    }
-  }
-
-  moveForward() {
-    Utils.forward(this.classesContainer, -350);
-  }
-
-  moveBack() {
-    Utils.backward(this.classesContainer, 350);
-  }
-
   handleClassSelect(idx) {
     const { activeClass } = this.state;
-    this.setState({ activeClass: idx === activeClass ? null : idx });
+    this.setState({ activeClass: idx === activeClass ? 1 : idx });
   }
 
   handleGameTypeSelect(idx) {
@@ -96,16 +73,49 @@ class TeacherCreatingPage extends React.Component {
     this.setState({ activeType: idx === activeType ? null : idx });
   }
 
-  handleSelect(e) {
-    this.setState({ range: e.target.value });
+  handleRangeSelect(idx) {
+    const { activeRange } = this.state;
+    this.setState({ activeRange: idx === activeRange ? 0 : idx });
+  }
+
+  handleSubjectSelect(idx) {
+    const { activeSubject } = this.state;
+    this.setState({ activeSubject: idx === activeSubject ? null : idx });
+  }
+
+  handleDirectionSelect(idx) {
+    const { activeDirection } = this.state;
+    this.setState({ activeDirection: idx === activeDirection ? null : idx });
+  }
+
+  handleUserSelect(user) {
+    const { activeUsers } = this.state;
+    console.log(user);
+    const { userData: { roles } = {} } = this.props;
+    if (Object.keys(roles)[0] === '5') {
+      this.setState({ activeUsers: [user] });
+      return;
+    }
+    const index = activeUsers.indexOf(user);
+    if (index === -1) {
+      this.setState({ activeUsers: [...activeUsers, user] });
+    } else {
+      this.setState({
+        activeUsers: [
+          ...activeUsers.slice(0, index),
+          ...activeUsers.slice(index + 1),
+        ],
+      });
+    }
   }
 
   createGameRequest() {
     const {
       history,
-      createGame,
       userData: { roles } = {},
-      generateGame,
+      match: {
+        params: { mode },
+      } = {},
     } = this.props;
     const role = Object.keys(roles || {})[0];
     const {
@@ -120,30 +130,53 @@ class TeacherCreatingPage extends React.Component {
       startTime,
       endDate,
       endTime,
-      range,
+      activeRange,
       questionCount,
+      activeUsers,
+      activeSubject,
     } = this.state;
     if (role === '6') {
-      createGame({
-        name: gameName,
-        description: gameDescription,
-        publicity: activeType,
-        randomize: 0,
-        type: activeGameType,
-        class: activeClass,
-        time: `${timeToGoH}:${timeToGoM}`,
-        start_date: `${startDate} ${startTime}`,
-        finish_date: `${endDate} ${endTime}`,
-      }, history);
+      if (mode === 'generate') {
+        generateTeacherGame({
+          name: gameName,
+          description: gameDescription,
+          randomize: 0,
+          type: activeGameType,
+          time: `${timeToGoH}:${timeToGoM}`,
+          publicity: activeType,
+          class: activeClass,
+          question_public: activeType,
+          question_class: activeClass,
+          question_range: activeRange,
+          question_count: questionCount,
+          question_subject: activeSubject,
+        }, history);
+      } else {
+        createGame({
+          name: gameName,
+          description: gameDescription,
+          publicity: activeType,
+          randomize: 0,
+          type: activeGameType,
+          class: activeClass,
+          time: `${timeToGoH}:${timeToGoM}`,
+          start_date: `${startDate} ${startTime}`,
+          finish_date: `${endDate} ${endTime}`,
+        }, history);
+      }
     } else if (role === '5') {
-      generateGame({
-        name: gameName,
-        description: gameDescription,
-        question_class: activeClass,
-        question_range: range,
-        question_count: questionCount,
-        question_subject: null,
-      }, history);
+      if (mode === 'versus') {
+        console.log('Режим 1 на 1 еще не доработан');
+      } else {
+        generateGame({
+          name: gameName,
+          description: gameDescription,
+          question_class: activeClass,
+          question_range: activeRange,
+          question_count: questionCount,
+          question_subject: activeSubject,
+        }, history);
+      }
     }
   }
 
@@ -151,11 +184,20 @@ class TeacherCreatingPage extends React.Component {
     const {
       userData: {
         roles,
-      },
+      } = {},
+      classmates,
+      filterList: {
+        range,
+        subject,
+        direction,
+      } = {},
+      match: {
+        params: { mode },
+      } = {},
     } = this.props;
     let role = null;
     if (roles) {
-      role = Object.keys(roles || {})[0];
+      [role] = Object.keys(roles || {});
     }
     const timeRegEx = '^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$';
     const {
@@ -170,7 +212,10 @@ class TeacherCreatingPage extends React.Component {
       timeToGoM,
       gameName,
       questionCount,
-      range,
+      activeSubject,
+      activeRange,
+      activeUsers,
+      activeDirection,
     } = this.state;
     return (
       <main className="page">
@@ -190,57 +235,61 @@ class TeacherCreatingPage extends React.Component {
         </section>
         <section className="Options Container">
           <div className="Container__title">Настройки</div>
-          <div className="Options__inside__wrapper">
-            <div className="Options__inside__wrapper__title">Класс</div>
-            <span
-              className="Games__scroller Games__scroller--indents"
-              type="backward"
-              onClick={this.moveBack}
-              tabIndex="0"
-              role="button"
-              onKeyDown={() => {}}
-              ref={(button) => {
-                this.backward = button;
-              }}
-            />
-            <span
-              className="Games__scroller Games__scroller--indents"
-              type="forward"
-              onClick={this.moveForward}
-              tabIndex="0"
-              role="button"
-              onKeyDown={() => {}}
-              ref={(button) => {
-                this.forward = button;
-              }}
-            />
-            <div
-              className="Games__container Games__container-scroll Classes__container"
-              ref={(container) => {
-                this.classesContainer = container;
-              }}
-              onScroll={this.handleScroll}
-            >
-              <div
-                className="Games__container__wrapper Inside__container__wrapper Games__container__wrapper__last"
-                ref={(wrapper) => {
-                  this.wrapper = wrapper;
-                }}
-              >
-                {[...Array(11)].map((_, idx) => (
-                  <Button
-                    key={uid()}
-                    onClick={() => this.handleClassSelect(idx + 1)}
-                    title={`${idx + 1}`}
-                    className={`Options__class ${activeClass === idx + 1 ? 'Options__class--active' : ''}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
+          <List
+            title="Класс"
+          >
+            {[...Array(11)].map((_, idx) => (
+              <Button
+                key={uid()}
+                onClick={() => this.handleClassSelect(idx + 1)}
+                title={`${idx + 1}`}
+                className={`Options__class ${activeClass === idx + 1 ? 'Options__class--active' : ''}`}
+              />
+            ))}
+          </List>
           {role && role === '6' ? (
             <>
               <div className="Options__side Options__side__left">
+                {mode === 'generate' && (
+                  <>
+                    <List
+                      title="Сложность"
+                    >
+                      {range && range.map(rng => (
+                        <Button
+                          key={uid()}
+                          onClick={() => this.handleRangeSelect(rng.id)}
+                          title={rng.name}
+                          className={`Options__class Options__class--large ${activeRange === rng.id ? 'Options__class--active' : ''}`}
+                        />
+                      ))}
+                    </List>
+                    <List
+                      title="УУД"
+                    >
+                      {direction && direction.map(drc => (
+                        <Button
+                          key={uid()}
+                          onClick={() => this.handleDirectionSelect(drc.id)}
+                          title={drc.name}
+                          className={`Options__class Options__class--large ${activeDirection === drc.id ? 'Options__class--active' : ''}`}
+                        />
+                      ))}
+                    </List>
+                    <List
+                      title="Предмет"
+                    >
+                      {subject && subject.map(sbj => (
+                        <Button
+                          key={uid()}
+                          onClick={() => this.handleSubjectSelect(sbj.id)}
+                          title={sbj.name}
+                          className={`Options__class Options__class--large ${activeSubject === sbj.id ? 'Options__class--active' : ''}`}
+                        />
+                      ))}
+                    </List>
+                  </>
+                )}
                 <Type
                   onClick={this.handleTypeSelect}
                   list={['Открытый', 'Приватный']}
@@ -255,6 +304,14 @@ class TeacherCreatingPage extends React.Component {
                 />
               </div>
               <div className="Options__side Options__side__right">
+                {mode === 'generate' && (
+                  <div className="Options__row">
+                    <div className="Options__row__title">Количество вопросов</div>
+                    <div className="Options__row__input">
+                      <input name="questionCount" min="1" defaultValue={questionCount} onChange={this.handleChange} type="number" placeholder="Количество вопросов" />
+                    </div>
+                  </div>
+                )}
                 <div className="Options__row">
                   <div className="Options__row__title">Дата начала</div>
                   <div className="Options__row__input">
@@ -295,30 +352,55 @@ class TeacherCreatingPage extends React.Component {
               </div>
             </>
           ) : (
-            <div className="Options__side Options__side__right">
-              <div className="Options__row">
-                <div className="Options__row__title">Количество вопросов</div>
-                <div className="Options__row__input">
-                  <input name="questionCount" min="1" defaultValue={questionCount} onChange={this.handleChange} type="number" placeholder="Количество вопросов" />
-                </div>
+            <>
+              <div className="Options__side Options__side__left">
+                <List
+                  title="Сложность"
+                >
+                  {range && range.map(rng => (
+                    <Button
+                      key={uid()}
+                      onClick={() => this.handleRangeSelect(rng.id)}
+                      title={rng.name}
+                      className={`Options__class Options__class--large ${activeRange === rng.id ? 'Options__class--active' : ''}`}
+                    />
+                  ))}
+                </List>
+                <List
+                  title="Предмет"
+                >
+                  {subject && subject.map(sbj => (
+                    <Button
+                      key={uid()}
+                      onClick={() => this.handleSubjectSelect(sbj.id)}
+                      title={sbj.name}
+                      className={`Options__class Options__class--large ${activeSubject === sbj.id ? 'Options__class--active' : ''}`}
+                    />
+                  ))}
+                </List>
               </div>
-              <div className="Options__row">
-                <div className="Options__row__title">Сложность</div>
-                <div className="Options__row__input">
-                  <select
-                    name="difficulty"
-                    className="Options__row__select"
-                    onChange={this.handleSelect}
-                    value={range}
-                  >
-                    <option value="1">Легкий</option>
-                    <option value="2">Средний</option>
-                    <option value="3">Тяжелый</option>
-                  </select>
+              <div className="Options__side Options__side__right">
+                <div className="Options__row">
+                  <div className="Options__row__title">Количество вопросов</div>
+                  <div className="Options__row__input">
+                    <input name="questionCount" min="1" defaultValue={questionCount} onChange={this.handleChange} type="number" placeholder="Количество вопросов" />
+                  </div>
                 </div>
+                {mode === 'versus' && (
+                  <>
+                    <div className="Options__row">
+                      <div className="Options__row__title">Участники</div>
+                      <UserAdd
+                        users={classmates}
+                        onClick={this.handleUserSelect}
+                        active={activeUsers}
+                      />
+                    </div>
+                  </>
+                )}
+                <input type="submit" onClick={this.createGameRequest} value="Создать" />
               </div>
-              <input type="submit" onClick={this.createGameRequest} value="Создать" />
-            </div>
+            </>
           )}
         </section>
       </main>
@@ -327,6 +409,6 @@ class TeacherCreatingPage extends React.Component {
 }
 
 
-TeacherCreatingPage.propTypes = propTypes;
+CreatingPage.propTypes = propTypes;
 
-export default TeacherCreatingPage;
+export default CreatingPage;

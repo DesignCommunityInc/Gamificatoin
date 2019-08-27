@@ -43,12 +43,12 @@ class Rate extends React.Component {
               <Button
                 title="В школе"
                 className="tag"
-                onClick={() => fetchUserRate('class')}
+                onClick={() => fetchUserRate('school')}
               />
               <Button
                 title={`${number}А — ${number}Я`}
                 className="tag"
-                onClick={() => fetchUserRate('class')}
+                onClick={() => fetchUserRate('parallel')}
               />
               <Button
                 title={`${number}${letter}`}

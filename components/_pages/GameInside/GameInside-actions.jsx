@@ -9,11 +9,14 @@ export function fetchGamePlay(id) {
     type: types.FETCH_GAME_PLAY_SUCCESS,
     payload: { data },
   });
+  const failure = data => dispatch => dispatch({
+    type: types.FETCH_GAME_PLAY_FAILURE,
+    payload: { data },
+  });
   return async (dispatch) => {
     dispatch(start());
     try {
       await API.get(`/game/${id}/play`).then((response) => {
-        // eslint-disable-next-line max-len
         const { subjects } = response.data;
         const sub = subjects.slice(0);
         dispatch(success(response.data));
@@ -27,6 +30,7 @@ export function fetchGamePlay(id) {
         }, 300);
       });
     } catch (e) {
+      if (e.response && e.response.status === 400) dispatch(failure(e.response.data.message));
       handleErrors(e);
     }
   };

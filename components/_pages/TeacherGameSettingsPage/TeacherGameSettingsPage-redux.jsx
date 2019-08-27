@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 import { fetchTeacherGamePreview } from '../../../actions/Games';
 import TeacherGameSettingsPage from './TeacherGameSettingsPage-container';
 import { toggleQuestionListVisibility } from './QuestionsEditor/QuestionEditor-actions';
+import getInvites from './TeacherGameSettingsPage-actions';
 
 const gameView = props => <TeacherGameSettingsPage {...props} />;
 
 const mapStateToProps = ({ gamepreview, gameEditor }) => ({
   data: gamepreview.teacherData,
+  users: gameEditor.users,
   questionListVisibility: gameEditor.questionListVisibility,
   isLoading: gamepreview.isDataLoading,
 });
@@ -16,6 +18,7 @@ const mapStateToProps = ({ gamepreview, gameEditor }) => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchTeacherGamePreview,
   toggleQuestionListVisibility,
+  getInvites,
 }, dispatch);
 
 export default connect(

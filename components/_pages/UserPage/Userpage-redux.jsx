@@ -10,8 +10,8 @@ const userPageContainer = props => <Userpage {...props} />;
 const mapStateToProps = ({ gamelist, session }) => ({
   userData: session.data,
   isUserLoading: session.isLoading,
-  classmates: session.classmates,
-  isClassmatesLoading: session.isClassmatesLoading,
+  classmates: session.classmatesShort,
+  isClassmatesLoading: session.isClassmatesShortLoading,
   games: gamelist.shortData,
   IsGamesLoading: gamelist.isShortDataLoading,
   gamesError: gamelist.error,

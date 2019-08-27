@@ -8,6 +8,7 @@ import GME from '../../../../utils/GamingMouseEvents';
 import Utils from '../../../../utils/Utils';
 import * as types from '../../../../constants/QuestionTypes';
 import AnswerButton from './AnswerButton';
+import ScrollWrapper from '../../../ScrollWrapper';
 
 const propTypes = {
   id: PropTypes.string,
@@ -125,14 +126,16 @@ class Question extends React.Component {
         return (
           <>
             <div className="Question__list">
-              {answer.map((awr, idx) => (
-                <AnswerTile
-                  key={uid()}
-                  title={awr}
-                  id={`${id}-${idx}`}
-                  type={type}
-                />
-              ))}
+              <ScrollWrapper wheelable>
+                {answer.map((awr, idx) => (
+                  <AnswerTile
+                    key={uid()}
+                    title={awr}
+                    id={`${id}-${idx}`}
+                    type={type}
+                  />
+                ))}
+              </ScrollWrapper>
             </div>
             <div className="Question__drag__container">
               <AnswerContainer
@@ -145,41 +148,47 @@ class Question extends React.Component {
         );
       case types.SEQUENCE:
         return (
-          <div className="Question__list  Question__list--swap">
-            {answer.map((awr, idx) => (
-              <AnswerTile
-                key={uid()}
-                title={awr}
-                id={`${id}-${idx}`}
-                type={type}
-                titleList={answer}
-                subTitle={idx + 1}
-              />
-            ))}
+          <>
+            <div className="Question__list  Question__list--swap">
+              <ScrollWrapper wheelable>
+                {answer.map((awr, idx) => (
+                  <AnswerTile
+                    key={uid()}
+                    title={awr}
+                    id={`${id}-${idx}`}
+                    type={type}
+                    titleList={answer}
+                    subTitle={idx + 1}
+                  />
+                ))}
+              </ScrollWrapper>
+            </div>
             <AnswerButton
               onClick={() => {
                 handleAnswer(answer);
                 this.hideQuestion();
               }}
             />
-          </div>
+          </>
         );
       case types.MATCH: {
         const matches = typeof (answer[0]) === 'object' ? Object.values(answer[0]) : answer[0];
         const answers = typeof (answer[1]) === 'object' ? Object.values(answer[1]) : answer[1];
         return (
           <div className="Question__list Question__list--match">
-            {answers.map((_, idx) => (
-              <AnswerTile
-                key={uid()}
-                title={answers[idx]}
-                subTitle={matches[idx]}
-                id={`${id}-${idx}`}
-                type={type}
-                titleList={answers}
-                answerList={answer}
-              />
-            ))}
+            <ScrollWrapper wheelable>
+              {answers.map((_, idx) => (
+                <AnswerTile
+                  key={uid()}
+                  title={answers[idx]}
+                  subTitle={matches[idx]}
+                  id={`${id}-${idx}`}
+                  type={type}
+                  titleList={answers}
+                  answerList={answer}
+                />
+              ))}
+            </ScrollWrapper>
             <AnswerButton
               onClick={() => {
                 handleAnswer(answer);
@@ -206,10 +215,10 @@ class Question extends React.Component {
       category,
     } = this.props;
     const { showQuestion, showImage } = this.state;
-    const progress = answersCount / totalQuestions * 100;
+    const progress = (answersCount - 1) / totalQuestions * 100;
     return (
       <section className={`Game-fullscreen Question ${endGame || !showQuestion ? 'Question--fadeout' : ''}`}>
-        <div className={question.length > 100 ? 'Question__container Question__container--large' : 'Question__container'}>
+        <div className="Question__container">
           <div className="Question__count">
             <b>{`Вопрос № ${answersCount} `}</b>
             {`из ${totalQuestions}`}

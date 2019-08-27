@@ -21,12 +21,14 @@ const propTypes = {
   endGame: PropTypes.bool.isRequired,
   fetchGamePlay: PropTypes.func.isRequired,
   sendAnswer: PropTypes.func.isRequired,
+  error: PropTypes.string,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const defaultProps = {
   currentQuestion: null,
   currentCategory: null,
+  error: null,
 };
 
 class GameInside extends React.Component {
@@ -93,6 +95,7 @@ class GameInside extends React.Component {
       globalAnswerList,
       match: { params: { id } },
       answersCount,
+      error,
     } = this.props;
     return (
       <main className="page">
@@ -103,8 +106,8 @@ class GameInside extends React.Component {
           }}
         />
         <div className="background" />
-        {subjects.length === 0 && (
-          <div>В этой игре еще нет вопросов</div>
+        {error && (
+          <div className="failure">{error}</div>
         )}
         {(!isLoading && !endGame) && (
           <>

@@ -21,7 +21,7 @@ export function fetchUserProfile() {
   };
 }
 
-export function fetchClassmates() {
+export function fetchUserClassmatesShort() {
   const start = () => dispatch => dispatch({
     type: types.FETCH_USER_CLASSMATES_SHORT_START,
   });
@@ -33,6 +33,24 @@ export function fetchClassmates() {
     dispatch(start());
     try {
       await API.get('/user/students?info=short').then(response => dispatch(success(response.data)));
+    } catch (e) {
+      handleErrors(e);
+    }
+  };
+}
+
+export function fetchUserClassmates() {
+  const start = () => dispatch => dispatch({
+    type: types.FETCH_USER_CLASSMATES_START,
+  });
+  const success = data => dispatch => dispatch({
+    type: types.FETCH_USER_CLASSMATES_SUCCESS,
+    payload: { data },
+  });
+  return async (dispatch) => {
+    dispatch(start());
+    try {
+      await API.get('/user/students').then(response => dispatch(success(response.data)));
     } catch (e) {
       handleErrors(e);
     }

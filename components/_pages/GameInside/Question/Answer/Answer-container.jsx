@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AnswerButton from '../AnswerButton';
 import * as types from '../../../../../constants/QuestionTypes';
 
 const propTypes = {
@@ -28,7 +29,7 @@ class Answer extends React.Component {
     this.initialTitle = 'Положите ответ сюда';
   }
 
-  handleAnswerClick(e) {
+  handleAnswerClick() {
     const {
       handleAnswer,
       hideQuestion,
@@ -38,18 +39,18 @@ class Answer extends React.Component {
     if (passedAnswers.length === 0) return;
     hideQuestion();
     if (type === types.SELECT_ONE) {
-      handleAnswer(passedAnswers[0].title, this.handleCancel(e));
+      handleAnswer(passedAnswers[0].title, this.handleCancel());
     } else {
       const answerArray = [];
       passedAnswers.forEach((awr) => {
         answerArray.push(awr.title);
       });
-      handleAnswer(answerArray, this.handleCancel(e));
+      handleAnswer(answerArray, this.handleCancel());
     }
   }
 
   handleCancel(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
     const { passedAnswers, removeAnswers } = this.props;
     for (let i = passedAnswers.length - 1; i >= 0; i -= 1) {
       removeAnswers();
@@ -84,20 +85,22 @@ class Answer extends React.Component {
       } = {},
     } = this.props;
     return (
-      <div
-        className={`Question__drag ${isItPossibleToAnswer && isAnyOptionFocused ? 'Question__drag--passing-answer' : ''} ${passedLength > 0 ? 'Question__drag--answered' : ''}`}
-        role="button"
-        tabIndex="0"
-        data-attr={this.handleRenderAnswer()}
-        onClick={this.handleAnswerClick}
-        onKeyDown={() => {}}
-        onContextMenu={this.handleCancel}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-        ref={(ref) => {
-          this.answerContainer = ref;
-        }}
-      />
+      <>
+        <div
+          className={`Question__drag ${isItPossibleToAnswer && isAnyOptionFocused ? 'Question__drag--passing-answer' : ''} ${passedLength > 0 ? 'Question__drag--answered' : ''}`}
+          role="button"
+          tabIndex="0"
+          data-attr={this.handleRenderAnswer()}
+          onKeyDown={() => {}}
+          onContextMenu={this.handleCancel}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
+          ref={(ref) => {
+            this.answerContainer = ref;
+          }}
+        />
+        <AnswerButton onClick={this.handleAnswerClick} />
+      </>
     );
   }
 }

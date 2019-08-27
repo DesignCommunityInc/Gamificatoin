@@ -2,7 +2,8 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import restore from '../../actions/global';
-import { fetchUserProfile, fetchClassmates } from '../../actions/Session';
+import { fetchUserProfile, fetchUserClassmatesShort, fetchUserClassmates } from '../../actions/Session';
+import { fetchFilterList } from '../_pages/TeacherGameSettingsPage/QuestionsEditor/QuestionEditor-actions';
 import Root from './Root-container';
 
 const rootContainer = props => <Root {...props} />;
@@ -10,7 +11,9 @@ const rootContainer = props => <Root {...props} />;
 const mapDispatchToProps = dispatch => bindActionCreators({
   restore,
   fetchUserProfile,
-  fetchClassmates,
+  fetchUserClassmates,
+  fetchUserClassmatesShort,
+  fetchFilterList,
 }, dispatch);
 
 export default connect(

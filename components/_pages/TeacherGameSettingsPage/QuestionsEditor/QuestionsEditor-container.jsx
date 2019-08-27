@@ -16,7 +16,6 @@ const propTypes = {
   filterList: PropTypes.shape({}).isRequired,
   filter: PropTypes.shape({}).isRequired,
   fetchQuestionList: PropTypes.func.isRequired,
-  fetchFilterList: PropTypes.func.isRequired,
   addQuestionToList: PropTypes.func.isRequired,
   removeQuestionFromList: PropTypes.func.isRequired,
   filterAction: PropTypes.func.isRequired,
@@ -31,17 +30,37 @@ class QuestionEditor extends React.Component {
   constructor() {
     super();
     this.selectQuestion = this.selectQuestion.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      search: '',
+    };
   }
 
   componentDidMount() {
-    const { fetchFilterList, game_id } = this.props;
-    fetchFilterList();
+    const { game_id } = this.props;
     this.fetch({ page: 1, game_id });
   }
 
   fetch({ page }) {
+    const { search } = this.state;
     const { fetchQuestionList, filter, game_id } = this.props;
-    fetchQuestionList({ game_id, page, filters: filter });
+    fetchQuestionList({
+      game_id,
+      page,
+      filters: filter,
+      question:
+      search,
+    });
+  }
+
+  handleChange(e) {
+    const { currentPage } = this.props;
+    clearInterval(this.timeout);
+    this.setState({ search: e.target.value }, () => {
+      this.timeout = setTimeout(() => {
+        this.fetch({ page: currentPage });
+      }, 1000);
+    });
   }
 
   selectQuestion(questionId) {
@@ -64,9 +83,10 @@ class QuestionEditor extends React.Component {
     } = this.props;
     const viewedPages = 5;
     // viewedPages = viewedPages - currentPage >= 0 ? viewedPages : 0;
-    const startPage = currentPage + viewedPages >= totalPages
+    let startPage = currentPage + viewedPages >= totalPages
       ? totalPages - viewedPages
       : currentPage;
+    if (startPage <= 0) startPage = 1;
     return (
       <div className="pagging">
         <span
@@ -149,7 +169,11 @@ class QuestionEditor extends React.Component {
           <div className="Question-Editor__main">
             <div className="Editor__header">
               <span className="Editor__title">Банк вопросов</span>
-              <input className="Editor__search" placeholder="Найти" />
+              <input
+                className="Editor__search"
+                placeholder="Найти"
+                onChange={this.handleChange}
+              />
             </div>
             <div className="Editor__container">
               <div className="Editor__titles">

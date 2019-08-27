@@ -12,8 +12,10 @@ import Utils from '../../../utils/Utils';
 const propTypes = {
   games: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   IsGamesLoading: PropTypes.bool.isRequired,
-  userData: PropTypes.objectOf(PropTypes.any).isRequired,
-  isUserLoading: PropTypes.bool.isRequired,
+  classmates: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  isClassmatesLoading: PropTypes.bool.isRequired,
+  // userData: PropTypes.objectOf(PropTypes.any).isRequired,
+  // isUserLoading: PropTypes.bool.isRequired,
   fetchTeacherGamesShort: PropTypes.func.isRequired,
 };
 
@@ -30,8 +32,8 @@ class UserPage extends React.Component {
     const {
       games,
       IsGamesLoading,
-      userData,
-      isUserLoading,
+      // userData,
+      // isUserLoading,
       classmates,
       isClassmatesLoading,
     } = this.props;

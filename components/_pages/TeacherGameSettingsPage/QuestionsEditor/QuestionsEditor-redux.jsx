@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import QuestionEditor from './QuestionsEditor-container';
 import {
   fetchQuestionList,
-  fetchFilterList,
   addQuestionToList,
   removeQuestionFromList,
   filterAction,
@@ -25,7 +24,6 @@ const mapStateToProps = ({ gameEditor }) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchQuestionList,
-  fetchFilterList,
   addQuestionToList,
   removeQuestionFromList,
   filterAction,

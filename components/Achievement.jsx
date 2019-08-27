@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 const propTypes = {
   name: PropTypes.string,
+  image: PropTypes.string,
   description: PropTypes.string,
   exp_add: PropTypes.oneOfType([
     PropTypes.string,
@@ -15,6 +16,7 @@ const propTypes = {
 
 const defaultProps = {
   name: '',
+  image: '',
   description: '',
   exp_add: '',
   progress: 0,
@@ -27,6 +29,7 @@ const Achievement = ({
   exp_add: reward,
   progress,
   isLoading,
+  image,
 }) => {
   if (isLoading) {
     return (
@@ -46,7 +49,7 @@ const Achievement = ({
   return (
     <div className="achievement">
       <div className="achievement__icon__container">
-        <span className="achievement__icon" />
+        <span className="achievement__icon" style={{ backgroundImage: `url('${image}')` }} />
         <div className="achievement__progress">
           <span
             className="achievement__progress-done"

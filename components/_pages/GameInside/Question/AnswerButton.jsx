@@ -14,6 +14,7 @@ const AnswerButton = ({ onClick }) => (
     onKeyDown={() => {}}
     tabIndex="0"
     className="button button-main button-iconless button-main-light button-main-light-colorful"
+    style={{ textAlign: 'center' }}
   >
     Ответить
   </span>

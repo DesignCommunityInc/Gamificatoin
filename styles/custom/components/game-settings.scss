@@ -1,41 +1,42 @@
-.Games{
-    .Game__inforamtion__wrapper{    
+.Games {
+    &__information__wrapper {
+      position: relative;
+      display: block;
+      margin: 40px 0px 40px 10px;
+      margin-left: 10px;
+      width: auto;
+      .Game__information__detail {
         position: relative;
-        display: block;
-        margin: 40px 0px 40px 10px;
-        margin-left: 10px;
+        display: inline-block;
+        background: white;
+        height: 70px;
+        min-width: 140px;
+        margin-right: 15px;
         width: auto;
-        .Game__information__detail{
+        border-radius: $border-radius-large;
+        border-right: 1px solid $light-grey;
+        z-index: -1;
+        &__title{
+          position: relative;
+          margin: 8px 0px 0px 10px;
+          &__image{
             position: relative;
             display: inline-block;
-            background: white;
-            height: 70px;
-            min-width: 140px;
-            margin-right: 15px;
-            width: auto;
-            border-radius: $border-radius-large;
-            border-right: 1px solid $light-grey;
-            &__title{
-                position: relative;
-                margin: 8px 0px 0px 10px;
-                &__image{
-                    position: relative;
-                    display: inline-block;
-                    width: 17px;
-                    height: 17px;
-                    background: $dark-40;
-                    border-radius: 5px;
-                }
-                &__text{
-                    color: $dark;
-                    font-size: 11pt;
-                    font-weight: 600;
-                    vertical-align: top;
-                    margin-left: 10px;
-                    margin-right: 20px;
-                    position: relative;
-                }
-            }
+            width: 17px;
+            height: 17px;
+            background: $dark-40;
+            border-radius: 5px;
+          }
+          &__text{
+            color: $dark;
+            font-size: 11pt;
+            font-weight: 600;
+            vertical-align: top;
+            margin-left: 10px;
+            margin-right: 20px;
+            position: relative;
+          }
+        }
             &__value{
                 color: $dark;
                 margin: 5px 30px 0px 10px;
@@ -43,7 +44,7 @@
                 font-weight: 600;
                 height: 24px;
             }
-            s {
+            &s {
                 position: relative;
                 white-space: nowrap;
                 display: block;
@@ -510,9 +511,12 @@
                 }
             }
         }
-        .participant{
+        .participant {
             position: relative;
             display: inline-block;
+            padding: 20px;
+            border-radius: $border-radius-large;
+            margin: 10px 0;
             padding-right: 40px;
             margin-right: 20px;
             border-right: 2px solid $light-violet;
@@ -544,6 +548,83 @@
                     background: $red-40;
                 }
             }
+        }
+        .useradd {
+          display: block;
+          position: relative;
+          width: 100%;
+          height: 300px;
+          visibility: hidden;
+          margin: 10px 0;
+          opacity: 0;
+          text-align: left;
+          overflow: auto;
+          transition: $fast;
+          @include mobile {
+            max-width: unset;
+          }
+          &.absolute {
+            position: absolute;
+            height: 415px;
+            top: 30px;
+            left: -1px;
+            padding: 10px;
+            background: white;
+            border-radius: $border-radius-large;
+            border: 1px solid $light;
+            z-index: z("top-layer");
+            &::-webkit-scrollbar-thumb {
+              background: white;
+            }
+            &::-webkit-scrollbar-track {
+              background: transparent;
+            }
+            .participant {
+              transition: $fast;
+              cursor: pointer;
+              &:active {
+                transform: scale(.98);
+                backface-visibility: hidden;
+                will-change: transform;
+                background: $light;
+              }
+            }
+          }
+          &--empty {
+            display: block;
+            position: relative;
+            text-align: center;
+            line-height: 300px;
+            font-size: 18pt;
+            color: $grey;
+            font-weight: 700;
+      
+          }
+          &--visible {
+            visibility: visible;
+            opacity: 1;
+          }
+          &__splitter-1 {
+            max-width: fit-content;
+            margin: 0 5px;
+            background: $light-violet;
+            color: $violet;
+            padding: 5px 10px;
+            border-radius: $border-radius-large;
+          }
+          &__open-button {
+            display: block;
+            max-width: 200px;
+            text-align: center;
+            &:hover {
+              background: $violet;
+              color: white;
+            }
+            &--active {
+              background: $violet;
+              color: white;
+            }
+          }
         }
     }
     

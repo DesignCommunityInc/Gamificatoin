@@ -15,15 +15,24 @@
     width: 100%;
   }
 }
+.failure {
+  display: block;
+  position: relative;
+  text-align: center;
+  line-height: 100vh;
+  color: white;
+  font-weight: 700;
+  font-size: 18pt;
+}
 .Game {
   display: block;
   position: relative;
   &-fullscreen {
-    position: fixed;
+    // position: fixed;
     width: 100vw;
     height: 100vh;
     z-index: z("top-layer");
-    overflow: hidden;
+    // overflow: hidden;
   }
   .Categories {
     display: block;
@@ -35,7 +44,7 @@
     width: 100%;
     opacity: 1;
     &::before {
-      content: 'Выберите категорию';
+      content: 'Выберите первую категорию';
       display: block;
       position: relative;
       padding-bottom: 40px;
@@ -152,10 +161,9 @@
 }
 
 .Question {
-  display: table;
+  display: block;
   // position: fixed;
   top: 0;
-  table-layout: fixed;
   // width: 100vw;
   // height: 100vh;
   background-repeat: no-repeat;
@@ -170,14 +178,14 @@
   }
   // .Question__container
   &__container {
-    display: table-row;
+    display: block;
     position: relative;
-    height: 1px;
   }
   // .Question__container > .Question__count
   &__count {
     display: block;
-    margin: 10px auto;
+    margin: 0 auto;
+    padding: 10px 0;
     max-width: 20%;
     color: $light;
     font-size: 10pt;
@@ -269,13 +277,12 @@
   &__title {
     display: block;
     position: relative;
-    padding: 10px 0;
-    max-width: 50%;
-    max-height: 400px;
+    padding: 10px;
+    width: 80vw;
+    height: 35vh;
     margin: 0 auto;
     font-size: 20pt;
     font-weight: 500;
-    transition: $fast;
     overflow: auto;
     @include lowscreen {
       font-size: 14pt;
@@ -292,13 +299,6 @@
     }
     &::-webkit-scrollbar-thumb {
       background: $white-40; 
-    }
-    .Question__container--large & {
-      max-width: 80%;
-      font-size: 14pt;
-      @include lowscreen {
-        font-size: 10pt;
-      }
     }
     p {
       display: inline-block;
@@ -337,10 +337,10 @@
   }
   // .Question__list
   &__list {
-    display: table-row;
+    display: block;
     position: relative;
     width: 80%;
-    height: 1px;
+    margin: 0 auto;
     text-align: center;
     @include mobile {
       width: 100%;
@@ -353,47 +353,49 @@
   &__answer {
     display: inline-block;
     position: relative;
-    max-width: 600px;
-    padding: 3% 5%;
-    margin: .5%;
+    width: 300px;
+    max-width: 500px;
+    padding: 30px 10px;
+    margin: 10px;
     vertical-align: middle;
-    text-align: left;
-    font-weight: 700;
-    font-size: 14pt;
-    color: $dark;
     background: white;
     border-radius: $border-radius-large;
     user-select: none;
     touch-action: none;
     animation: jumpScaling .1s forwards;
-    transition: all 0s, 
+    transition: all 0s,
                 margin $average, 
-                padding $fast,
                 color $average, 
                 font-size $fast;
     cursor: grab;
     @include mobile {
-      padding: 5% 10%;
-      margin: 3%;
+      padding: 2%;
+      margin: 5px;
+      line-height: 50px;
+      font-size: 11pt;
     }
-    &::after {
-      content: attr(data-attr);
-      display: block;
+    p {
+      display: inline-block;
       position: relative;
-      top: 0;
-      left: 0;
+      color: $dark;
+      white-space: pre-wrap;
+      overflow: visible;
+      text-overflow: unset;
+      font-weight: 700;
+      text-align: center;
     }
     &::before {
       content: attr(data-attr-before);
       display: block;
       position: absolute;
-      padding: 10px;
+      padding: 20px 10px;
       top: 0;
       left: 0;
-      font-size: 14pt;
-      color: $purple;
+      line-height: 0;
+      font-size: 12pt;
+      // background: $purple;
+      color: $dark;
       visibility: visible;
-      z-index: 99;
       transition: $fast;      
     }
     &--empty-space {
@@ -403,12 +405,15 @@
       transition: $fast;
       &::before {
         color: white;
-        z-index: z("main-layer");
       }
     }
     &--matches {
       position: absolute;
       pointer-events: none;
+      z-index: z("supertop-layer");
+      p {
+        color: white;
+      }
     }
     &--hidden {
       visibility: hidden;
@@ -417,22 +422,27 @@
     }
     &--grabbing {
       position: fixed!important;
-      padding: 3.5% 5.5%;
-      margin: -1%;
-      font-size: 18pt;
-      color: white!important;
+      margin: -10px 0;
       background: $purple;
       box-shadow: 0 0 30px -20px $dark;
       pointer-events: none;
-      z-index: z("supertop-layer");
+      z-index: z("top-layer");
       cursor: grabbing!important;
       transition: all 0s, 
-                  padding $fast, 
+                  width $fast,
                   margin $average, 
                   font-size $fast,
                   color $average,
                   background-color $fast,
                   z-index $average;
+      @include mobile {
+        width: 110px;
+        height: 55px;
+        margin: -5px;
+      }
+      p {
+        color: white;
+      }
     }
     &--on-empty-space {
       &::before {
@@ -447,7 +457,8 @@
       background-position: 0 0, 0 100%, 0 0, 100% 0!important;
       animation: borderMoving 2s infinite forwards;
       transition: $fast;
-      &::after {
+      z-index: 1000;
+      p {
         transition: $fast;
         color: white!important;
       }
@@ -455,18 +466,15 @@
     &:hover {
       color: $violet;
     }
-    p {
-      display: inline-block;
-    }
     // TEXT
     &-text {
+      display: block;
       position: relative;
       width: 80%;
       height: 100%;
       max-height: 60px;
       padding: 15px;
-      margin-top: 50px;
-      vertical-align: middle;
+      margin: 50px auto;
       color: white;
       font-size: 10pt;
       font-weight: 500;
@@ -506,7 +514,7 @@
         }
       }
       &__container {
-        display: table-row;
+        display: block;
         position: relative;
         height: 50%;
         text-align: center;
@@ -517,21 +525,18 @@
   &__drag {
     display: block;
     position: relative;
-    height: 90%;
-    max-width: 80%;
+    height: 80%;
+    font-size: 12pt;
     margin: 20px auto;
     background: $white-40;
     border-radius: $border-radius-average;
     border: 2px solid white;
     transition: all $fast, border 0s;
-    @include lowscreen {
-      height: 80%;
-    }
     @include mobile {
       border-radius: $border-radius-small;
       max-width: 100%;
-      height: 100%;
-      margin: 0;
+      height: 50%;
+      margin: 10% 0;
     }
     &::after {
       content: attr(data-attr);
@@ -563,14 +568,16 @@
       &::after {
         color: $purple;
         font-weight: 900;
-        font-size: 20pt;
+        // font-size: 18pt;
       }
     }
     &__container {
-      display: table-row;
+      display: block;
       position: relative;
-      height: 30%;
-      min-height: 100px;
+      height: 25vh;
+      width: 80vw;
+      padding: 10px;
+      margin: 0 auto;
       text-align: center;
       @include mobile {
         height: 100%;
@@ -579,17 +586,17 @@
   }
   .button {
     display: block;
-    position: absolute;
+    position: relative;
+    width: 200px;
     margin: 50px auto;
     padding: 10px 20px;
-    left: 50%;
-    transform: translateX(-50%) scale(1);
+    transform: scale(1);
     border-radius: $border-radius-average;
     text-overflow: unset;
     color: $purple;
     transition: $fast;
     &:active {
-      transform: translateX(-50%) scale(.95);
+      transform: scale(.95);
     }
   }
 }
@@ -598,6 +605,53 @@
   text-align: center;
   animation: zoomInDown 1.5s both;
   overflow: hidden;
+  &__questions {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 10%;
+    margin: 0 20px;
+    max-height: 80%;
+    max-width: 300px;
+    text-align: left;
+    overflow: auto;
+    @include mobile {
+      display: none;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: white;
+    }
+    &__item {
+      display: block;
+      position: relative;
+      margin: 10px 0;
+      // background: white;
+
+      &--question {
+        background: $white-40;
+        color: white;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 5px;
+        overflow: auto;
+      }
+      &--score {
+        text-align: center;
+        color: white;
+        font-size: 14pt;
+        font-weight: 700;
+      }
+      &--score-desc {
+        text-align: center;
+        color: white;
+        font-size: 12pt;
+        font-weight: 500;
+      }
+    }
+  }
   &__view {
     display: block;
     position: relative;
@@ -649,11 +703,11 @@
       width: 100px;
       padding: 5px 10px;
       margin: 0 10px;
-      background: $linear-gradient;
+      background: $white-40;
       border-radius: $border-radius-small;
       color: white;
       font-weight: 700;
-      opacity: .75;
+      opacity: .85;
     }
   }
 }

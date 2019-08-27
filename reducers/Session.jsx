@@ -5,6 +5,8 @@ const initialState = {
   isLoading: true,
   classmates: [],
   isClassmatesLoading: true,
+  classmatesShort: [],
+  isClassmatesShortLoading: true,
   shortAchievements: {
     data: [],
   },
@@ -25,16 +27,28 @@ export default (state = initialState, action) => {
         data: action.payload.userData,
         isLoading: false,
       };
-    case types.FETCH_USER_CLASSMATES_SHORT_START:
+    case types.FETCH_USER_CLASSMATES_START:
       return {
         ...state,
         classmates: [],
         isClassmatesLoading: true,
       };
-    case types.FETCH_USER_CLASSMATES_SHORT_SUCCESS:
+    case types.FETCH_USER_CLASSMATES_SUCCESS:
       return {
         ...state,
         classmates: action.payload.data,
+        isClassmatesLoading: false,
+      };
+    case types.FETCH_USER_CLASSMATES_SHORT_START:
+      return {
+        ...state,
+        classmatesShort: [],
+        isClassmatesLoading: true,
+      };
+    case types.FETCH_USER_CLASSMATES_SHORT_SUCCESS:
+      return {
+        ...state,
+        classmatesShort: action.payload.data,
         isClassmatesLoading: false,
       };
     case types.FETCH_USER_ACHIEVEMENTS_SHORT_START:

@@ -1,20 +1,17 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import createGame, { generateGame } from './CreatingPage-action';
 import CreatingPage from './CreatingPage-container';
 
 const creatingPage = props => <CreatingPage {...props} />;
 
-const mapStateToProps = ({ gamelist, session }) => ({
-  data: gamelist.data,
+const mapStateToProps = ({ session, gameEditor }) => ({
   userData: session.data,
-  isLoading: gamelist.isDataLoading,
+  filterList: gameEditor.filterList,
+  classmates: session.classmates,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  createGame,
-  generateGame,
 }, dispatch);
 
 export default connect(

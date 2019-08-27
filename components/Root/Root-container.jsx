@@ -24,7 +24,9 @@ import * as routes from '../../constants/Routes';
 const propTypes = {
   restore: PropTypes.func.isRequired,
   fetchUserProfile: PropTypes.func.isRequired,
-  fetchClassmates: PropTypes.func.isRequired,
+  fetchUserClassmates: PropTypes.func.isRequired,
+  fetchUserClassmatesShort: PropTypes.func.isRequired,
+  fetchFilterList: PropTypes.func.isRequired,
 };
 
 class Root extends React.Component {
@@ -38,10 +40,14 @@ class Root extends React.Component {
     const {
       restore,
       fetchUserProfile,
-      fetchClassmates,
+      fetchUserClassmatesShort,
+      fetchFilterList,
+      fetchUserClassmates,
     } = this.props;
     fetchUserProfile();
-    fetchClassmates();
+    fetchUserClassmates();
+    fetchUserClassmatesShort();
+    fetchFilterList();
     if (this.role !== '5') return; // 5 === ученик
     const game = JSON.parse(localStorage.getItem('game'));
     const timer = JSON.parse(localStorage.getItem('timer'));
@@ -100,12 +106,7 @@ class Root extends React.Component {
   }
 
   render() {
-    return (
-      <>
-        <link rel="stylesheet" href="https://cdn.rawgit.com/mfd/09b70eb47474836f25a21660282ce0fd/raw/e06a670afcb2b861ed2ac4a1ef752d062ef6b46b/Gilroy.css" />
-        {this.switchRender()}
-      </>
-    );
+    return (this.switchRender());
   }
 }
 

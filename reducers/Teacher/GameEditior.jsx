@@ -13,6 +13,7 @@ const initialState = {
   isLoading: true,
   questionList: initialQuestions,
   selectedQuestions: [],
+  users: {},
   currentPage: 1,
   filterList: {},
   filter: {},
@@ -37,6 +38,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         questionList: initialQuestions,
+        selectedQuestions: [],
         isQuestionListLoading: true,
         currentPage: action.payload.data,
       };
@@ -73,6 +75,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         filter: action.payload.data,
+      };
+    case types.FETCH_INVITE_USERS_SUCCESS:
+      return {
+        ...state,
+        users: action.payload.data,
       };
     default:
       return state;

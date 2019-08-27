@@ -33,12 +33,14 @@ const SpecialAchievementsContainer = ({
   </section>
 ) : (
   <section className="Achievements Container">
-    <div className="Achievements__container Achievements__container-last" data-attr="Последнее полученное достижение">
-      <Achievement
-        key={uid()}
-        {...last}
-      />
-    </div>
+    {last && (
+      <div className="Achievements__container Achievements__container-last" data-attr="Последнее полученное достижение">
+        <Achievement
+          key={uid()}
+          {...last}
+        />
+      </div>
+    )}
     <div className="Achievements__container Achievements__container-progress" data-attr="Достижения с прогрессом">
       {progress.map(item => (
         <Achievement

@@ -26,6 +26,9 @@ const Header = ({
     last_name: lastName,
     second_name: secondName,
     photo,
+    rating,
+    class_number: number,
+    class_letter: letter,
   } = {},
   toggleSettingsScreen,
   location: { pathname } = {},
@@ -74,12 +77,12 @@ const Header = ({
               <div className="tile__container__info">
                 <h2>{lastName}</h2>
                 <h4>{`${name} ${secondName}`}</h4>
-                <Link to="/my/class/">
-                  <span>4Б класс</span>
-                </Link>
-                <Link to="my/rate/">
-                  <span>ТОП 16</span>
-                </Link>
+                {number && (
+                  <>
+                    <span>{`${number}${letter} класс`}</span>
+                    <span>{`ТОП ${rating}`}</span>
+                  </>
+                )}
               </div>
             </div>
             <div className="settings-container">

@@ -234,24 +234,26 @@ class Option extends React.Component {
     return (
       <>
         <div
-          data-attr={title}
           data-attr-before={DOMPurify.sanitize(subTitle)}
           className={`Question__answer Question__answer--hidden Question__answer--matches ${draggable ? 'Question__answer--empty-space' : ''} ${onReplace ? 'Question__answer--on-empty-space' : ''}`}
-        />
+        >
+          <p>{DOMPurify.sanitize(title)}</p>
+        </div>
         <div
           ref={(ref) => {
             this.clone = ref;
           }}
           data-attr={DOMPurify.sanitize(title)}
           className={`Question__answer Question__answer--hidden ${!draggable && !passed ? 'hidden' : ''}`}
-        />
+        >
+          <p>{DOMPurify.sanitize(title)}</p>
+        </div>
         <div
           ref={(ref) => {
             this.currentTarget = ref;
           }}
           id={id}
           className={`Question__answer ${draggable ? 'Question__answer--grabbing' : ''} ${passed ? 'hidden' : ''} ${onReplace ? 'Question__answer--on-replace' : ''}`}
-          data-attr={DOMPurify.sanitize(title)}
           role="button"
           tabIndex="0"
           onMouseDown={this.handleStart}
@@ -261,7 +263,9 @@ class Option extends React.Component {
           onTouchStart={this.handleStart}
           onTouchMove={this.handleMove}
           onTouchEnd={this.handleEnd}
-        />
+        >
+          <p>{DOMPurify.sanitize(title)}</p>
+        </div>
       </>
     );
   }

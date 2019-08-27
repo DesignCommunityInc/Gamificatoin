@@ -68,6 +68,28 @@ class UserPage extends React.Component {
           isLoading={isLoading}
           {...data}
         />
+        <div
+          className="Games Container"
+          style={{
+            display: 'block',
+            textAlign: 'center',
+            fontSize: 24,
+            fontWeight: 700,
+          }}
+        >
+          Этот профиль закрыт!
+        </div>
+        <div
+          className="Games Container"
+          style={{
+            display: 'block',
+            textAlign: 'center',
+            fontSize: 16,
+            fontWeight: 500,
+          }}
+        >
+          Вы не можете посмотреть подробную информацию об этом пользователе
+        </div>
       </main>
     );
   }

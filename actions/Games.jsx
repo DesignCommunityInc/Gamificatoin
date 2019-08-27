@@ -112,17 +112,6 @@ export function fetchGamePreview(id) {
     dispatch(start());
     try {
       await API.get(`/game/${id}`).then(response => dispatch(success(response.data)));
-      const img = 'https://blog.schoolspecialty.com/wp-content/uploads/2017/04/How-to-Help-Your-Students-Overcome-Math-Anxiety-1200x624.jpg';
-      const game = {
-        img,
-        results: 43,
-        name: 'География',
-        difficulty: 2,
-        questions: 21,
-        time: 45,
-        experience: 1200,
-      };
-      dispatch(success(game));
     } catch (e) {
       handleErrors(e);
     }

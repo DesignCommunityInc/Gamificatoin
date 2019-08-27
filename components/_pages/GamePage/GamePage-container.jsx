@@ -36,19 +36,19 @@ class GamePage extends React.Component {
         <Settings />
         <section className="Games Container">
           <div className="Games__container Games__container-bottom-offset">
-            <Mode
+            {/* <Mode
               title="1 на 1"
-              link="1"
-            />
+              link="versus"
+            /> */}
             <Mode
               title="Саморазвития"
-              link="2"
+              link="learning"
             />
           </div>
         </section>
         <Gamelist
           title={invites.title}
-          list={invites.data}
+          list={invites.data.reverse()}
           isLoading={isLoading}
           pathname={pathname}
           error={invites.data === null}

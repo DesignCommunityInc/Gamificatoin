@@ -6,11 +6,13 @@ import GamePreview from './GamePreview-container';
 
 const previewContainer = props => <GamePreview {...props} />;
 
-const mapStateToProps = ({ gamepreview, session }) => ({
+const mapStateToProps = ({ gamepreview, settings, session }) => ({
   preview: gamepreview.data,
   isLoading: gamepreview.isLoading,
   error: gamepreview.error,
-  classmates: session.classmates,
+  helpers: settings.isHelpersEnabled,
+  classmates: session.classmatesShort,
+  isClassmatesLoading: session.isClassmatesShortLoading,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

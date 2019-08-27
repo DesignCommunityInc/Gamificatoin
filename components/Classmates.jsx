@@ -7,35 +7,44 @@ import * as routes from '../constants/Routes';
 const propTypes = {
   mateList: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isLoading: PropTypes.bool.isRequired,
+  tagList: PropTypes.arrayOf(PropTypes.string),
+};
+
+const defaultProps = {
+  tagList: null,
 };
 
 const Classmates = ({
   mateList,
-  isLoading,
+  tagList,
 }) => (
-  <section className="Classmates">
+  <section className="Classmates Classmates--inline">
     <Link to={routes.CLASSMATES_PAGE} className="Container__title Container__title-forward">Мой класс</Link>
     <div className="Classmates__container">
       <div className="tag-list">
-        <span className="tag-list__item">4Б</span>
+        {tagList && tagList.map(tag => (
+          <span key={uid()} className="tag-list__item">{tag}</span>
+        ))}
       </div>
       <div className="Classmates__toggle">
         <span />
       </div>
       <div className="mates">
-        {/* {console.log(mateList)} */}
         {mateList.map(({ id, photo }) => (
-          <Link to={`/user/${id}`} key={uid()}>
-            <span className="mates__image" style={{ backgroundImage: `url('${photo}')` }} />
-          </Link>
+          <Link
+            key={uid()}
+            to={`/user/${id}`}
+            className="mates__image"
+            style={{ backgroundImage: `url('${photo}')` }}
+          />
         ))}
-        <span className="mates__image" />
-        <span className="mates__count">+ 25 человек</span>
+        {/* <span className="mates__count">+ 25 человек</span> */}
       </div>
     </div>
   </section>
 );
 
 Classmates.propTypes = propTypes;
+Classmates.defaultProps = defaultProps;
 
 export default Classmates;

@@ -5,7 +5,6 @@ import Settings from '../../Settings';
 import Info from './Info';
 import Classmates from '../../Classmates';
 import Rules from './Rules';
-import Utils from '../../../utils/Utils';
 import Alert from '../../Alert';
 import Button from '../../Button';
 
@@ -15,7 +14,8 @@ const propTypes = {
   match: PropTypes.shape({}).isRequired,
   history: PropTypes.shape({}).isRequired,
   preview: PropTypes.shape({}).isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  helpers: PropTypes.bool.isRequired,
+  isClassmatesLoading: PropTypes.bool.isRequired,
   fetchGamePreview: PropTypes.func.isRequired,
 };
 
@@ -24,14 +24,10 @@ class GamePreview extends React.Component {
     super();
     this.handleStart = this.handleStart.bind(this);
     this.handleStartSubmit = this.handleStartSubmit.bind(this);
-    this.state = {
-      // start: false,
-    };
     this.alert = React.createRef();
   }
 
   componentDidMount() {
-    // Utils.scrollTo(document.documentElement, 0, 0);
     const {
       match: {
         params: { id },
@@ -43,9 +39,7 @@ class GamePreview extends React.Component {
 
   handleStart() {
     const { current } = this.alert;
-    if (current) {
-      current.showAlert();
-    }
+    if (current) current.showAlert();
   }
 
   handleStartSubmit() {
@@ -62,11 +56,14 @@ class GamePreview extends React.Component {
 
   render() {
     const {
+      preview,
       preview: {
         img,
       } = {},
       classmates,
-      isLoading,
+      // isLoading,
+      isClassmatesLoading,
+      helpers,
     } = this.props;
     return (
       <main className="page">
@@ -78,14 +75,15 @@ class GamePreview extends React.Component {
         <Alert
           ref={this.alert}
           onClick={this.handleStartSubmit}
+          enable={helpers}
         />
-        <Info image={img} />
+        <Info image="https://blog.schoolspecialty.com/wp-content/uploads/2017/04/How-to-Help-Your-Students-Overcome-Math-Anxiety-1200x624.jpg" />
         <section className="Container">
+          <Rules {...preview} />
           <Classmates
             mateList={classmates}
-            isLoading={isLoading}
+            isLoading={isClassmatesLoading}
           />
-          <Rules />
         </section>
         <section className="Container">
           <Button
@@ -95,10 +93,9 @@ class GamePreview extends React.Component {
           />
         </section>
       </main>
-    )
+    );
   }
 }
 
 GamePreview.propTypes = propTypes;
-// export default withRouter(props => <GameInside {...props} />) 
 export default GamePreview;

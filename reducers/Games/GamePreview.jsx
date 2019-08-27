@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
     case types.FETCH_TEACHER_GAME_PREVIEW_START:
       return {
         ...state,
-        teacherData: initialData,
+        // teacherData: initialData,
         isLoading: true,
       };
     case types.FETCH_TEACHER_GAME_PREVIEW_SUCCESS:

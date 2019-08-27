@@ -25,6 +25,7 @@ const mapStateToProps = ({ gameInside }) => ({
   subjectsIsAnimated: gameInside.subjectsIsAnimated,
   globalAnswerList: gameInside.globalAnswerList,
   endGame: gameInside.endGame,
+  error: gameInside.error,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

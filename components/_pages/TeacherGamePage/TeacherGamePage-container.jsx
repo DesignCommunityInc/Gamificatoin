@@ -33,7 +33,7 @@ class TeacherGamePage extends React.Component {
     } = this.props;
     return (
       <main className="page">
-        <Header 
+        <Header
           title="Мои игры"
         />
         <Settings />
@@ -45,16 +45,12 @@ class TeacherGamePage extends React.Component {
               <p className="Message__content__2">Или сгенерируйте игру автоматически, это еще легче.</p>
             </div>
             <Mode
-              title = "Создать игру"
-              link = "1"
-              img = ''
-              backImg = ''
+              title="Создать игру"
+              link="custom"
             />
             <Mode
-              title = "Генерация игры"
-              link = "2"
-              img = ''
-              backImg = ''
+              title="Генерация игры"
+              link="generate"
             />
           </div>
         </section>
