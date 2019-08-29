@@ -36,10 +36,10 @@ class GamePage extends React.Component {
         <Settings />
         <section className="Games Container">
           <div className="Games__container Games__container-bottom-offset">
-            {/* <Mode
+            <Mode
               title="1 на 1"
               link="versus"
-            /> */}
+            />
             <Mode
               title="Саморазвития"
               link="learning"
@@ -48,7 +48,14 @@ class GamePage extends React.Component {
         </section>
         <Gamelist
           title={invites.title}
-          list={invites.data.reverse()}
+          list={invites.data[invites.data.length - 1]}
+          isLoading={isLoading}
+          pathname={pathname}
+          error={invites.data === null}
+        />
+        <Gamelist
+          title="Соревнования"
+          list={invites.data.slice(0, invites.data.length - 1)}
           isLoading={isLoading}
           pathname={pathname}
           error={invites.data === null}
@@ -59,7 +66,7 @@ class GamePage extends React.Component {
           isLoading={isLoading}
           pathname={pathname}
           error={recommendation.data === null}
-          emptyTitle="У вас пока нет рекомендаций :("
+          emptyTitle="Вы еще не создали ни одной игры :("
         />
         <Gamelist
           title={completed.title}

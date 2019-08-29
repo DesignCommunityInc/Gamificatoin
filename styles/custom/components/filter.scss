@@ -38,10 +38,13 @@
       text-align: center;
     }
     &--inline {
-      padding: 10px;
-      text-align: center;
+      height: 20px;
+      margin: 10px 0;
+      width: 100%;
       font-weight: 700;
-      border-bottom: 1px solid $light;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center center;
     }
   }
   &__body {

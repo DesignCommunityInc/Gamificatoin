@@ -8,19 +8,20 @@ import Textarea from '../../Textarea';
 import Button from '../../Button';
 import UserAdd from './UserAdd';
 import List from './List';
-import createGame, { generateGame, generateTeacherGame } from './CreatingPage-action';
+import createGame, { generateGame, generateTeacherGame, generateVersusGame } from './CreatingPage-action';
 
 const propTypes = {
   // isLoading: PropTypes.bool.isRequired,
   history: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
-  classmates: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.shape({})),
-    PropTypes.shape({}),
-  ]).isRequired,
   userData: PropTypes.shape({}).isRequired,
+  onlineUsers: PropTypes.arrayOf(PropTypes.shape({})),
   filterList: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
+  fetchOnlineUsers: PropTypes.func.isRequired,
+};
+const defaultProps = {
+  onlineUsers: [],
 };
 
 class CreatingPage extends React.Component {
@@ -52,6 +53,13 @@ class CreatingPage extends React.Component {
       activeUsers: [],
       questionCount: 10,
     };
+  }
+
+  componentDidMount() {
+    const { match: { params: { mode } } = {}, fetchOnlineUsers } = this.props;
+    if (mode === 'versus') {
+      fetchOnlineUsers();
+    }
   }
 
   handleClassSelect(idx) {
@@ -90,7 +98,6 @@ class CreatingPage extends React.Component {
 
   handleUserSelect(user) {
     const { activeUsers } = this.state;
-    console.log(user);
     const { userData: { roles } = {} } = this.props;
     if (Object.keys(roles)[0] === '5') {
       this.setState({ activeUsers: [user] });
@@ -132,8 +139,8 @@ class CreatingPage extends React.Component {
       endTime,
       activeRange,
       questionCount,
-      activeUsers,
       activeSubject,
+      activeUsers,
     } = this.state;
     if (role === '6') {
       if (mode === 'generate') {
@@ -166,7 +173,16 @@ class CreatingPage extends React.Component {
       }
     } else if (role === '5') {
       if (mode === 'versus') {
-        console.log('Режим 1 на 1 еще не доработан');
+        const [user] = activeUsers;
+        generateVersusGame({
+          name: gameName,
+          description: gameDescription,
+          question_class: activeClass,
+          question_range: activeRange,
+          question_count: questionCount,
+          question_subject: activeSubject,
+          user: user.id,
+        }, history);
       } else {
         generateGame({
           name: gameName,
@@ -182,10 +198,10 @@ class CreatingPage extends React.Component {
 
   render() {
     const {
+      onlineUsers,
       userData: {
         roles,
       } = {},
-      classmates,
       filterList: {
         range,
         subject,
@@ -391,7 +407,7 @@ class CreatingPage extends React.Component {
                     <div className="Options__row">
                       <div className="Options__row__title">Участники</div>
                       <UserAdd
-                        users={classmates}
+                        users={onlineUsers}
                         onClick={this.handleUserSelect}
                         active={activeUsers}
                       />
@@ -410,5 +426,6 @@ class CreatingPage extends React.Component {
 
 
 CreatingPage.propTypes = propTypes;
+CreatingPage.defaultProps = defaultProps;
 
 export default CreatingPage;

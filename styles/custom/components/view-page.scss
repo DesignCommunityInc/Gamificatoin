@@ -22,6 +22,35 @@
         border-radius: 100%;
         background-repeat: no-repeat;
         background-size: cover;
+        border: 2px solid $light-grey;
+        transition: $slow;
+        cursor: pointer;
+        &--active {
+          border-color: $green;
+        }
+        &:hover + .ViewPage__main__info__last-activity {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+      &__last-activity {
+        display: block;
+        position: absolute;
+        top: 25%;
+        width: 100%;
+        text-align: center;
+        padding: 5px;
+        color: white;
+        font-weight: 500;
+        border-radius: $border-radius-average;
+        cursor: pointer;
+        visibility: hidden;
+        opacity: 0;
+        transition: $fast;
+        &:hover {
+          visibility: visible;
+          opacity: 1;
+        }
       }
       &__first{
         position: relative;

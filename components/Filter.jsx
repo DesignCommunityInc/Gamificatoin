@@ -4,6 +4,7 @@ import React from 'react';
 import uid from 'uid';
 import PropTypes from 'prop-types';
 import Checkbox from './Checkbox';
+import filterIcon from '../styles/assets/question_filter.png';
 
 const propTypes = {
   inline: PropTypes.bool,
@@ -61,7 +62,7 @@ const Filter = ({
       <div className="Filter__body">
         <div className="Filter__header">
           <span
-            className="button button-main button-main-violet button-iconless"
+            className="button button-main button-main-violet button"
             onClick={apply}
             onKeyDown={() => {}}
             tabIndex="0"
@@ -94,7 +95,7 @@ const Filter = ({
       <div className="Filter__body">
         <div className="Filter__header">
           <span
-            className="button button-main button-main-violet button-iconless"
+            className="button button-main button-main-violet button"
             onClick={() => apply()}
             onKeyDown={() => {}}
             tabIndex="0"
@@ -124,7 +125,7 @@ const Filter = ({
     </div>
     <div className="Filter__container Sort">
       <span
-        className={`button button-icon button-icon-sort ${!desc ? 'sort-desc' : ''}`}
+        className={`button button-ico button-ico-sort ${!desc ? 'sort-desc' : ''}`}
         button-sort=""
         onClick={descToggler}
         role="button"
@@ -135,7 +136,7 @@ const Filter = ({
   </section>
 ) : (
   <section className="Filter Filter--inline">
-    <div className="Filter__header Filter__header--inline">ico</div>
+    <div className="Filter__header Filter__header--inline" style={{ backgroundImage: `url('${filterIcon}')` }} />
     <div className="Filter__container Filter__container--inline">
       <div className="Filter__body Filter__body--inline">
         {Object.keys(filterFields).map(field => (
@@ -166,7 +167,7 @@ const Filter = ({
     </div>
     <div className="Filter__footer">
       <span
-        className="button button-main button-main-violet button-iconless"
+        className="button button-main button-main-violet button"
         onClick={apply}
         onKeyDown={() => {}}
         tabIndex="0"

@@ -1,7 +1,6 @@
 
 .Header { 
     position: relative;
-    white-space: nowrap;
     padding: $container-padding;
     width: 100%;
     white-space: nowrap;
@@ -60,7 +59,8 @@
           padding-left: 20px;
           vertical-align: top;
 
-          span {
+          & > span {
+            font-weight: 300;
             display: inline-block;
             padding: 3px 10px;
             margin: {
@@ -68,15 +68,7 @@
                 top: 2px;
             }
             border-radius: 2px;
-            background: $light-violet;
-            color: $violet;
             font-size: 12pt;
-
-              &::before {
-                content: 'ico';
-                font-weight: 700;
-                margin-right: 5px;
-              }
           }
           h2 {
             font-weight: 500;

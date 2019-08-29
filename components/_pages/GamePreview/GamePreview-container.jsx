@@ -59,6 +59,7 @@ class GamePreview extends React.Component {
       preview,
       preview: {
         img,
+        name,
       } = {},
       classmates,
       // isLoading,
@@ -68,9 +69,7 @@ class GamePreview extends React.Component {
     return (
       <main className="page">
         <Settings />
-        <Header
-          title="Правила игры"
-        />
+        <Header title={name} />
         {/* if helpers are available, render alert there => alert = helper */}
         <Alert
           ref={this.alert}

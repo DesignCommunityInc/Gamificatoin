@@ -13,7 +13,154 @@
   height: 100%;
   z-index: z("supertop-layer");
 }
-
+.Question-Creator {
+  display: block;
+  position: fixed;
+  width: 100%;
+  max-width: 900px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  padding: 20px 10px;
+  background: white;
+  border-radius: $border-radius-large;
+  z-index: z("supertop-layer");
+  transform: translate(-50%, -50%);
+  animation: .5s zoomInDownCenter forwards;
+  @include mobile {
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: unset;
+  }
+  &__save-button {
+    display: block;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    padding: 10px;
+    text-align: center;
+  }
+  .Creator {
+    &__filters {
+      display: inline-block;
+      position: relative;
+      width: 30%;
+      height: 100%;
+      padding-right: 20px;
+      vertical-align: top;
+    }
+    &__filter {
+      width: 100%;
+      &__container {
+        width: 100%;
+        padding: 5px;
+        color: $violet;
+        border-color: $light;
+        option {
+          color: $violet;
+        }
+        &::-webkit-scrollbar-track {
+          background: red;
+        }
+      }
+    }
+    &__title {
+      padding: 5px 0;
+      font-weight: 500;
+    }
+    &__check {
+      display: block;
+      position: relative;
+      padding: 15px 0;
+      font-size: 8pt;
+      cursor: pointer;
+      .check {
+        display: inline-block;
+        position: relative;
+        margin-right: 10px;
+      }
+    }
+    // right
+    &__body {
+      display: inline-block;
+      height: 100%;
+      width: 70%;
+      vertical-align: top;
+      overflow: auto;
+      &::-webkit-scrollbar-thumb {
+        background: $violet;
+      }
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+    }
+    &__content {
+      display: block;
+      width: 100%;
+      padding-left: 20px;
+      border-left: 1px solid $light;
+      &__title {
+        color: $violet;
+        font-weight: 300;
+        font-size: 12pt;
+      }
+      &__block {
+        display: block;
+        position: relative;
+        width: 95%;
+        padding: 10px;
+        border-bottom: 1px solid $light;
+        h4 {
+          font-weight: 500;
+          padding: 10px 0;
+        }
+      }
+      &__textbox {
+        width: 100%;
+        min-height: 100px;
+        padding: 10px;
+        margin: 10px 0;
+        resize: none;
+        &--short {
+          min-height: 60px;
+        }
+      }
+      &__option {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        input {
+          width: 80%;
+          padding: 10px;
+          margin: 0 40px;
+        }
+        .check {
+          position: absolute;
+          line-height: 45px;
+        }
+      }
+      &__match {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+        input {
+          display: inline-block;
+          width: 35%;
+          margin-right: 20px;
+          padding: 10px;
+        }
+      }
+      &__number {
+        display: inline;
+        padding: 0 20px;
+        font-weight: 700;
+        font-size: 12pt;
+        color: $violet;
+      }
+    }
+  }
+}
 .Question-Editor {
   display: block;
   position: fixed;
@@ -153,9 +300,14 @@
       display: inline-block;
       padding: 10px;
       font-weight: 700;
-      &::before {
-        content: 'ico';
-        margin-right: 10px;
+      span {
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 30px;
+        width: 20px;
+        height: 20px;
+        background-repeat: no-repeat;
+        background-size: cover;
       }
     }
     &__search {

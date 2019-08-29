@@ -1,5 +1,6 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
+import uid from 'uid';
 import { Link } from 'react-router-dom';
 
 const propTypes = {
@@ -18,6 +19,7 @@ const propTypes = {
   time: PropTypes.string,
   experience: PropTypes.number,
   creator: PropTypes.shape({}),
+  participants: PropTypes.arrayOf(PropTypes.shape({})),
   isLoading: PropTypes.bool,
   // eslint-disable-next-line camelcase
   available_until: PropTypes.string,
@@ -32,7 +34,8 @@ const defaultProps = {
   questions_count: '',
   time: '',
   experience: 0,
-  creator: null,
+  creator: {},
+  participants: null,
   // eslint-disable-next-line camelcase
   available_until: '',
   completed: false,
@@ -47,7 +50,13 @@ const Game = ({
   questions_count: questions,
   time,
   experience,
-  creator,
+  creator: {
+    second_name: secondName,
+    name: creatorName,
+    middle_name: middleName,
+    photo,
+  } = {},
+  participants,
   isLoading,
   available_until: availableUntil,
   completed,
@@ -79,30 +88,46 @@ const Game = ({
           <div className="game__reward__exp">{`+ ${experience} xp`}</div>
         </div>
       </Link>
-      {creator != null && (
-        <Link to="/teacher" className="game__author" >
-          <div className="game__author__image" />
-          {/* style={{ backgroundImage: `url('${creator.image}')` }} */}
+      {creatorName && (
+        <div className="game__author">
+          <div className="game__author__image" style={{ backgroundImage: `url('${photo && photo}')` }} />
           <div className="game__author__info">
-            {/* eslint-disable-next-line react/prop-types */}
-            <h5>{creator.second_name}</h5>
-            {/* eslint-disable-next-line react/prop-types */}
-            <h6>{`${creator.name} ${creator.middle_name}`}</h6>
+            <h5>{secondName}</h5>
+            <h6>{`${creatorName} ${middleName}`}</h6>
           </div>
-        </Link>
+        </div>
       )}
-      {!completed && (
-        <Link to="/teacher" className="game__author">
+      {participants && participants.map(({
+        name: partName,
+        second_name,
+        middle_name,
+        photo: partPhoto,
+      }) => (
+        <div key={uid()} className="game__author">
+          <div className="game__author__image" style={{ backgroundImage: `url('${partPhoto && partPhoto}')` }} />
+          <div className="game__author__info">
+            <h5>{second_name}</h5>
+            <h6>{`${partName} ${middle_name}`}</h6>
+          </div>
+        </div>
+      ))}
+      {(!completed && availableUntil) && (
+        <div className="game__author">
           <div className="game__author__info">
             <h6>Доступно до</h6>
             <h5>{availableUntil}</h5>
           </div>
-        </Link>
+        </div>
       )}
+      <div className="game__author" style={{ opacity: 0 }}>
+        <div className="game__author__info">
+          <h6> </h6>
+          <h5> </h5>
+        </div>
+      </div>
     </div>
   );
 };
-
 
 Game.propTypes = propTypes;
 Game.defaultProps = defaultProps;

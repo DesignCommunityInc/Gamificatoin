@@ -8,6 +8,7 @@ import Textarea from '../../Textarea';
 import Participant from './Participant';
 import Detail from './Detail';
 import QuestionEditor from './QuestionsEditor';
+import QuestionsCreator from './QuestionsCreator';
 import Button from '../../Button';
 import UserAdd from './UserAdd';
 import { invite } from './TeacherGameSettingsPage-actions';
@@ -21,6 +22,8 @@ const propTypes = {
   location: PropTypes.shape({}).isRequired,
   questionListVisibility: PropTypes.bool.isRequired,
   toggleQuestionListVisibility: PropTypes.func.isRequired,
+  questionCreatorVisibility: PropTypes.bool.isRequired,
+  toggleQuestionCreatorVisibility: PropTypes.func.isRequired,
   getInvites: PropTypes.func.isRequired,
 };
 
@@ -88,6 +91,8 @@ class TeacherGameSettingsPage extends React.Component {
         params: { id },
       } = {},
       users,
+      questionCreatorVisibility,
+      toggleQuestionCreatorVisibility,
       questionListVisibility,
       toggleQuestionListVisibility,
       fetchTeacherGamePreview,
@@ -107,6 +112,9 @@ class TeacherGameSettingsPage extends React.Component {
             game_id={id}
             fetchTeacherGamePreview={fetchTeacherGamePreview}
           />
+        )}
+        {questionCreatorVisibility && (
+          <QuestionsCreator />
         )}
         <Header title="Редактирование" />
         <Settings />
@@ -160,6 +168,11 @@ class TeacherGameSettingsPage extends React.Component {
           <div className="Container__title">Вопросы игры</div>
           <div className="Buttons__wrapper">
             <Button
+              onClick={toggleQuestionCreatorVisibility}
+              className="button"
+              title="Создать вопрос"
+            />
+            <Button
               onClick={toggleQuestionListVisibility}
               className="button"
               title="Добавить вопрос из банка"
@@ -168,7 +181,7 @@ class TeacherGameSettingsPage extends React.Component {
           <div className="Questions__wrapper">
             {questions && questions.map((question, idx) => (
               <Question
-                // key={uid()}
+                key={uid()}
                 {...question}
                 counter={idx + 1}
                 idx={idx}

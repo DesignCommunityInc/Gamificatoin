@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 const propTypes = {
   className: PropTypes.string.isRequired,
   title: PropTypes.string,
+  icon: PropTypes.string,
   tabIndex: PropTypes.number,
   onClick: PropTypes.func.isRequired,
   onKeyDown: PropTypes.func,
@@ -12,6 +13,7 @@ const defaultProps = {
   onKeyDown: () => {},
   tabIndex: 0,
   title: '',
+  icon: null,
 };
 
 const Button = ({
@@ -20,6 +22,7 @@ const Button = ({
   onKeyDown,
   tabIndex,
   title,
+  icon,
 }) => (
   <span
     className={className}
@@ -28,6 +31,7 @@ const Button = ({
     tabIndex={tabIndex}
     role="button"
   >
+    {icon && <span style={{ backgroundImage: `url('${icon}')` }} /> }
     {title}
   </span>
 );

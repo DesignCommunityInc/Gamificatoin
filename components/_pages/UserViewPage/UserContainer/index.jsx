@@ -11,6 +11,8 @@ const propTypes = {
   second_name: PropTypes.string,
   name: PropTypes.string,
   middle_name: PropTypes.string,
+  photo: PropTypes.string,
+  online: PropTypes.shape({}),
 };
 const defaultProps = {
   level: 0,
@@ -18,6 +20,8 @@ const defaultProps = {
   second_name: '',
   name: '',
   middle_name: '',
+  photo: '',
+  online: {},
 };
 
 class UserContainer extends React.Component {
@@ -34,12 +38,21 @@ class UserContainer extends React.Component {
       achievements_count,
       isLoading,
       photo,
+      online: {
+        status,
+        last_activity: lastActivity,
+      } = {},
     } = this.props;
     return (
       <section className="ViewPage Container">
         <div className="ViewPage__main">
           <div className="ViewPage__main__info">
-            <div className="ViewPage__main__info__image" style={{ backgroundImage: `url('${photo}')` }} />
+            <div className={`ViewPage__main__info__image ${status ? 'ViewPage__main__info__image--active' : ''}`} style={{ backgroundImage: `url('${photo}')` }} />
+            <div className="ViewPage__main__info__last-activity">
+              Последняя активность
+              <br />
+              {lastActivity}
+            </div>
             {!isLoading ? (
               <>
                 <p className="ViewPage__main__info__first">{secondName}</p>

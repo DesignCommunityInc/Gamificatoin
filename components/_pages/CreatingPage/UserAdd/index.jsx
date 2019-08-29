@@ -4,15 +4,13 @@ import uid from 'uid';
 import Button from '../../../Button';
 
 const propTypes = {
-  users: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.shape({})),
-    PropTypes.shape({}),
-  ]).isRequired,
+  users: PropTypes.arrayOf(PropTypes.shape({})),
   active: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
+  users: [],
 };
 
 class UserAdd extends React.Component {
@@ -84,7 +82,7 @@ class UserAdd extends React.Component {
           ))}
         </div>
         <Button
-          className={`useradd__open-button button button-main button-main-light button-main-light-colorful button-iconless ${visible ? 'useradd__open-button--active' : ''}`}
+          className={`useradd__open-button button button-main button-main-light button-main-light-colorful button ${visible ? 'useradd__open-button--active' : ''}`}
           onClick={() => this.setState({ visible: !visible })}
           title={`${visible ? 'Закрыть' : 'Выбрать участников'}`}
         />

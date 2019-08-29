@@ -36,10 +36,11 @@ class Answer extends React.Component {
       passedAnswers,
       type,
     } = this.props;
-    if (passedAnswers.length === 0) return;
+    // if (passedAnswers.length === 0) return;
     hideQuestion();
     if (type === types.SELECT_ONE) {
-      handleAnswer(passedAnswers[0].title, this.handleCancel());
+      const answer = passedAnswers.length > 0 ? [passedAnswers].title : '';
+      handleAnswer(answer, this.handleCancel());
     } else {
       const answerArray = [];
       passedAnswers.forEach((awr) => {

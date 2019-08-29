@@ -35,7 +35,7 @@ const Classmates = ({
             key={uid()}
             to={`/user/${id}`}
             className="mates__image"
-            style={{ backgroundImage: `url('${photo}')` }}
+            style={{ backgroundImage: `url('${photo && photo}')` }}
           />
         ))}
         {/* <span className="mates__count">+ 25 человек</span> */}

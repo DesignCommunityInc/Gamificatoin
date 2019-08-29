@@ -52,12 +52,12 @@ class Alert extends React.Component {
         <div className="Alert__title">{title}</div>
         <Button
           onClick={this.hideAlert}
-          className="button button-main button-main-red button-main-red-colorful button-iconless"
+          className="button button-main button-main-red button-main-red-colorful button"
           title="Отмена"
         />
         <Button
           onClick={this.submit}
-          className="button button-info button-iconless"
+          className="button button-info button"
           title="Продолжить"
         />
       </section>

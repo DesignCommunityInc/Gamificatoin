@@ -19,6 +19,7 @@ const initialState = {
   filter: {},
   isQuestionListLoading: true,
   questionListVisibility: false,
+  questionCreatorVisibility: false,
 };
 
 export default (state = initialState, action) => {
@@ -33,6 +34,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         questionListVisibility: !state.questionListVisibility,
+      };
+    case types.QUESTION_CREATOR_VISIBILITY_TOGGLE:
+      return {
+        ...state,
+        questionCreatorVisibility: !state.questionCreatorVisibility,
       };
     case types.FETCH_QUESTION_LIST_START:
       return {

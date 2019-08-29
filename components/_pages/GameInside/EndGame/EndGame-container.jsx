@@ -60,7 +60,7 @@ class EndGame extends React.Component {
               {experience ? <span>{`${experience} xp`}</span> : <span>xp</span>}
               {points && <span>{`${points} pt`}</span>}
             </div>
-            <Link to={routes.ROOT} className="button button-main button-iconless">Перейти на главный экран</Link>
+            <Link to={routes.ROOT} className="button button-main button">Перейти на главный экран</Link>
           </div>
         </div>
         {achievements && (

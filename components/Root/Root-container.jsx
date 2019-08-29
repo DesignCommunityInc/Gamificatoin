@@ -32,8 +32,8 @@ const propTypes = {
 class Root extends React.Component {
   constructor() {
     super();
-    this.role = JSON.parse(localStorage.getItem('User')).role;
-    // this.role = '6';
+    // this.role = JSON.parse(localStorage.getItem('User')).role;
+    this.role = '6';
   }
 
   componentDidMount() {

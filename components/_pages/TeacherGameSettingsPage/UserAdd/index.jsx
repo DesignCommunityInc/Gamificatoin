@@ -61,7 +61,7 @@ class UserAdd extends React.Component {
           ))}
         </div>
         <Button
-          className={`useradd__open-button button button-main button-main-light button-main-light-colorful button-iconless ${visible ? 'useradd__open-button--active' : ''}`}
+          className={`useradd__open-button button button-main button-main-light button-main-light-colorful button ${visible ? 'useradd__open-button--active' : ''}`}
           onClick={() => this.setState({ visible: !visible })}
           title={`${visible ? 'Закрыть' : 'Выбрать участников'}`}
         />

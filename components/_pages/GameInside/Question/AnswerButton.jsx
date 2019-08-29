@@ -13,7 +13,7 @@ const AnswerButton = ({ onClick }) => (
     role="button"
     onKeyDown={() => {}}
     tabIndex="0"
-    className="button button-main button-iconless button-main-light button-main-light-colorful"
+    className="button button-main button button-main-light button-main-light-colorful"
     style={{ textAlign: 'center' }}
   >
     Ответить

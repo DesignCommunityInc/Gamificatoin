@@ -13,6 +13,7 @@ const initialState = {
   isShortAchievementsLoading: true,
   rate: 0,
   isRateLoading: true,
+  onlineUsers: [],
 };
 
 export default (state = initialState, action) => {
@@ -43,13 +44,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         classmatesShort: [],
-        isClassmatesLoading: true,
+        isClassmatesShortLoading: true,
       };
     case types.FETCH_USER_CLASSMATES_SHORT_SUCCESS:
       return {
         ...state,
         classmatesShort: action.payload.data,
-        isClassmatesLoading: false,
+        isClassmatesShortLoading: false,
       };
     case types.FETCH_USER_ACHIEVEMENTS_SHORT_START:
       return {
@@ -76,6 +77,11 @@ export default (state = initialState, action) => {
         ...state,
         rate: action.payload.data,
         isRateLoading: false,
+      };
+    case types.FETCH_USERS_ONLINE:
+      return {
+        ...state,
+        onlineUsers: action.payload.data,
       };
     default:
       return state;

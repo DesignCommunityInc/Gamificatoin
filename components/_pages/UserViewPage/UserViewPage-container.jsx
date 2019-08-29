@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import UserContainer from './UserContainer';
 import Header from '../../Header';
 import Settings from '../../Settings';
-import Utils from '../../../utils/Utils';
 import Achievements from '../../AchievementList';
 
 const propTypes = {
   data: PropTypes.shape({}).isRequired,
   isLoading: PropTypes.bool.isRequired,
   match: PropTypes.shape({}).isRequired,
-  achievements: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  achievements: PropTypes.arrayOf(PropTypes.shape({})),
   fetchUserView: PropTypes.func.isRequired,
   fetchUserAchievements: PropTypes.func.isRequired,
+};
+const defaultProps = {
+  achievements: [],
 };
 
 class UserPage extends React.Component {
@@ -96,5 +98,6 @@ class UserPage extends React.Component {
 }
 
 UserPage.propTypes = propTypes;
+UserPage.defaultProps = defaultProps;
 
 export default UserPage;

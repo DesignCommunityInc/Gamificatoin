@@ -9,6 +9,8 @@
   &__splitter-1 {
     display: block;
     position: relative;
+    max-width: 50px;
+    text-align: center;
     max-width: fit-content;
     margin: 10px 0;
     padding: 5px 10px;
@@ -174,6 +176,7 @@
       }
       &__reward {
         position: absolute;
+        max-width: 100px;
         right: 0;
         padding: 5px 10px;
         vertical-align: top;
@@ -181,10 +184,12 @@
         background: $light-violet;
         color: $violet;
         border-radius: $border-radius-small;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         @include mobile {
           display: block;
           position: relative;
-          max-width: 100px;
           margin: 5px auto;
         }
       }

@@ -80,7 +80,7 @@ class UserPage extends React.Component {
           <Classmates
             mateList={classmates}
             isLoading={isClassmatesLoading}
-            tagList={[`${class_letter}${class_number}`]}
+            tagList={isClassmatesLoading ? [''] : [`${class_number}${class_letter}`]}
           />
         </section>
       </main>

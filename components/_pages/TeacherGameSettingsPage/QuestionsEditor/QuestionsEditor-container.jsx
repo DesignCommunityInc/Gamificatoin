@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import uid from 'uid';
 import QuestionListItem from './QuestionListItem';
 import Filter from '../../../Filter';
+import titleIcon from '../../../../styles/assets/question_title.png';
 
 const propTypes = {
   game_id: PropTypes.string.isRequired,
@@ -168,7 +169,10 @@ class QuestionEditor extends React.Component {
         <div className="Question-Editor">
           <div className="Question-Editor__main">
             <div className="Editor__header">
-              <span className="Editor__title">Банк вопросов</span>
+              <span className="Editor__title">
+                <span style={{ backgroundImage: `url('${titleIcon}')` }} />
+                Банк вопросов
+              </span>
               <input
                 className="Editor__search"
                 placeholder="Найти"
@@ -206,7 +210,7 @@ class QuestionEditor extends React.Component {
           </div>
           <div className="Question-Editor__footer">
             <div
-              className="button button-main button-iconless save-button"
+              className="button button-main button save-button"
               onClick={() => saveQuestions({ game_id, questions: selectedQuestions })
                 .then(() => fetchTeacherGamePreview(game_id))}
               role="button"

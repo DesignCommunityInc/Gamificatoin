@@ -3,7 +3,6 @@ import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import uid from 'uid';
 import Game from './Game';
-import Utils from '../utils/Utils';
 import ScrollWrapper from './ScrollWrapper';
 
 const propTypes = {
@@ -19,7 +18,7 @@ const defaultProps = {
   pathname: null,
   error: false,
   list: [],
-  emptyTitle: 'Вы уже прошли все игры :(',
+  emptyTitle: 'На данный момент нет доступных игр :(',
 };
 
 const GameList = ({
@@ -71,7 +70,7 @@ const GameList = ({
       <ScrollWrapper>
         {list.map(game => (
           <Game
-            key={game.id}
+            key={uid()}
             {...game}
           />
         ))}

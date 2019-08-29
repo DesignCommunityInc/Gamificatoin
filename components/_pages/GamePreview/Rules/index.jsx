@@ -31,10 +31,10 @@ const Rules = ({
     <div className="Container__title">Правила игры</div>
     <div className="Games-Preview__rule__container">
       <div className="Games-Preview__rule-field">Закрытая игра</div>
-      <div className="Games-Preview__rule-field">{`плиток: ${questions_count}`}</div>
-      <div className="Games-Preview__rule-field">{`время на прохождение: ${time}`}</div>
+      {questions_count && <div className="Games-Preview__rule-field">{`плиток: ${questions_count}`}</div>}
+      {time && <div className="Games-Preview__rule-field">{`время на прохождение: ${time}`}</div>}
       <div className="Games-Preview__rule-title">Описание</div>
-      <div className="Games-Preview__rule-description">{description}</div>
+      {description && <div className="Games-Preview__rule-description">{description}</div>}
       <div className="Games-Preview__rule-title">Правила</div>
       <div className="Games-Preview__rule-description">
         Для начала игры необходимо выброть стартовую категорию.

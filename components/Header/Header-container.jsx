@@ -5,6 +5,11 @@ import Timer from '../Timer';
 import { logout } from '../../utils/API';
 import * as routes from '../../constants/Routes';
 import Button from '../Button';
+import main from '../../styles/assets/home_settings.png';
+import settings from '../../styles/assets/settings_icon.png';
+import closeIcon from '../../styles/assets/logout_icon.png';
+import classIcon from '../../styles/assets/user_class--violet.png';
+import ratingIcon from '../../styles/assets/user_rating--violet.png';
 
 const propTypes = {
   data: PropTypes.shape({}).isRequired,
@@ -78,29 +83,42 @@ const Header = ({
                 <h2>{lastName}</h2>
                 <h4>{`${name} ${secondName}`}</h4>
                 {number && (
-                  <>
-                    <span>{`${number}${letter} класс`}</span>
-                    <span>{`ТОП ${rating}`}</span>
-                  </>
+                  <Button
+                    className="button button-main button-icon button-main-violet button-main-violet-colorful"
+                    title={`${number}${letter} класс`}
+                    icon={classIcon}
+                    onClick={() => {}}
+                  />
+                )}
+                {rating && (
+                  <Button
+                    className="button button-main button-icon button-main-violet button-main-violet-colorful"
+                    title={`ТОП ${rating}`}
+                    icon={ratingIcon}
+                    onClick={() => {}}
+                  />
                 )}
               </div>
             </div>
             <div className="settings-container">
               <Link to="/">
                 <Button
-                  className="button button-main button-main-light"
+                  className="button button-main button-icon button-main-light"
                   title="Главный экран"
+                  icon={main}
                   onClick={() => {}}
                 />
               </Link>
               <Button
-                className="button button-main button-main-light"
+                className="button button-main button-icon button-main-light"
                 title="Настройки"
+                icon={settings}
                 onClick={() => toggleSettingsScreen()}
               />
               <Button
-                className="button button-main button-main-red"
+                className="button button-main button-icon button-main-red"
                 title="Выход"
+                icon={closeIcon}
                 onClick={() => logout()}
               />
             </div>
@@ -150,35 +168,22 @@ const Header = ({
             </div>
             <div className="settings-container--short">
               <Link to="/">
-                <span
-                  role="button"
+                <Button
                   className="button button-main button-main-light"
-                >
-                  Главный экран
-                </span>
+                  title="Главный экран"
+                  onClick={() => {}}
+                />
               </Link>
-              <span
-                role="button"
+              <Button
                 className="button button-main button-main-light"
-                onClick={() => {
-                  toggleSettingsScreen();
-                }}
-                onKeyDown={() => {}}
-                tabIndex="0"
-              >
-                Настройки
-              </span>
-              <span
-                role="button"
+                onClick={() => toggleSettingsScreen()}
+                title="Настройки"
+              />
+              <Button
                 className="button button-main button-main-red"
-                onClick={() => {
-                  logout();
-                }}
-                onKeyDown={() => {}}
-                tabIndex="0"
-              >
-                Выход
-              </span>
+                onClick={() => logout()}
+                title="Выход"
+              />
             </div>
             <div
               className="tile__container--short"
