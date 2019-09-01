@@ -1,5 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import uid from 'uid';
+import Button from '../../../Button';
+
+const propTypes = {
+  answer: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
 
 class Question extends React.Component {
   constructor() {
@@ -8,44 +14,52 @@ class Question extends React.Component {
     this.viewQuestionText = this.viewQuestionText.bind(this);
   }
 
-  viewQuestionText(id) {
-    this.props.onClick(this.props.idx);
+  viewQuestionText() {
+    const { onClick, idx } = this.props;
+    onClick(idx);
   }
 
-  renderAnswer(answerA){
-    if( typeof (answerA) == "Array" ){
-      answerA.map((answerV) => (
-        this.renderAnswer(answerV)
-      ))
+  renderAnswer(answers) {
+    if (Array.isArray(answers)) {
+      answers.map(answer => this.renderAnswer(answer));
+      return false;
     }
-    return (
-      <>
-        {answerA['n'] ? (
-            <p type="wrong">{answerA['n']}</p>
-          ) : answerA['y'] ? (
-            <p type="correct">{answerA['y']}</p>
-          ) : (
-            <p>{answerA}</p>
-          )
-        } 
-      </>
-    )
+    const { n, y } = answers;
+    if (n) {
+      return <p key={uid()} type="wrong">{n}</p>;
+    }
+    if (y) {
+      return <p key={uid()} type="correct">{y}</p>;
+    }
+    return <p key={uid()}>{answers}</p>;
   }
 
   render() {
 
-    const { direction, question, counter, title, specUUD, type, image, isLoading, id , active, subject, answer = [] } = this.props;
-    if(isLoading) return (
-      <div>Loading...</div>
-    );
-
-    return(
+    const {
+      direction,
+      question,
+      counter,
+      title,
+      specUUD,
+      type,
+      image,
+      isLoading,
+      id,
+      active,
+      subject,
+      answer,
+    } = this.props;
+    return (
       <div className={`question ${active}`}>
         <div className="question__left_side">
           <div className="question__counter">
             <p>{counter}</p>
           </div>
-          <div onClick={this.viewQuestionText} className="question__view__button--mobile"> </div>
+          <Button
+            onClick={this.viewQuestionText}
+            className="question__view__button--mobile"
+          />
         </div>
         <div className="question__information">
           <div className="question__information__title">{`Вопрос №${id}`}</div>
@@ -55,10 +69,16 @@ class Question extends React.Component {
           </div>
         </div>
         <div className="question__view__button__wrapper">
-          <div onClick={this.viewQuestionText} className="question__view__button">
-            <span className="question__view__button__dot"></span>
-            <span className="question__view__button__dot"></span>
-            <span className="question__view__button__dot"></span>
+          <div
+            onClick={this.viewQuestionText}
+            className="question__view__button"
+            role="button"
+            tabIndex="0"
+            onKeyDown={() => {}}
+          >
+            <span className="question__view__button__dot" />
+            <span className="question__view__button__dot" />
+            <span className="question__view__button__dot" />
           </div>
         </div>
         <div className="question__bigView">
@@ -74,10 +94,8 @@ class Question extends React.Component {
           </div>
           <div className="question__bigView__text">
             <p className="question__bigView__text__title">Ответы</p>
-            <div className="question__bigView__text__wrapper"> 
-              {/* {answer && answer.map((answerA, idx) => (
-                this.renderAnswer(answerA)
-              ))}   */}
+            <div className="question__bigView__text__wrapper">
+              {answer && answer.map(a => this.renderAnswer(a))}
             </div>
           </div>
         </div>
@@ -87,7 +105,7 @@ class Question extends React.Component {
 }
 
 
-// Info.propTypes = propTypes;
+Question.propTypes = propTypes;
 // Info.defaultTypes = defaultTypes;
 
 export default Question;

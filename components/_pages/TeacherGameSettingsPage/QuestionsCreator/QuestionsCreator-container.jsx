@@ -223,8 +223,8 @@ class QuestionCreator extends React.Component {
                         <CheckBox
                           id="select"
                           type="radio"
-                          onClick={() => this.handleSelectAnswer(type, idx)}
-                          defaultChecked={check.indexOf(idx) !== -1}
+                          onClick={() => this.handleSelectAnswer(type, idx + 1)}
+                          defaultChecked={check.indexOf(idx + 1) !== -1}
                         />
                       </label>
                       <input
@@ -254,8 +254,8 @@ class QuestionCreator extends React.Component {
                         <CheckBox
                           id={`${idx}`}
                           type="checkbox"
-                          onClick={() => this.handleSelectAnswer(type, idx)}
-                          defaultChecked={check.indexOf(idx) !== -1}
+                          onClick={() => this.handleSelectAnswer(type, idx + 1)}
+                          defaultChecked={check.indexOf(idx + 1) !== -1}
                         />
                       </label>
                       <input

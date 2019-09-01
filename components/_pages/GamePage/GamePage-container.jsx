@@ -48,14 +48,7 @@ class GamePage extends React.Component {
         </section>
         <Gamelist
           title={invites.title}
-          list={invites.data[invites.data.length - 1]}
-          isLoading={isLoading}
-          pathname={pathname}
-          error={invites.data === null}
-        />
-        <Gamelist
-          title="Соревнования"
-          list={invites.data.slice(0, invites.data.length - 1)}
+          list={invites.data}
           isLoading={isLoading}
           pathname={pathname}
           error={invites.data === null}

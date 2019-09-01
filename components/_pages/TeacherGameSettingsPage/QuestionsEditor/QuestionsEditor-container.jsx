@@ -7,6 +7,7 @@ import uid from 'uid';
 import QuestionListItem from './QuestionListItem';
 import Filter from '../../../Filter';
 import titleIcon from '../../../../styles/assets/question_title.png';
+import Button from '../../../Button';
 
 const propTypes = {
   game_id: PropTypes.string.isRequired,
@@ -209,16 +210,12 @@ class QuestionEditor extends React.Component {
             />
           </div>
           <div className="Question-Editor__footer">
-            <div
+            <Button
               className="button button-main button save-button"
               onClick={() => saveQuestions({ game_id, questions: selectedQuestions })
                 .then(() => fetchTeacherGamePreview(game_id))}
-              role="button"
-              tabIndex="0"
-              onKeyDown={() => {}}
-            >
-              Сохранить
-            </div>
+              title="Сохранить"
+            />
             {this.pagination()}
           </div>
         </div>

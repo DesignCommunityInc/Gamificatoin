@@ -75,10 +75,14 @@ class Timer extends React.Component {
     let hour = hours;
     let min = minutes;
     let sec = seconds;
-
-    hour = hours > 0 && minutes - 1 < 0 ? hours - 1 : hours;
-    min = min > 0 && seconds - 1 < 0 ? minutes - 1 : minutes;
-    sec = sec >= 0 && seconds - 1 < 0 ? 59 : seconds - 1;
+    const finalTime = 59;
+    if (hour > 0 && min - 1 < 0 && sec - 1 < 0) {
+      hour -= 1;
+    }
+    if (min >= 0 && sec - 1 < 0) {
+      min = min - 1 < 0 ? finalTime : min - 1;
+    }
+    sec = sec >= 0 && sec - 1 < 0 ? finalTime : sec - 1;
 
     localStorage.setItem('timer', JSON.stringify({ hours: hour, minutes: min, seconds: sec }));
     setTimer({ hours: hour, minutes: min, seconds: sec });
@@ -87,7 +91,6 @@ class Timer extends React.Component {
       setTimer(null);
       endTheGame();
     }
-    // endGame
   }
 
   render() {

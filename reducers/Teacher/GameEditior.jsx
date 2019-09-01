@@ -34,6 +34,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         questionListVisibility: !state.questionListVisibility,
+        selectedQuestions: [],
       };
     case types.QUESTION_CREATOR_VISIBILITY_TOGGLE:
       return {
@@ -44,7 +45,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         questionList: initialQuestions,
-        selectedQuestions: [],
         isQuestionListLoading: true,
         currentPage: action.payload.data,
       };
